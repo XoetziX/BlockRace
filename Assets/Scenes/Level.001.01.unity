@@ -1078,6 +1078,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6396010255524993374, guid: a304f1e869dc35d489acbcd335764b24, type: 3}
+      propertyPath: m_Text
+      value: Next level
+      objectReference: {fileID: 0}
+    - target: {fileID: 6396010255577258682, guid: a304f1e869dc35d489acbcd335764b24, type: 3}
+      propertyPath: m_Text
+      value: Once again!
+      objectReference: {fileID: 0}
     - target: {fileID: 6396010255669653890, guid: a304f1e869dc35d489acbcd335764b24, type: 3}
       propertyPath: m_Name
       value: OnScreenUI
@@ -1164,6 +1172,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6396010255669653902, guid: a304f1e869dc35d489acbcd335764b24, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6396010256066696110, guid: a304f1e869dc35d489acbcd335764b24, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6396010256563832382, guid: a304f1e869dc35d489acbcd335764b24, type: 3}
+      propertyPath: m_Text
+      value: Once again!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6396010256840540626, guid: a304f1e869dc35d489acbcd335764b24, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

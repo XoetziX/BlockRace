@@ -424,7 +424,7 @@ GameObject:
   - component: {fileID: 312293052}
   - component: {fileID: 312293051}
   m_Layer: 5
-  m_Name: ultimativen
+  m_Name: to
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -482,7 +482,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ultimativen
+  m_Text: to
 --- !u!222 &312293052
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -561,7 +561,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Ui ui ui
+  m_Text: WAAAHhhh
 --- !u!222 &470388679
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -738,7 +738,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: STARTEN
+  m_Text: START
 --- !u!222 &628624051
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1266,7 +1266,7 @@ GameObject:
   - component: {fileID: 848279029}
   - component: {fileID: 848279028}
   m_Layer: 5
-  m_Name: Willkommen
+  m_Name: Welcome
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1324,7 +1324,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: WILLKOMMEN ZUM
+  m_Text: WELCOME
 --- !u!222 &848279029
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1887,7 +1887,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Geht so
+  m_Text: Should work
 --- !u!222 &1743152773
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1966,7 +1966,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Einfach
+  m_Text: Easy
 --- !u!222 &1746916293
 CanvasRenderer:
   m_ObjectHideFlags: 0
