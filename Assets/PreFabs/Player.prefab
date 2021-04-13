@@ -131,10 +131,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc0b6e7b754c77048be3485d257a0623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardForce: 3000
-  sidewaysForce: 50
   playerTransform: {fileID: 5248882238904205761}
   rigidBody: {fileID: 5248882238904205766}
+  _playerData: {fileID: 11400000, guid: 465507bfc2ef44d4da3d01de9f361426, type: 2}
 --- !u!114 &7852501337631336270
 MonoBehaviour:
   m_ObjectHideFlags: 0

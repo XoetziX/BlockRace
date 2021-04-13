@@ -4,32 +4,25 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
-    private PlayerData playerData;
-
-    public float forwardForce;
-    public float sidewaysForce;
-    private float powerupForwardForce = 0f;
-    private bool powerupBigger = false;
-
     public Transform playerTransform;
     public Rigidbody rigidBody;
 
-    private float screenCenterX;
+    [SerializeField] private PlayerData _playerData;
+    private float _currentForwardForce;
+    private float _currentSidewaysForce;
 
-    private void Awake()
-    {
-        playerData = PlayerPersistence.GetData();
-    }
-    private void OnDestroy()
-    {
-        PlayerPersistence.SaveData(playerData);
-    }
+    private float powerupForwardForce = 0f;
+    private bool powerupBigger = false;
+
+
+    private float screenCenterX;
 
     private void Start()
     {
         // save the horizontal center of the screen in order to determine the left and right touch control
         screenCenterX = Screen.width * 0.5f;
+        _currentForwardForce = _playerData.GetCurrentForwardForce();
+        _currentSidewaysForce = _playerData.getCurrentSidewayForce();
     }
         // Update is called once per frame
     void Update()
@@ -54,8 +47,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void DoKeyBoardMovement()
     {
+        Debug.Log("DRIN");
         //move forward, if applicable with boost
-        rigidBody.AddForce(0, 0, (forwardForce + powerupForwardForce) * Time.deltaTime);
+        rigidBody.AddForce(0, 0, (_currentForwardForce + powerupForwardForce) * Time.deltaTime);
 
         //set powerupForwardForce to 0 again, after it was considered
         if (powerupForwardForce != 0f)
@@ -67,11 +61,11 @@ public class PlayerMovement : MonoBehaviour
         //left/right movement
         if (Input.GetButton("Right"))
         {
-            rigidBody.AddForce(sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+            rigidBody.AddForce(_currentSidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
         if (Input.GetButton("Left"))
         {
-            rigidBody.AddForce(-sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+            rigidBody.AddForce(-_currentSidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
     }
 
@@ -87,12 +81,12 @@ public class PlayerMovement : MonoBehaviour
             // if the touch position is to the right of center
             if (firstTouch.position.x > screenCenterX)
             {
-                rigidBody.AddForce(sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+                rigidBody.AddForce(_currentSidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
             }
             // if the touch position is to the left of center
             else if (firstTouch.position.x < screenCenterX)
             {
-                rigidBody.AddForce(-sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+                rigidBody.AddForce(-_currentSidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
             }
 
         }
@@ -112,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void setBoostForward(float percantageOfBaseForwardForce)
     {
-        powerupForwardForce = playerData.BaseForwardForce * percantageOfBaseForwardForce;
+        powerupForwardForce = _playerData.BaseForwardForce * percantageOfBaseForwardForce;
     }
 
     /*public void setBoostBigger()
