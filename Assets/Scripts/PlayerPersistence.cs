@@ -40,6 +40,4 @@ public class PlayerPersistence
         PlayerPrefs.SetFloat("ForwardForce", playerData.BaseForwardForce);
         PlayerPrefs.SetFloat("SidewayForce", playerData.BaseSidewayForce);
     }
-
-    
 }

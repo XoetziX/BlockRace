@@ -14,23 +14,8 @@ public class LevelUIManager : MonoBehaviour
     public Text txt_currentSpeed;
     private bool gameOver = false;
 
-    private void Awake()
-    {
-        Debug.Log(">>> LevelUIManager - awake - " + gameOverUI);
-    }
-    private void Start()
-    {
-        Debug.Log(">>> LevelUIManager - start - " + gameOverUI);
-        //ShowGameOverUI();
-    }
-    private void OnDestroy()
-    {
-        LogHelper.DebugMe("LEVELUIMANAGER DESTROYED");
-    }
-
     void Update()
     {
-        Debug.Log(">>> LevelUIManager - UPDATE - " + gameOverUI);
         if (!gameOver)
         {
             txt_Distance.text = (player.transform.position.z.ToString("0") + " m");
@@ -39,20 +24,20 @@ public class LevelUIManager : MonoBehaviour
         //show speed
         float tmpSpeed = player.rigidBody.velocity.magnitude * 3.6f;
         txt_currentSpeed.text = "Speed: " + tmpSpeed.ToString("0");
+        //Debug.Log("SPEED" + tmpSpeed.ToString("0"));
     }
 
-    public void ShowGameOverUI()
+    internal void showGameOverUI()
     {
-        Debug.Log(">>> LevelUIManager - ShowGameOverUI - " + gameOverUI);
         gameOverUI.SetActive(true);
     }
 
-    public void ShowLevelCompleteUI()
+    internal void showLevelCompleteUI()
     {
         completeLevelUI.SetActive(true);
     }
 
-    public void SetGameOver()
+    public void setGameOver()
     {
         gameOver = true;
     }

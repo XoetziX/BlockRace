@@ -43,8 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aea77a55cb6eb4647972eb8314747024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 5248882238904205769, guid: 1cca2594e2caa4347a8ec642e46bf925, type: 3}
-  completeLevelUI: {fileID: 380728041073539280, guid: 48bcf658a4483aa4999d02559ba2cb10, type: 3}
-  gameOverUI: {fileID: 4062284572133681631, guid: 8796ee7da29ef39419d9abbda69cd718, type: 3}
-  txt_Distance: {fileID: 5338548305251790229, guid: c1861d0ac08fdf740bd4b1f217ecd256, type: 3}
-  txt_currentSpeed: {fileID: 9181951329410221452, guid: a4c9af436486d4c47acc7e5dc256c03c, type: 3}
+  player: {fileID: 0}
+  completeLevelUI: {fileID: 0}
+  gameOverUI: {fileID: 0}
+  txt_Distance: {fileID: 0}
+  txt_currentSpeed: {fileID: 0}

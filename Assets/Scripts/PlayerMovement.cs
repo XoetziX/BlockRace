@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -21,33 +20,16 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         playerData = PlayerPersistence.GetData();
-
     }
     private void OnDestroy()
     {
         PlayerPersistence.SaveData(playerData);
-        LogHelper.DebugMe("PLAYER DESTROYED");
     }
 
     private void Start()
     {
         // save the horizontal center of the screen in order to determine the left and right touch control
         screenCenterX = Screen.width * 0.5f;
-        switch (GameManager.Instance.getGameDifficulty())
-        {
-            case GameManager.Difficulty.easy:
-                forwardForce = (int) GameManager.Difficulty.easy;
-                break;
-            case GameManager.Difficulty.medium:
-                forwardForce = (int)GameManager.Difficulty.medium;
-                break;
-            case GameManager.Difficulty.hard:
-                forwardForce = (int)GameManager.Difficulty.hard;
-                break;
-            default:
-                LogHelper.logError(this.name, MethodInfo.GetCurrentMethod().Name, "difficulty is not set");
-                break;
-        }
     }
         // Update is called once per frame
     void Update()

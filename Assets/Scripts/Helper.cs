@@ -17,8 +17,6 @@ public class Helper : MonoBehaviour
             Debug.Log("NULL!!!!!!!!!!!!!");
         }
     }
-
-
     public static void CheckIfPlayerDataIsNull(object checkerObject, string gimmeAString)
     {
         if (checkerObject != null)
@@ -31,5 +29,17 @@ public class Helper : MonoBehaviour
         }
     }
 
+    public static void DebugMe()
+    {
+        Debug.Log("## Drin ##");
+    }
+    public static void DebugMe(float y)
+    {
+        Debug.Log("## Drin ## -> " + y.ToString());
+    }
+    public static void DebugMe(string v)
+    {
+        Debug.Log("## Drin ## -> " + v);
+    }
 
 }
