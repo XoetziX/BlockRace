@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Transform playerTransform;
-    public Rigidbody rigidBody;
+    [SerializeField] private Transform playerTransform;
+    [SerializeField] private Rigidbody rigidBody;
+    [SerializeField] private PlayerDataFix _playerDataFix;
+    [SerializeField] private PlayerDataVar _playerDataVar;
 
-    [SerializeField] private PlayerData _playerData;
     private float _currentForwardForce;
     private float _currentSidewaysForce;
 
@@ -21,10 +22,19 @@ public class PlayerMovement : MonoBehaviour
     {
         // save the horizontal center of the screen in order to determine the left and right touch control
         screenCenterX = Screen.width * 0.5f;
-        _currentForwardForce = _playerData.GetCurrentForwardForce();
-        _currentSidewaysForce = _playerData.getCurrentSidewayForce();
+        _currentForwardForce = GetCurrentForwardForce();
+        _currentSidewaysForce = GetCurrentSidewayForce();
     }
-        // Update is called once per frame
+    private float GetCurrentForwardForce()
+    {
+        return (int)_playerDataVar.ChoosenDifficulty;
+    }
+    public float GetCurrentSidewayForce()
+    {
+        return _playerDataFix.BaseSidewayForce;
+    }
+
+    // Update is called once per frame
     void Update()
     {
         DoKeyBoardMovement();
@@ -44,10 +54,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
     private void DoKeyBoardMovement()
     {
-        Debug.Log("DRIN");
         //move forward, if applicable with boost
         rigidBody.AddForce(0, 0, (_currentForwardForce + powerupForwardForce) * Time.deltaTime);
 
@@ -59,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //left/right movement
-        if (Input.GetButton("Right"))
+        if (Input.GetButton("Right")) 
         {
             rigidBody.AddForce(_currentSidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
@@ -106,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void setBoostForward(float percantageOfBaseForwardForce)
     {
-        powerupForwardForce = _playerData.BaseForwardForce * percantageOfBaseForwardForce;
+        powerupForwardForce = _playerDataFix.BaseForwardForce * percantageOfBaseForwardForce;
     }
 
     /*public void setBoostBigger()

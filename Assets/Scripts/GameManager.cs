@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
     //private float restartDelay = 3f;
     private bool gameHasEnded = false;
     public enum Difficulty { easy = 2000, medium = 3000, hard = 4000 }
-    private Difficulty difficulty = Difficulty.medium;
 
     public LevelUIManager levelUIManager;
     public void CompleteLevel()

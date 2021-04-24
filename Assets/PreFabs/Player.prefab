@@ -133,7 +133,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 5248882238904205761}
   rigidBody: {fileID: 5248882238904205766}
-  _playerData: {fileID: 11400000, guid: 465507bfc2ef44d4da3d01de9f361426, type: 2}
+  _playerDataFix: {fileID: 11400000, guid: b528dd572aaa6ea4bb9c888da2787ec7, type: 2}
+  _playerDataVar: {fileID: 11400000, guid: 074ff1e7a5c07b34e97b3402c62468f7, type: 2}
 --- !u!114 &7852501337631336270
 MonoBehaviour:
   m_ObjectHideFlags: 0

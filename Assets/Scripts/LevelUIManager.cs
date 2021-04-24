@@ -2,28 +2,42 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelUIManager : MonoBehaviour
 {
-    public PlayerMovement player;
-    public GameObject completeLevelUI;
-    public GameObject gameOverUI;
+    private Transform playerTransform;
+    private Rigidbody playerRigidbody;
+    private LevelInfo _levelInfo;
+    [SerializeField] private GameObject completeLevelUI;
+    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private Text txt_Distance;
+    [SerializeField] private Text txt_CurrentSpeed;
+    [SerializeField] private Text txt_LevelName;
 
-    public Text txt_Distance;
-    public Text txt_currentSpeed;
     private bool gameOver = false;
+
+    private void Start()
+    {
+        playerTransform = GameObject.Find("Player").GetComponent<Transform>();
+        playerRigidbody = GameObject.Find("Player").GetComponent<Rigidbody>();
+        _levelInfo = GameObject.Find("LevelInfo").GetComponent<LevelInfo>();
+        
+        txt_LevelName.text = _levelInfo.LevelName;
+
+    }
 
     void Update()
     {
         if (!gameOver)
         {
-            txt_Distance.text = (player.transform.position.z.ToString("0") + " m");
+            txt_Distance.text = (playerTransform.position.z.ToString("0") + " m");
         }
 
         //show speed
-        float tmpSpeed = player.rigidBody.velocity.magnitude * 3.6f;
-        txt_currentSpeed.text = "Speed: " + tmpSpeed.ToString("0");
+        float tmpSpeed = playerRigidbody.velocity.magnitude * 3.6f;
+        txt_CurrentSpeed.text = "Speed: " + tmpSpeed.ToString("0");
         //Debug.Log("SPEED" + tmpSpeed.ToString("0"));
     }
 
