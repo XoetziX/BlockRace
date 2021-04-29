@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -12,11 +13,14 @@ public class LevelUIManager : MonoBehaviour
     private LevelInfo _levelInfo;
     [SerializeField] private GameObject completeLevelUI;
     [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] private Text txt_Distance;
     [SerializeField] private Text txt_CurrentSpeed;
     [SerializeField] private Text txt_LevelName;
 
     private bool gameOver = false;
+
+    public string CurrentSpeed = "5"; 
 
     private void Start()
     {
@@ -28,6 +32,15 @@ public class LevelUIManager : MonoBehaviour
 
     }
 
+    internal void showPauseMenuUI()
+    {
+        pauseMenuUI.SetActive(true);
+    }
+    internal void hidePauseMenuUI()
+    {
+        pauseMenuUI.SetActive(false);
+    }
+
     void Update()
     {
         if (!gameOver)
@@ -37,7 +50,9 @@ public class LevelUIManager : MonoBehaviour
 
         //show speed
         float tmpSpeed = playerRigidbody.velocity.magnitude * 3.6f;
+        CurrentSpeed = tmpSpeed.ToString();
         txt_CurrentSpeed.text = "Speed: " + tmpSpeed.ToString("0");
+        LocalizedString locString = new LocalizedString();
         //Debug.Log("SPEED" + tmpSpeed.ToString("0"));
     }
 

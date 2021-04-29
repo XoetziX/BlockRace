@@ -19,6 +19,18 @@ MonoBehaviour:
     m_Key: Once Again
     m_Metadata:
       m_Items: []
+  - m_Id: 8207743419949056
+    m_Key: PLAYER_SPEED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8337808556302336
+    m_Key: DIFFICULTY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8341659116118016
+    m_Key: PLAYER_SPEED_TEST
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

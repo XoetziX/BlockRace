@@ -22,6 +22,8 @@ MonoBehaviour:
     id: 4
   m_StringDatabase:
     id: 5
+  m_Metadata:
+    m_Items: []
   references:
     version: 1
     00000000:
@@ -67,9 +69,9 @@ MonoBehaviour:
         - id: 12
         - id: 13
         - id: 14
+        - id: 15
         m_Formatters:
         - id: 9
-        - id: 15
         - id: 16
         - id: 17
         - id: 18
@@ -77,6 +79,7 @@ MonoBehaviour:
         - id: 20
         - id: 21
         - id: 22
+        - id: 23
     00000007:
       type: {class: SmartSettings, ns: UnityEngine.Localization.SmartFormat.Core.Settings, asm: Unity.Localization}
       data:
@@ -114,8 +117,14 @@ MonoBehaviour:
     0000000D:
       type: {class: ReflectionSource, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
     0000000E:
-      type: {class: DefaultSource, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
+      type: {class: GlobalVariablesSource, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
+      data:
+        m_Groups:
+        - name: global
+          group: {fileID: 11400000, guid: ec2d856667de94e41922d2655e4bb3b7, type: 2}
     0000000F:
+      type: {class: DefaultSource, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
+    00000010:
       type: {class: PluralLocalizationFormatter, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
       data:
         m_Names:
@@ -123,14 +132,14 @@ MonoBehaviour:
         - p
         - 
         m_DefaultTwoLetterISOLanguageName: en
-    00000010:
+    00000011:
       type: {class: ConditionalFormatter, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
       data:
         m_Names:
         - conditional
         - cond
         - 
-    00000011:
+    00000012:
       type: {class: TimeFormatter, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
       data:
         m_Names:
@@ -139,7 +148,7 @@ MonoBehaviour:
         - t
         - 
         m_DefaultFormatOptions: 4646
-    00000012:
+    00000013:
       type: {class: XElementFormatter, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
       data:
         m_Names:
@@ -147,26 +156,26 @@ MonoBehaviour:
         - xml
         - x
         - 
-    00000013:
+    00000014:
       type: {class: ChooseFormatter, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
       data:
         m_Names:
         - choose
         - c
         m_SplitChar: 124
-    00000014:
+    00000015:
       type: {class: SubStringFormatter, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
       data:
         m_Names:
         - substr
         m_ParameterDelimiter: 44
         m_NullDisplayString: (null)
-    00000015:
+    00000016:
       type: {class: IsMatchFormatter, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
       data:
         m_Names:
         - ismatch
-    00000016:
+    00000017:
       type: {class: DefaultFormatter, ns: UnityEngine.Localization.SmartFormat.Extensions, asm: Unity.Localization}
       data:
         m_Names:
