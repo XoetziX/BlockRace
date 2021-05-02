@@ -133,7 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 5248882238904205761}
   rigidBody: {fileID: 5248882238904205766}
-  _playerDataFix: {fileID: 11400000, guid: b528dd572aaa6ea4bb9c888da2787ec7, type: 2}
+  playerDataFix: {fileID: 11400000, guid: b528dd572aaa6ea4bb9c888da2787ec7, type: 2}
   gameSettings: {fileID: 11400000, guid: aaeeda0eecdeec04badc44c0fbf19012, type: 2}
 --- !u!114 &7852501337631336270
 MonoBehaviour:

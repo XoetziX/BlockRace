@@ -16,13 +16,11 @@ public class LevelUIManager : MonoBehaviour
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] private Text txt_Distance;
-    [SerializeField] private Text txt_CurrentSpeed;
     [SerializeField] private Text txt_ForwardSpeed;
     [SerializeField] private Text txt_LevelName;
 
     private bool gameOver = false;
 
-    public string CurrentSpeed = "5"; 
 
     private void Start()
     {

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84e7f8e11c36d844b9188844f3764933, type: 3}
   m_Name: GameSettingsSO
   m_EditorClassIdentifier: 
-  newLevelLoaded: 1
-  gameHasEnded: 0
+  newLevelLoaded: 0
+  gameHasEnded: 1
   gameIsPaused: 0
-  _choosenDifficulty: 3000
+  choosenDifficulty: 3000
