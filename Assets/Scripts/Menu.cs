@@ -5,8 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
+    [SerializeField] GameSettings gameSettings;
     public void StartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void SetDifficultyEasy()
+    {
+        gameSettings.ChoosenDifficulty = GameSettings.Difficulty.easy;
+    }
+    public void SetDifficultyMedium()
+    {
+        gameSettings.ChoosenDifficulty = GameSettings.Difficulty.medium;
+    }
+    public void SetDifficultyHard()
+    {
+        gameSettings.ChoosenDifficulty = GameSettings.Difficulty.hard;
     }
 }

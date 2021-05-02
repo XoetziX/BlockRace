@@ -11,6 +11,7 @@ public class LevelUIManager : MonoBehaviour
     private Transform playerTransform;
     private Rigidbody playerRigidbody;
     private LevelInfo _levelInfo;
+    [SerializeField] private CountdownController countdownController;
     [SerializeField] private GameObject completeLevelUI;
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject pauseMenuUI;
@@ -32,14 +33,6 @@ public class LevelUIManager : MonoBehaviour
 
     }
 
-    internal void showPauseMenuUI()
-    {
-        pauseMenuUI.SetActive(true);
-    }
-    internal void hidePauseMenuUI()
-    {
-        pauseMenuUI.SetActive(false);
-    }
 
     void Update()
     {
@@ -52,21 +45,30 @@ public class LevelUIManager : MonoBehaviour
         float tmpSpeed = playerRigidbody.velocity.magnitude * 3.6f;
         CurrentSpeed = tmpSpeed.ToString();
         txt_CurrentSpeed.text = "Speed: " + tmpSpeed.ToString("0");
-        LocalizedString locString = new LocalizedString();
-        //Debug.Log("SPEED" + tmpSpeed.ToString("0"));
     }
-
-    internal void showGameOverUI()
+    public void StartCountdown()
+    {
+        countdownController.StartLevelCountdown();
+    }
+    internal void ShowPauseMenuUI()
+    {
+        pauseMenuUI.SetActive(true);
+    }
+    internal void HidePauseMenuUI()
+    {
+        pauseMenuUI.SetActive(false);
+    }
+    internal void ShowGameOverUI()
     {
         gameOverUI.SetActive(true);
     }
 
-    internal void showLevelCompleteUI()
+    internal void ShowLevelCompleteUI()
     {
         completeLevelUI.SetActive(true);
     }
 
-    public void setGameOver()
+    public void SetGameOver()
     {
         gameOver = true;
     }

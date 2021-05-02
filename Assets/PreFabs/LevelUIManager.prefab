@@ -46,6 +46,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6985693113496225452}
   - component: {fileID: 6985693113496225453}
+  - component: {fileID: 146839576}
   m_Layer: 0
   m_Name: LevelUIManager
   m_TagString: Untagged
@@ -81,6 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aea77a55cb6eb4647972eb8314747024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  countdownController: {fileID: 146839576}
   completeLevelUI: {fileID: 4304875033665200630}
   gameOverUI: {fileID: 4304875032425788298}
   pauseMenuUI: {fileID: 4149556544485114657}
@@ -88,6 +90,21 @@ MonoBehaviour:
   txt_CurrentSpeed: {fileID: 4304875033140625599}
   txt_LevelName: {fileID: 2642867489298513030}
   CurrentSpeed: 5
+--- !u!114 &146839576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6985693113496225454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 979ad15201ca51b4a8ab8ea11caa2375, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  countdownTime: 3
+  countdownText: {fileID: 2828067892582413193}
+  gameSettings: {fileID: 0}
 --- !u!114 &6985693113155524298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,6 +119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countdownTime: 0
   countdownText: {fileID: 0}
+  gameSettings: {fileID: 0}
 --- !u!114 &6985693113155524299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,6 +382,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2180624519663966109, guid: a304f1e869dc35d489acbcd335764b24, type: 3}
   m_PrefabInstance: {fileID: 7169392473873298008}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2828067892582413193 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4918384599175545297, guid: a304f1e869dc35d489acbcd335764b24, type: 3}
+  m_PrefabInstance: {fileID: 7169392473873298008}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9024630955968587205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4304875033665200630 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6396010256066696110, guid: a304f1e869dc35d489acbcd335764b24, type: 3}

@@ -7,7 +7,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Rigidbody rigidBody;
     [SerializeField] private PlayerDataFix _playerDataFix;
-    [SerializeField] private PlayerDataVar _playerDataVar;
+    //[SerializeField] private PlayerDataVar _playerDataVar;
+    [SerializeField] private GameSettings gameSettings;
 
     private float _currentForwardForce;
     private float _currentSidewaysForce;
@@ -27,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private float GetCurrentForwardForce()
     {
-        return (int)_playerDataVar.ChoosenDifficulty;
+        return (int)gameSettings.ChoosenDifficulty;
     }
     public float GetCurrentSidewayForce()
     {
@@ -58,7 +59,6 @@ public class PlayerMovement : MonoBehaviour
     {
         //move forward, if applicable with boost
         rigidBody.AddForce(0, 0, (_currentForwardForce + powerupForwardForce) * Time.deltaTime);
-
         //set powerupForwardForce to 0 again, after it was considered
         if (powerupForwardForce != 0f)
         {
