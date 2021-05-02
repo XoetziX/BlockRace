@@ -272,7 +272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7610399534063669905, guid: ce900fc94b59a1944bb930a152ba1d2f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -100.58
+      value: -80.5
       objectReference: {fileID: 0}
     - target: {fileID: 7610399534063669905, guid: ce900fc94b59a1944bb930a152ba1d2f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -675,26 +675,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 146839576, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
-      propertyPath: gameSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: aaeeda0eecdeec04badc44c0fbf19012, type: 2}
-    - target: {fileID: 2679045064338626704, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 534.6209
-      objectReference: {fileID: 0}
-    - target: {fileID: 2679045064338626704, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 274.402
-      objectReference: {fileID: 0}
-    - target: {fileID: 2679045064338626704, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -2.0307007
-      objectReference: {fileID: 0}
-    - target: {fileID: 2679045064338626704, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 119.580444
-      objectReference: {fileID: 0}
     - target: {fileID: 4149556544626787829, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

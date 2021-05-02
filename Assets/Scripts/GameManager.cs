@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    //private float restartDelay = 3f;
     [SerializeField] private GameSettings _gameSettings;
     //public enum Difficulty { easy = 2000, medium = 3000, hard = 4000 }
 
@@ -62,10 +61,12 @@ public class GameManager : MonoBehaviour
 
     public void Resume()
     {
+        //TODO Das in LevelUIManager verschieben. Umgeht Probleme mit Referenz. Pause wird über SO geregelt. 
         levelUIManager.HidePauseMenuUI();
         Time.timeScale = 1f;
         _gameSettings.GameIsPaused = false;
     }
+
 
     public void CompleteLevel()
     {
