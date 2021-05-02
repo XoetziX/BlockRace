@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
         {
             levelUIManager.StartCountdown(); //at the end of the countdown -> _gameSettings.GameIsPaused = false;
             _gameSettings.NewLevelLoaded = false;
+
         }
 
         if (_gameSettings.GameIsPaused)
@@ -63,7 +64,6 @@ public class GameManager : MonoBehaviour
 
     public void Resume()
     {
-        //TODO Das in LevelUIManager verschieben. Umgeht Probleme mit Referenz. Pause wird über SO geregelt. 
         levelUIManager.HidePauseMenuUI();
         Time.timeScale = 1f;
         _gameSettings.GameIsPaused = false;
@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
 
     public void NextLevel()
     {
+        _gameSettings.NewLevelLoaded = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 

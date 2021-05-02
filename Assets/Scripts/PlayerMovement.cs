@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,10 +25,12 @@ public class PlayerMovement : MonoBehaviour
         // save the horizontal center of the screen in order to determine the left and right touch control
         screenCenterX = Screen.width * 0.5f;
         _currentForwardForce = GetCurrentForwardForce();
+        //Debug.Log("_currentForwardForce: " + _currentForwardForce);
         _currentSidewaysForce = GetCurrentSidewayForce();
     }
     private float GetCurrentForwardForce()
     {
+        Debug.Log("gameSettings.ChoosenDifficulty: " + gameSettings.ChoosenDifficulty);
         return (int)gameSettings.ChoosenDifficulty;
     }
     public float GetCurrentSidewayForce()
@@ -38,11 +41,25 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        DoForwardMovement();
         DoKeyBoardMovement();
-        DoTouchMovementTODOSinnvollInEineMovementMethodeIntegrieren();
+        DoTouchMovement();
         CalculatePowerUps();
         CheckGameOver();
 
+    }
+
+    private void DoForwardMovement()
+    {
+        Debug.Log("_currentForwardForce: " + _currentForwardForce);
+        //move forward, if applicable with boost
+        rigidBody.AddForce(0, 0, (_currentForwardForce + powerupForwardForce) * Time.deltaTime);
+        //set powerupForwardForce to 0 again, after it was considered
+        if (powerupForwardForce != 0f)
+        {
+            //Debug.Log("BOOST#############" + boostForwardForce.ToString());
+            powerupForwardForce = 0f;
+        }
     }
 
     private void CheckGameOver()
@@ -57,15 +74,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void DoKeyBoardMovement()
     {
-        //move forward, if applicable with boost
-        rigidBody.AddForce(0, 0, (_currentForwardForce + powerupForwardForce) * Time.deltaTime);
-        //set powerupForwardForce to 0 again, after it was considered
-        if (powerupForwardForce != 0f)
-        {
-            //Debug.Log("BOOST#############" + boostForwardForce.ToString());
-            powerupForwardForce = 0f;
-        }
-
         //left/right movement
         if (Input.GetButton("Right")) 
         {
@@ -77,22 +85,18 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void DoTouchMovementTODOSinnvollInEineMovementMethodeIntegrieren()
+    private void DoTouchMovement()
     {
         // if there are any touches currently
         if (Input.touchCount > 0)
         {
-            // get the first one
-            Touch firstTouch = Input.GetTouch(0);
+            Touch touch = Input.GetTouch(0);
 
-
-            // if the touch position is to the right of center
-            if (firstTouch.position.x > screenCenterX)
+            if (touch.position.x > screenCenterX) // if the touch position is to the right of center
             {
                 rigidBody.AddForce(_currentSidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
-            }
-            // if the touch position is to the left of center
-            else if (firstTouch.position.x < screenCenterX)
+            }            
+            else if (touch.position.x < screenCenterX) // if the touch position is to the left of center
             {
                 rigidBody.AddForce(-_currentSidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
             }
@@ -112,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void setBoostForward(float percantageOfBaseForwardForce)
+    public void SetBoostForward(float percantageOfBaseForwardForce)
     {
         powerupForwardForce = _playerDataFix.BaseForwardForce * percantageOfBaseForwardForce;
     }
@@ -121,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
     {
         powerupBigger = true;
     }*/
-    public void setBoostBigger() => powerupBigger = true;
+    public void SetBoostBigger() => powerupBigger = true;
 
     private void MakeMeNormalAgain()
     {

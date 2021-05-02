@@ -28,12 +28,12 @@ public class PlayerCollision : MonoBehaviour
             else if (collision.collider.tag == "SpeedUp")
             {
                 collision.gameObject.SetActive(false);
-                player.setBoostForward(100f);
+                player.SetBoostForward(100f);
             }
             else if (collision.collider.tag == "Bigger")
             {
                 collision.gameObject.SetActive(false);
-                player.setBoostBigger();
+                player.SetBoostBigger();
             }
         }
 

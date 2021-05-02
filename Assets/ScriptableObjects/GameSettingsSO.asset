@@ -15,4 +15,4 @@ MonoBehaviour:
   newLevelLoaded: 1
   gameHasEnded: 0
   gameIsPaused: 0
-  _choosenDifficulty: 4000
+  _choosenDifficulty: 3000

@@ -17,10 +17,12 @@ public class GameSettings : ScriptableObject
     public bool GameIsPaused { get; set; }
     public Difficulty ChoosenDifficulty { get; set; }
 
-    //private void OnEnable()
-    //{
-    //    //Reset values if not want to use the stored ones from previous play
-    //}
+    private void OnEnable()
+    {
+        Debug.Log("_choosenDifficulty: " + _choosenDifficulty);
+        _choosenDifficulty = Difficulty.medium;
+        //Reset values if not want to use the stored ones from previous play
+    }
 
 
 
