@@ -8,10 +8,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameSettings _gameSettings;
     //public enum Difficulty { easy = 2000, medium = 3000, hard = 4000 }
 
-    public LevelUIManager levelUIManager;
+    private LevelUIManager levelUIManager;
 
     private void Start()
     {
+        levelUIManager = FindObjectOfType<LevelUIManager>();
+
         //reset values in SO
         _gameSettings.GameHasEnded = false;
         _gameSettings.GameIsPaused = false;
