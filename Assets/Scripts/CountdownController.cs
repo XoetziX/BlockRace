@@ -24,7 +24,7 @@ public class CountdownController : MonoBehaviour
             countdownTime--;
         }
         countdownText.text = "GO!";
-        gameSettings.GameIsPaused = false;
+        gameSettings.ResumeGame = true;
         yield return new WaitForSecondsRealtime(0.5f);
         countdownText.gameObject.SetActive(false);
     }

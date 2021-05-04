@@ -5,24 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameSettings _gameSettings;
-    //public enum Difficulty { easy = 2000, medium = 3000, hard = 4000 }
+    [SerializeField] private GameSettings gameSettings;
 
     private LevelUIManager levelUIManager;
 
     private void Start()
     {
+        //ONLY FOR TEST IN ORDER TO START WITHOUT START MENU
+        gameSettings.NewLevelLoaded = true;
+
         levelUIManager = FindObjectOfType<LevelUIManager>();
 
         //reset values in SO
-        _gameSettings.GameHasEnded = false;
-        _gameSettings.GameIsPaused = false;
+        gameSettings.GameHasEnded = false;
+        gameSettings.PauseGame = false;
 
-        //ONLY FOR TEST IN ORDER TO START WITHOUT START MENU
-        _gameSettings.NewLevelLoaded = true;
-        if (_gameSettings.NewLevelLoaded)
+        if (gameSettings.NewLevelLoaded)
         {
-            _gameSettings.GameIsPaused = true;
+            gameSettings.PauseGame = true; //could call PauseGameTime() directly
         }
     }
     // Update is called once per frame
@@ -30,23 +30,24 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (_gameSettings.GameIsPaused){Resume();}
+            if (gameSettings.PauseGame){Resume();}
             else{PauseGameTime(); ShowPauseUI(); }
         }
 
-        if (_gameSettings.NewLevelLoaded)
+        if (gameSettings.NewLevelLoaded)
         {
             levelUIManager.StartCountdown(); //at the end of the countdown -> _gameSettings.GameIsPaused = false;
-            _gameSettings.NewLevelLoaded = false;
+            gameSettings.NewLevelLoaded = false;
 
         }
 
-        if (_gameSettings.GameIsPaused)
+        //used from outside GameManager in order to avoid reference to GameManager
+        if (gameSettings.PauseGame)
         {
             PauseGameTime();
         }
-        else
-        {
+        else if (gameSettings.ResumeGame) //e. g. used by CountDownController
+        {            
             Resume();
         }
 
@@ -55,7 +56,8 @@ public class GameManager : MonoBehaviour
     public void PauseGameTime()
     {
         Time.timeScale = 0f;
-        _gameSettings.GameIsPaused = true;
+        gameSettings.PauseGame = false;
+        levelUIManager.StopStopWatch();
     }
     public void ShowPauseUI()
     {
@@ -65,8 +67,9 @@ public class GameManager : MonoBehaviour
     public void Resume()
     {
         levelUIManager.HidePauseMenuUI();
+        levelUIManager.StartStopWatch();
         Time.timeScale = 1f;
-        _gameSettings.GameIsPaused = false;
+        gameSettings.ResumeGame = false;
     }
 
 
@@ -74,15 +77,17 @@ public class GameManager : MonoBehaviour
     {
         levelUIManager.SetGameOver();
         levelUIManager.ShowLevelCompleteUI();
+        levelUIManager.StopStopWatch();
     }
 
     public void GameOver()
     {
-        if (_gameSettings.GameHasEnded == false)
+        if (gameSettings.GameHasEnded == false)
         {
-            _gameSettings.GameHasEnded = true;
+            gameSettings.GameHasEnded = true;
             levelUIManager.SetGameOver();
             levelUIManager.ShowGameOverUI();
+            levelUIManager.StopStopWatch();
             Debug.Log("Game Over");
 
         }
@@ -90,12 +95,13 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
+        gameSettings.NewLevelLoaded = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void NextLevel()
     {
-        _gameSettings.NewLevelLoaded = true;
+        gameSettings.NewLevelLoaded = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 

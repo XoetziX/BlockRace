@@ -28,6 +28,7 @@ public class PlayerCollision : MonoBehaviour
             else if (collision.collider.tag == "SpeedUp")
             {
                 collision.gameObject.SetActive(false);
+                //TODO: Boost value -> new boost SO
                 player.SetBoostForward(100f);
             }
             else if (collision.collider.tag == "Bigger")

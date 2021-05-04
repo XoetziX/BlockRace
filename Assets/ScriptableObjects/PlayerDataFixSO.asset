@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3df628daf2f3e74dbd56d2164f04523, type: 3}
   m_Name: PlayerDataFixSO
   m_EditorClassIdentifier: 
-  _baseForwardForce: 3000
   _baseSidewayForce: 50

@@ -43,5 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 032992f0b7e952242bdd814ada07ab41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameSettings: {fileID: 11400000, guid: aaeeda0eecdeec04badc44c0fbf19012, type: 2}
-  levelUIManager: {fileID: 0}
+  gameSettings: {fileID: 11400000, guid: aaeeda0eecdeec04badc44c0fbf19012, type: 2}

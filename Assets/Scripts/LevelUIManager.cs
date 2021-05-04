@@ -11,6 +11,7 @@ public class LevelUIManager : MonoBehaviour
     private Transform playerTransform;
     private Rigidbody playerRigidbody;
     private LevelInfo _levelInfo;
+    [SerializeField] private Stopwatch stopWatch;
     [SerializeField] private CountdownController countdownController;
     [SerializeField] private GameObject completeLevelUI;
     [SerializeField] private GameObject gameOverUI;
@@ -48,12 +49,22 @@ public class LevelUIManager : MonoBehaviour
         //show speed - * 3,6 for km/h - Project = only consider forward Vector
         Vector3 forwardVelocity = Vector3.Project(playerRigidbody.velocity, playerTransform.forward);
         float forwardSpeed = forwardVelocity.magnitude * 3.6f;
-        txt_ForwardSpeed.text = "Forward Speed: " + forwardSpeed.ToString("0");
+        txt_ForwardSpeed.text = "Forward Speed: " + forwardSpeed.ToString("0") + " km/h";
     }
+    
     public void StartCountdown()
     {
         countdownController.StartLevelCountdown();
     }
+    public void StartStopWatch()
+    {
+        stopWatch.StartStopwatch();
+    }
+    public void StopStopWatch()
+    {
+        stopWatch.StopStopwatch();
+    }
+
     internal void ShowPauseMenuUI()
     {
         pauseMenuUI.SetActive(true);
