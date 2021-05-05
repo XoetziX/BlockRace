@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class LevelUIManager : MonoBehaviour
 {
+    [SerializeField] private GameSettings gameSettings;
+
     private Transform playerTransform;
     private Rigidbody playerRigidbody;
     private LevelInfo _levelInfo;
@@ -92,5 +94,9 @@ public class LevelUIManager : MonoBehaviour
     public void SetGameOver()
     {
         gameOver = true;
+    }
+    public void QuitGame()
+    {
+        gameSettings.QuitGame = true;
     }
 }

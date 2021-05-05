@@ -47,8 +47,13 @@ public class GameManager : MonoBehaviour
             PauseGameTime();
         }
         else if (gameSettings.ResumeGame) //e. g. used by CountDownController
-        {            
+        {
             Resume();
+        }
+
+        if (gameSettings.QuitGame)
+        {
+            QuitGame();
         }
 
     }
@@ -105,4 +110,10 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
+    public void QuitGame()
+    {
+        gameSettings.QuitGame = false;
+        Debug.Log("Quit Game");
+        Application.Quit();
+    }
 }

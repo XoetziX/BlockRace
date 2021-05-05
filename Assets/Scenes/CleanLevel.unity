@@ -660,42 +660,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1703716110, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
+      propertyPath: m_Name
+      value: bt_quitGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 4149556544485114657, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4149556544626787829, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 789461004}
-    - target: {fileID: 4304875033205894368, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: 8d28599a99b8cb8408b88886c4584f04, type: 3}
-    - target: {fileID: 4304875033205894368, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
-      propertyPath: m_FontData.m_FontSize
-      value: 29
-      objectReference: {fileID: 0}
-    - target: {fileID: 4304875033205894368, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
-      propertyPath: m_FontData.m_Alignment
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4304875033205894373, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4304875033205894374, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 340.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4304875033205894374, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 59.8024
-      objectReference: {fileID: 0}
-    - target: {fileID: 4304875033205894374, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -777.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4304875033205894374, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 453.94815
-      objectReference: {fileID: 0}
     - target: {fileID: 6985693113496225452, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
       propertyPath: m_RootOrder
       value: 1

@@ -5,10 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class Credits : MonoBehaviour
 {
+    [SerializeField] private GameSettings gameSettings;
     public void Quit()
     {
-        Debug.Log("Quit");
-        Application.Quit();
+        gameSettings.QuitGame = true;
     }
     public void GoToMainMenu()
     {

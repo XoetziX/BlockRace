@@ -10,6 +10,7 @@ public class GameSettings : ScriptableObject
     [SerializeField] private bool gameHasEnded;
     [SerializeField] private bool pauseGame; 
     [SerializeField] private bool resumeGame; 
+    [SerializeField] private bool quitGame; 
     [SerializeField] private Difficulty choosenDifficulty;
     public enum Difficulty { easy = 2000, medium = 3000, hard = 4000 }
 
@@ -32,6 +33,11 @@ public class GameSettings : ScriptableObject
     {
         get => resumeGame;
         set => resumeGame = value;
+    }
+    public bool QuitGame
+    {
+        get => quitGame;
+        set => quitGame = value;
     }
     public Difficulty ChoosenDifficulty
     {

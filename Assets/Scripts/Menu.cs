@@ -10,7 +10,10 @@ public class Menu : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
-
+    public void QuitGame()
+    {
+        gameSettings.QuitGame = true;
+    }
     public void SetDifficultyEasy()
     {
         gameSettings.ChoosenDifficulty = GameSettings.Difficulty.easy;
