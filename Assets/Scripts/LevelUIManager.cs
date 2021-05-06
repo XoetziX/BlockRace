@@ -9,12 +9,16 @@ using UnityEngine.UI;
 public class LevelUIManager : MonoBehaviour
 {
     [SerializeField] private GameSettings gameSettings;
+    [SerializeField] private PlayerDataVar playerDataVar;
 
     private Transform playerTransform;
     private Rigidbody playerRigidbody;
     private LevelInfo _levelInfo;
     [SerializeField] private Stopwatch stopWatch;
     [SerializeField] private CountdownController countdownController;
+    [SerializeField] private HighscoreController highscoreController;
+
+    //UI objects
     [SerializeField] private GameObject completeLevelUI;
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject pauseMenuUI;
@@ -65,6 +69,11 @@ public class LevelUIManager : MonoBehaviour
     public void StopStopWatch()
     {
         stopWatch.StopStopwatch();
+    }
+
+    internal void AddHighscore()
+    {
+       highscoreController.AddHighScore(playerDataVar.PlayerName, stopWatch.Timer);
     }
 
     internal void ShowPauseMenuUI()

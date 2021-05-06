@@ -52,4 +52,9 @@ public class Stopwatch : MonoBehaviour
         timer = 0;
         txt_stopWatch.text = "0:00 min";
     }
+
+    public float Timer
+    {
+        get => timer;
+    }
 }

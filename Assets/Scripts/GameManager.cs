@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
         levelUIManager.SetGameOver();
         levelUIManager.ShowLevelCompleteUI();
         levelUIManager.StopStopWatch();
+        levelUIManager.AddHighscore();
     }
 
     public void GameOver()
