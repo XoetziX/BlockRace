@@ -12,6 +12,7 @@ public class Stopwatch : MonoBehaviour
     [SerializeField] Text txt_stopWatch;
     bool doCalculation;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,12 +32,21 @@ public class Stopwatch : MonoBehaviour
     void StopWatchCalculation()
     {
         timer += Time.deltaTime;
-        msec = (int)((timer - (int)timer) * 100);
+        //example: timer = 1.3375 | int(timer) = 1 | (int)((timer - (int)timer) * 1000) = 337
+        msec = (int)((timer - (int)timer) * 1000);
         sec = (int)(timer % 60);
         min = (int)(timer / 60 % 60);
 
-        //txt_stopWatch.text = min.ToString("0") + ":" + msec.ToString("00") + " min";
         txt_stopWatch.text = string.Format("{0:00}:{1:00}:{2:00}", min, sec, msec);
+    }
+
+    public static string GimmeTimeFormat(float time)
+    {
+        float tmpMsec = (int)((time - (int)time) * 1000);
+        float tmpSec = (int)(time % 60);
+        float tmpMin = (int)(time / 60 % 60);
+
+        return string.Format("{0:00}:{1:00}:{2:00}", tmpMin, tmpSec, tmpMsec);
     }
 
     public void StartStopwatch()

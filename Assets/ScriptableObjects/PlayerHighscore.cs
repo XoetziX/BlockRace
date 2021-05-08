@@ -4,13 +4,15 @@ public class PlayerHighscore
 {
     private string playerName;
     private float time;
-    private DateTime dateTimeHSreached;
+    private string timeFormatted;
+    private DateTime dateTimeHSWasReached;
 
     public PlayerHighscore(string playerName, float time)
     {
         this.playerName = playerName;
         this.time = time;
-        dateTimeHSreached = System.DateTime.Now;
+        this.timeFormatted = Stopwatch.GimmeTimeFormat(time);
+        dateTimeHSWasReached = System.DateTime.Now;
     }
 
     public string PlayerName
@@ -22,13 +24,21 @@ public class PlayerHighscore
     public float Time
     {
         get => time;
-        set => time = value;
+        set
+        {
+            time = value;
+            timeFormatted = Stopwatch.GimmeTimeFormat(time);
+        }
+    }
+    public string TimeFormatted
+    {
+        get => timeFormatted;
     }
 
     public DateTime DateTimeHSreached
     {
-        get => dateTimeHSreached;
-        set => dateTimeHSreached = value;
+        get => dateTimeHSWasReached;
+        set => dateTimeHSWasReached = value;
     }
 
 }
