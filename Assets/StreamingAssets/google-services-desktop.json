@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "405450486383",
+    "project_id": "blockracemanager",
+    "storage_bucket": "blockracemanager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:405450486383:android:8f2159777c93efdf72d39a",
+        "android_client_info": {
+          "package_name": "de.indiegames.oetzi.blockracemanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "405450486383-jj40vh24rtpv5gv9pfdeipd9es58k4hi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIFUpfaWRlJw1lvIB5UZF8_-p6SNMj61Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "405450486383-jj40vh24rtpv5gv9pfdeipd9es58k4hi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

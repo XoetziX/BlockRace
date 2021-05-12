@@ -1,17 +1,20 @@
-﻿using System.Collections;
 using UnityEngine;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
 using TMPro;
 using System.Linq;
+using System.Collections;
 
 public class FirebaseManager : MonoBehaviour
 {
+    public static FirebaseManager instance;
+    [SerializeField] private PlayerDataVar playerDataVar;
+
     //Firebase variables
     [Header("Firebase")]
     public DependencyStatus dependencyStatus;
-    public FirebaseAuth fbAuth;    
+    public FirebaseAuth fbAuth;
     public FirebaseUser fbUser;
     public DatabaseReference DBreference;
 
@@ -31,13 +34,14 @@ public class FirebaseManager : MonoBehaviour
     public TMP_Text warningRegisterText;
 
     //User Data variables
-    [Header("UserData")]
-    public TMP_InputField usernameField;
-    public TMP_InputField xpField;
-    public TMP_InputField killsField;
-    public TMP_InputField deathsField;
-    public GameObject scoreElement;
-    public Transform scoreboardContent;
+    //[Header("UserData")]
+
+    //public TMP_InputField usernameField;
+    //public TMP_InputField xpField;
+    //public TMP_InputField killsField;
+    //public TMP_InputField deathsField;
+    //public GameObject scoreElement;
+    //public Transform scoreboardContent;
 
     void Awake()
     {
@@ -55,6 +59,16 @@ public class FirebaseManager : MonoBehaviour
                 Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
             }
         });
+
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != null)
+        {
+            Debug.Log("Instance already exists, destroying object!");
+            Destroy(this);
+        }
     }
 
     private void InitializeFirebase()
@@ -95,25 +109,25 @@ public class FirebaseManager : MonoBehaviour
     public void SignOutButton()
     {
         fbAuth.SignOut();
-        UIManager.instance.LoginScreen();
+        MainMenuUIManager.instance.ShowLoginScreen();
         ClearRegisterFields();
         ClearLoginFields();
     }
     //Function for the save button
-    public void SaveDataButton()
-    {
-        StartCoroutine(UpdateUsernameAuth(usernameField.text));
-        StartCoroutine(UpdateUsernameDatabase(usernameField.text));
+    //public void SaveDataButton()
+    //{
+    //    StartCoroutine(UpdateUsernameAuth(usernameField.text));
+    //    StartCoroutine(UpdateUsernameDatabase(usernameField.text));
 
-        StartCoroutine(UpdateXp(int.Parse(xpField.text)));
-        StartCoroutine(UpdateKills(int.Parse(killsField.text)));
-        StartCoroutine(UpdateDeaths(int.Parse(deathsField.text)));
-    }
+    //    StartCoroutine(UpdateXp(int.Parse(xpField.text)));
+    //    StartCoroutine(UpdateKills(int.Parse(killsField.text)));
+    //    StartCoroutine(UpdateDeaths(int.Parse(deathsField.text)));
+    //}
     //Function for the scoreboard button
-    public void ScoreboardButton()
-    {        
-        StartCoroutine(LoadScoreboardData());
-    }
+    //public void ScoreboardButton()
+    //{
+    //    StartCoroutine(LoadScoreboardData());
+    //}
 
     private IEnumerator Login(string _email, string _password)
     {
@@ -162,8 +176,8 @@ public class FirebaseManager : MonoBehaviour
 
             yield return new WaitForSeconds(2);
 
-            usernameField.text = fbUser.DisplayName;
-            UIManager.instance.UserDataScreen(); // Change to user data UI
+            playerDataVar.name = fbUser.DisplayName;
+            MainMenuUIManager.instance.ShowStartScreen(); // Change to start UI
             confirmLoginText.text = "";
             ClearLoginFields();
             ClearRegisterFields();
@@ -177,12 +191,12 @@ public class FirebaseManager : MonoBehaviour
             //If the username field is blank show a warning
             warningRegisterText.text = "Missing Username";
         }
-        else if(passwordRegisterField.text != passwordRegisterVerifyField.text)
+        else if (passwordRegisterField.text != passwordRegisterVerifyField.text)
         {
             //If the password does not match show a warning
             warningRegisterText.text = "Password Does Not Match!";
         }
-        else 
+        else
         {
             //Call the Firebase auth signin function passing the email and password
             var RegisterTask = fbAuth.CreateUserWithEmailAndPasswordAsync(_email, _password);
@@ -223,7 +237,7 @@ public class FirebaseManager : MonoBehaviour
                 if (fbUser != null)
                 {
                     //Create a user profile and set the username
-                    UserProfile profile = new UserProfile{DisplayName = _username};
+                    UserProfile profile = new UserProfile { DisplayName = _username };
 
                     //Call the Firebase auth update user profile function passing the profile with the username
                     var ProfileTask = fbUser.UpdateUserProfileAsync(profile);
@@ -240,7 +254,7 @@ public class FirebaseManager : MonoBehaviour
                     {
                         //Username is now set
                         //Now return to login screen
-                        UIManager.instance.LoginScreen();                        
+                        MainMenuUIManager.instance.ShowLoginScreen();
                         warningRegisterText.text = "";
                         ClearRegisterFields();
                         ClearLoginFields();
@@ -267,7 +281,7 @@ public class FirebaseManager : MonoBehaviour
         else
         {
             //Auth username is now updated
-        }        
+        }
     }
 
     private IEnumerator UpdateUsernameDatabase(string _username)
@@ -352,18 +366,18 @@ public class FirebaseManager : MonoBehaviour
         else if (DBTask.Result.Value == null)
         {
             //No data exists yet
-            xpField.text = "0";
-            killsField.text = "0";
-            deathsField.text = "0";
+            //xpField.text = "0";
+            //killsField.text = "0";
+            //deathsField.text = "0";
         }
         else
         {
             //Data has been retrieved
             DataSnapshot snapshot = DBTask.Result;
 
-            xpField.text = snapshot.Child("xp").Value.ToString();
-            killsField.text = snapshot.Child("kills").Value.ToString();
-            deathsField.text = snapshot.Child("deaths").Value.ToString();
+            //xpField.text = snapshot.Child("xp").Value.ToString();
+            //killsField.text = snapshot.Child("kills").Value.ToString();
+            //deathsField.text = snapshot.Child("deaths").Value.ToString();
         }
     }
 
@@ -380,30 +394,30 @@ public class FirebaseManager : MonoBehaviour
         }
         else
         {
-            //Data has been retrieved
-            DataSnapshot snapshot = DBTask.Result;
+            ////Data has been retrieved
+            //DataSnapshot snapshot = DBTask.Result;
 
-            //Destroy any existing scoreboard elements
-            foreach (Transform child in scoreboardContent.transform)
-            {
-                Destroy(child.gameObject);
-            }
+            ////Destroy any existing scoreboard elements
+            //foreach (Transform child in scoreboardContent.transform)
+            //{
+            //    Destroy(child.gameObject);
+            //}
 
-            //Loop through every users UID
-            foreach (DataSnapshot childSnapshot in snapshot.Children.Reverse<DataSnapshot>())
-            {
-                string username = childSnapshot.Child("username").Value.ToString();
-                int kills = int.Parse(childSnapshot.Child("kills").Value.ToString());
-                int deaths = int.Parse(childSnapshot.Child("deaths").Value.ToString());
-                int xp = int.Parse(childSnapshot.Child("xp").Value.ToString());
+            ////Loop through every users UID
+            //foreach (DataSnapshot childSnapshot in snapshot.Children.Reverse<DataSnapshot>())
+            //{
+            //    string username = childSnapshot.Child("username").Value.ToString();
+            //    int kills = int.Parse(childSnapshot.Child("kills").Value.ToString());
+            //    int deaths = int.Parse(childSnapshot.Child("deaths").Value.ToString());
+            //    int xp = int.Parse(childSnapshot.Child("xp").Value.ToString());
 
-                //Instantiate new scoreboard elements
-                GameObject scoreboardElement = Instantiate(scoreElement, scoreboardContent);
-                scoreboardElement.GetComponent<ScoreElement>().NewScoreElement(username, kills, deaths, xp);
-            }
+            //    //Instantiate new scoreboard elements
+            //    GameObject scoreboardElement = Instantiate(scoreElement, scoreboardContent);
+            //    scoreboardElement.GetComponent<ScoreElement>().NewScoreElement(username, kills, deaths, xp);
+            //}
 
-            //Go to scoareboard screen
-            UIManager.instance.ScoreboardScreen();
+            ////Go to scoareboard screen
+            //UIManager.instance.ScoreboardScreen();
         }
     }
 }
