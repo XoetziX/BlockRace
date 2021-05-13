@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "405450486383",
+    "firebase_url": "https://blockracemanager-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "blockracemanager",
     "storage_bucket": "blockracemanager.appspot.com"
   },

@@ -5,6 +5,7 @@ using Firebase.Database;
 using TMPro;
 using System.Linq;
 using System.Collections;
+using System;
 
 public class FirebaseManager : MonoBehaviour
 {
@@ -17,21 +18,6 @@ public class FirebaseManager : MonoBehaviour
     public FirebaseAuth fbAuth;
     public FirebaseUser fbUser;
     public DatabaseReference DBreference;
-
-    //Login variables
-    [Header("Login")]
-    public TMP_InputField emailLoginField;
-    public TMP_InputField passwordLoginField;
-    public TMP_Text warningLoginText;
-    public TMP_Text confirmLoginText;
-
-    //Register variables
-    [Header("Register")]
-    public TMP_InputField usernameRegisterField;
-    public TMP_InputField emailRegisterField;
-    public TMP_InputField passwordRegisterField;
-    public TMP_InputField passwordRegisterVerifyField;
-    public TMP_Text warningRegisterText;
 
     //User Data variables
     //[Header("UserData")]
@@ -73,63 +59,27 @@ public class FirebaseManager : MonoBehaviour
 
     private void InitializeFirebase()
     {
-        Debug.Log("Setting up Firebase Auth");
         //Set the authentication instance object
         fbAuth = FirebaseAuth.DefaultInstance;
         DBreference = FirebaseDatabase.DefaultInstance.RootReference;
-        Debug.Log("DBreference: " + DBreference.ToString());
+        Debug.Log("Initializing Firebase Auth + DB");
 
     }
-    public void ClearLoginFields()
-    {
-        emailLoginField.text = "";
-        passwordLoginField.text = "";
-    }
-    public void ClearRegisterFields()
-    {
-        usernameRegisterField.text = "";
-        emailRegisterField.text = "";
-        passwordRegisterField.text = "";
-        passwordRegisterVerifyField.text = "";
-    }
 
-    //Function for the login button
-    public void LoginButton()
-    {
-        //Call the login coroutine passing the email and password
-        StartCoroutine(Login(emailLoginField.text, passwordLoginField.text));
-    }
-    //Function for the register button
-    public void RegisterButton()
-    {
-        //Call the register coroutine passing the email, password, and username
-        StartCoroutine(Register(emailRegisterField.text, passwordRegisterField.text, usernameRegisterField.text));
-    }
     //Function for the sign out button
-    public void SignOutButton()
+    public void SignOut()
     {
         fbAuth.SignOut();
-        MainMenuUIManager.instance.ShowLoginScreen();
-        ClearRegisterFields();
-        ClearLoginFields();
     }
-    //Function for the save button
+
+    ////Function for the save button
     //public void SaveDataButton()
     //{
     //    StartCoroutine(UpdateUsernameAuth(usernameField.text));
     //    StartCoroutine(UpdateUsernameDatabase(usernameField.text));
-
-    //    StartCoroutine(UpdateXp(int.Parse(xpField.text)));
-    //    StartCoroutine(UpdateKills(int.Parse(killsField.text)));
-    //    StartCoroutine(UpdateDeaths(int.Parse(deathsField.text)));
-    //}
-    //Function for the scoreboard button
-    //public void ScoreboardButton()
-    //{
-    //    StartCoroutine(LoadScoreboardData());
     //}
 
-    private IEnumerator Login(string _email, string _password)
+    public IEnumerator Login(string _email, string _password, Action<string> callbackText)
     {
         //Call the Firebase auth signin function passing the email and password
         var LoginTask = fbAuth.SignInWithEmailAndPasswordAsync(_email, _password);
@@ -162,7 +112,7 @@ public class FirebaseManager : MonoBehaviour
                     message = "Account does not exist";
                     break;
             }
-            warningLoginText.text = message;
+            callbackText(message);
         }
         else
         {
@@ -170,31 +120,60 @@ public class FirebaseManager : MonoBehaviour
             //Now get the result
             fbUser = LoginTask.Result;
             Debug.LogFormat("User signed in successfully: {0} ({1})", fbUser.DisplayName, fbUser.Email);
-            warningLoginText.text = "";
-            confirmLoginText.text = "Logged In";
-            StartCoroutine(LoadUserData());
+            callbackText("Logged In");
+            StartCoroutine(LoadPlayerData());
 
             yield return new WaitForSeconds(2);
 
             playerDataVar.name = fbUser.DisplayName;
             MainMenuUIManager.instance.ShowStartScreen(); // Change to start UI
-            confirmLoginText.text = "";
-            ClearLoginFields();
-            ClearRegisterFields();
         }
     }
 
-    private IEnumerator Register(string _email, string _password, string _username)
+    private IEnumerator LoadPlayerData()
+    {
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>> Load User Data and set PlayerDataVarSO
+        Debug.LogWarning("LoadUserData not implemented yet! ToDo: Load User Data and set PlayerDataVarSO");
+        //playerDataVar
+
+        //Get the currently logged in user data
+        var DBTask = DBreference.Child("users").Child(fbUser.UserId).GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.Result.Value == null)
+        {
+            //No data exists yet
+            //xpField.text = "0";
+            //killsField.text = "0";
+            //deathsField.text = "0";
+        }
+        else
+        {
+            //Data has been retrieved
+            DataSnapshot snapshot = DBTask.Result;
+
+            //xpField.text = snapshot.Child("xp").Value.ToString();
+            //killsField.text = snapshot.Child("kills").Value.ToString();
+            //deathsField.text = snapshot.Child("deaths").Value.ToString();
+        }
+    }
+
+    public IEnumerator Register(string _email, string _password, string _confirmPassword, string _username, Action<string> callbackWarningText)
     {
         if (_username == "")
         {
             //If the username field is blank show a warning
-            warningRegisterText.text = "Missing Username";
+            callbackWarningText("Missing Username");
         }
-        else if (passwordRegisterField.text != passwordRegisterVerifyField.text)
+        else if (_password != _confirmPassword)
         {
             //If the password does not match show a warning
-            warningRegisterText.text = "Password Does Not Match!";
+            callbackWarningText("Password Does Not Match!");
         }
         else
         {
@@ -226,7 +205,7 @@ public class FirebaseManager : MonoBehaviour
                         message = "Email Already In Use";
                         break;
                 }
-                warningRegisterText.text = message;
+                callbackWarningText(message);
             }
             else
             {
@@ -248,16 +227,14 @@ public class FirebaseManager : MonoBehaviour
                     {
                         //If there are errors handle them
                         Debug.LogWarning(message: $"Failed to register task with {ProfileTask.Exception}");
-                        warningRegisterText.text = "Username Set Failed!";
+                        callbackWarningText("Username Set Failed!");
                     }
                     else
                     {
                         //Username is now set
                         //Now return to login screen
                         MainMenuUIManager.instance.ShowLoginScreen();
-                        warningRegisterText.text = "";
-                        ClearRegisterFields();
-                        ClearLoginFields();
+                        callbackWarningText("");
                     }
                 }
             }
@@ -352,34 +329,6 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
-    private IEnumerator LoadUserData()
-    {
-        //Get the currently logged in user data
-        var DBTask = DBreference.Child("users").Child(fbUser.UserId).GetValueAsync();
-
-        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
-
-        if (DBTask.Exception != null)
-        {
-            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
-        }
-        else if (DBTask.Result.Value == null)
-        {
-            //No data exists yet
-            //xpField.text = "0";
-            //killsField.text = "0";
-            //deathsField.text = "0";
-        }
-        else
-        {
-            //Data has been retrieved
-            DataSnapshot snapshot = DBTask.Result;
-
-            //xpField.text = snapshot.Child("xp").Value.ToString();
-            //killsField.text = snapshot.Child("kills").Value.ToString();
-            //deathsField.text = snapshot.Child("deaths").Value.ToString();
-        }
-    }
 
     private IEnumerator LoadScoreboardData()
     {
