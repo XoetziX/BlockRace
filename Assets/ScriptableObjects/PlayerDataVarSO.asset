@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb187e8a44e363a41ac82af383fb76cd, type: 3}
-  m_Name: PlayerDataVarSO
+  m_Name: oetzi
   m_EditorClassIdentifier: 
   playerName: 

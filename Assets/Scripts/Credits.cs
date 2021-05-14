@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Credits : MonoBehaviour
 {
-    [SerializeField] private GameSettings gameSettings;
+    [SerializeField] private GameSettingsSO gameSettings;
     public void Quit()
     {
         gameSettings.QuitGame = true;

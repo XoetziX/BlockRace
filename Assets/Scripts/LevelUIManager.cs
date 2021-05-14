@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class LevelUIManager : MonoBehaviour
 {
-    [SerializeField] private GameSettings gameSettings;
+    [SerializeField] private GameSettingsSO gameSettings;
     [SerializeField] private PlayerDataVar playerDataVar;
 
     private Transform playerTransform;

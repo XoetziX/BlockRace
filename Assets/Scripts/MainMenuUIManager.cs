@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuUIManager : MonoBehaviour
 {
     public bool testModeActive;
     public static MainMenuUIManager instance;
+
+    [SerializeField] private GameSettingsSO gameSettings;
+    [SerializeField] private PlayerDataVar playerDataVar;
 
     //Login variables
     [Header("Login")]
@@ -78,14 +82,26 @@ public class MainMenuUIManager : MonoBehaviour
     {
         warningLoginText.text = ""; //if previous register failed
         //Call the login coroutine passing the email and password
-        StartCoroutine(FirebaseManager.instance.Login(emailLoginField.text, passwordLoginField.text, SetWarningLoginText));
+        StartCoroutine(FirebaseManager.instance.Login(emailLoginField.text, passwordLoginField.text, SetWarningLoginText, SetInfoLoginText));
     }
     private void SetWarningLoginText(string returnText)
     {
         string warningText = returnText;
         warningLoginText.text = warningText;
     }
+    private void SetInfoLoginText(string returnText)
+    {
+        confirmLoginText.text = returnText;
+    }
 
+    public void StartGameButton()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    public void QuitGameButton()
+    {
+        gameSettings.QuitGame = true;
+    }
     public void SignOutButton()
     {
         FirebaseManager.instance.SignOut();
@@ -131,4 +147,23 @@ public class MainMenuUIManager : MonoBehaviour
         passwordRegisterField.text = "";
         passwordRegisterVerifyField.text = "";
     }
+
+
+
+    public void SetDifficultyEasy(bool clicked)
+    {
+        if (clicked)
+            gameSettings.ChoosenDifficulty = GameSettingsSO.Difficulty.easy;
+    }
+    public void SetDifficultyMedium(bool clicked)
+    {
+        if (clicked)
+            gameSettings.ChoosenDifficulty = GameSettingsSO.Difficulty.medium;
+    }
+    public void SetDifficultyHard(bool clicked)
+    {
+        if (clicked)
+            gameSettings.ChoosenDifficulty = GameSettingsSO.Difficulty.hard;
+    }
+   
 }

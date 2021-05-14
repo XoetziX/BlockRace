@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManagerNoLevel : MonoBehaviour
 {
-    [SerializeField] private GameSettings gameSettings;
+    [SerializeField] private GameSettingsSO gameSettings;
 
     private void Start()
     {

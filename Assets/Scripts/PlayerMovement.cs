@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody rigidBody;
     [SerializeField] private PlayerDataFix playerDataFix;
     //[SerializeField] private PlayerDataVar _playerDataVar;
-    [SerializeField] private GameSettings gameSettings;
+    [SerializeField] private GameSettingsSO gameSettings;
 
     private float baseForwardForce;
     private float currentForwardForce; //can be improved with skills (later on)

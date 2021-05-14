@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New GameSettings", menuName = "Game Settings SO", order = 51)]
-public class GameSettings : ScriptableObject
+public class GameSettingsSO : ScriptableObject
 {
     [SerializeField] private bool newLevelLoaded;                       //set TRUE before loading a new level, in order to allow the game manager to show the countdown first
     [SerializeField] private bool gameHasEnded;

@@ -79,7 +79,7 @@ public class FirebaseManager : MonoBehaviour
     //    StartCoroutine(UpdateUsernameDatabase(usernameField.text));
     //}
 
-    public IEnumerator Login(string _email, string _password, Action<string> callbackText)
+    public IEnumerator Login(string _email, string _password, Action<string> callbackWarningText, Action<string> callbackInfoText)
     {
         //Call the Firebase auth signin function passing the email and password
         var LoginTask = fbAuth.SignInWithEmailAndPasswordAsync(_email, _password);
@@ -112,7 +112,7 @@ public class FirebaseManager : MonoBehaviour
                     message = "Account does not exist";
                     break;
             }
-            callbackText(message);
+            callbackWarningText(message);
         }
         else
         {
@@ -120,17 +120,18 @@ public class FirebaseManager : MonoBehaviour
             //Now get the result
             fbUser = LoginTask.Result;
             Debug.LogFormat("User signed in successfully: {0} ({1})", fbUser.DisplayName, fbUser.Email);
-            callbackText("Logged In");
-            StartCoroutine(LoadPlayerData());
-
-            yield return new WaitForSeconds(2);
+            callbackInfoText("Logged In");
 
             playerDataVar.name = fbUser.DisplayName;
+            StartCoroutine(LoadPlayerData());
+
+            yield return new WaitForSeconds(1);
+
             MainMenuUIManager.instance.ShowStartScreen(); // Change to start UI
         }
     }
 
-    private IEnumerator LoadPlayerData()
+    public IEnumerator LoadPlayerData()
     {
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>> Load User Data and set PlayerDataVarSO
         Debug.LogWarning("LoadUserData not implemented yet! ToDo: Load User Data and set PlayerDataVarSO");

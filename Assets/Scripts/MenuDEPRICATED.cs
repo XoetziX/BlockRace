@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Menu : MonoBehaviour
+public class MenuDEPRICATED : MonoBehaviour
 {
-    [SerializeField] private GameSettings gameSettings;
+    [SerializeField] private GameSettingsSO gameSettings;
     [SerializeField] private PlayerDataVar playerDataVar;
     [SerializeField] private GameObject inp_playerName;
 
@@ -27,14 +27,14 @@ public class Menu : MonoBehaviour
     }
     public void SetDifficultyEasy()
     {
-        gameSettings.ChoosenDifficulty = GameSettings.Difficulty.easy;
+        gameSettings.ChoosenDifficulty = GameSettingsSO.Difficulty.easy;
     }
     public void SetDifficultyMedium()
     {
-        gameSettings.ChoosenDifficulty = GameSettings.Difficulty.medium;
+        gameSettings.ChoosenDifficulty = GameSettingsSO.Difficulty.medium;
     }
     public void SetDifficultyHard()
     {
-        gameSettings.ChoosenDifficulty = GameSettings.Difficulty.hard;
+        gameSettings.ChoosenDifficulty = GameSettingsSO.Difficulty.hard;
     }
 }

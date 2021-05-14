@@ -7,7 +7,7 @@ public class CountdownController : MonoBehaviour
 {
     public int countdownTime;
     public Text countdownText;
-    public GameSettings gameSettings;
+    public GameSettingsSO gameSettings;
 
     public void StartLevelCountdown()
     {
