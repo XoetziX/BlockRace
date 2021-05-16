@@ -9,13 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84e7f8e11c36d844b9188844f3764933, type: 3}
-  m_Name: GameSettingsSO
+  m_Script: {fileID: 11500000, guid: 050238a42ee130144afd2aaaffbb4b50, type: 3}
+  m_Name: LevelInfoSO
   m_EditorClassIdentifier: 
-  newLevelLoaded: 0
-  gameHasEnded: 0
-  pauseGame: 0
-  resumeGame: 0
-  quitGame: 0
-  choosenDifficulty: 4000
-  maxNrOfHS: 3
+  levelName: 

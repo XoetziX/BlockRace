@@ -13,12 +13,13 @@ public class LevelUIManager : MonoBehaviour
 
     private Transform playerTransform;
     private Rigidbody playerRigidbody;
-    private LevelInfo _levelInfo;
+    [SerializeField] private LevelInfoSO levelInfo;
+
     [SerializeField] private Stopwatch stopWatch;
     [SerializeField] private CountdownController countdownController;
     [SerializeField] private HighscoreController highscoreController;
 
-    //UI objects
+    [Header("UI Objects")]
     [SerializeField] private GameObject completeLevelUI;
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject pauseMenuUI;
@@ -33,9 +34,10 @@ public class LevelUIManager : MonoBehaviour
     {
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         playerRigidbody = GameObject.Find("Player").GetComponent<Rigidbody>();
-        _levelInfo = GameObject.Find("LevelInfo").GetComponent<LevelInfo>();
-        
-        txt_LevelName.text = _levelInfo.LevelName;
+
+        //TODO add a cool way to extract the relevant infos from the scene/level name (e. g. replace "." with " ")
+        levelInfo.LevelName = SceneManager.GetActiveScene().name;
+        txt_LevelName.text = levelInfo.LevelName;
 
     }
 

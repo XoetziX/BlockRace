@@ -6,6 +6,7 @@ using TMPro;
 using System.Linq;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class FirebaseManagerGame : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class FirebaseManagerGame : MonoBehaviour
     //Firebase variables
     [Header("Firebase")]
     public DependencyStatus dependencyStatus;
-    public FirebaseUser fbUser;
+    //public FirebaseUser fbUser; // instead --> playerData.PlayerDBUserId
     public DatabaseReference DBreference;
 
     //User Data variables
@@ -44,7 +45,6 @@ public class FirebaseManagerGame : MonoBehaviour
                 Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
             }
         });
-
         if (instance == null)
         {
             instance = this;
@@ -58,8 +58,8 @@ public class FirebaseManagerGame : MonoBehaviour
 
     private void InitializeFirebase()
     {
+        Debug.Log(this.GetType().Name + " - Initializing DB");
         DBreference = FirebaseDatabase.DefaultInstance.RootReference;
-        Debug.Log("Initializing DB");
 
     }
 
@@ -70,7 +70,7 @@ public class FirebaseManagerGame : MonoBehaviour
         //playerDataVar
 
         //Get the currently logged in user data
-        var DBTask = DBreference.Child("users").Child(fbUser.UserId).GetValueAsync();
+        var DBTask = DBreference.Child("users").Child(playerData.PlayerDBUserId).GetValueAsync();
 
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
 
@@ -99,7 +99,7 @@ public class FirebaseManagerGame : MonoBehaviour
     public IEnumerator UpdateUsernameDatabase(string _username)
     {
         //Set the currently logged in user username in the database
-        var DBTask = DBreference.Child("users").Child(fbUser.UserId).Child("username").SetValueAsync(_username);
+        var DBTask = DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("username").SetValueAsync(_username);
 
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
 
@@ -113,10 +113,23 @@ public class FirebaseManagerGame : MonoBehaviour
         }
     }
 
+    internal void saveHighscores(List<PlayerHighscore> highscoresDB)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal List<PlayerHighscore> getHighscoresOfLevel(string levelName)
+    {
+        List<PlayerHighscore> tmpListe = new List<PlayerHighscore>();
+        tmpListe.Add(new PlayerHighscore("dummy1", 1.11f));
+        Debug.LogWarning("FireBaseGame - getHighscoresOfLevel DUMMY MODE");
+        return tmpListe;
+    }
+
     private IEnumerator UpdateXp(int _xp)
     {
         //Set the currently logged in user xp
-        var DBTask = DBreference.Child("users").Child(fbUser.UserId).Child("xp").SetValueAsync(_xp);
+        var DBTask = DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("xp").SetValueAsync(_xp);
 
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
 

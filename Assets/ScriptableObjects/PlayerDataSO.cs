@@ -8,6 +8,7 @@ public class PlayerDataSO : ScriptableObject
 {
     [Header("Variable Values")]
     [SerializeField] private string playerName;
+    [SerializeField] private string playerDBUserId;
 
     [Header("Fixed Values")]
     [SerializeField] private float _baseSidewayForce;
@@ -23,6 +24,11 @@ public class PlayerDataSO : ScriptableObject
         set => playerName = value;
     }
 
+    public string PlayerDBUserId
+    {
+        get => playerDBUserId;
+        set => playerDBUserId = value;
+    }
 
     public float BaseSidewayForce
     {

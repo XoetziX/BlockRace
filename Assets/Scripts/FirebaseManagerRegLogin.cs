@@ -114,6 +114,7 @@ public class FirebaseManagerRegLogin : MonoBehaviour
             callbackInfoText("Logged In");
 
             playerData.PlayerName = fbUser.DisplayName;
+            playerData.PlayerDBUserId = fbUser.UserId;
             StartCoroutine(FirebaseManagerGame.instance.LoadPlayerData());
 
             yield return new WaitForSeconds(1);

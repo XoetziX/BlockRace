@@ -583,17 +583,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8847019705524397143, guid: a79e7f0b284e4a2458af6982c7ce69f1, type: 3}
   m_PrefabInstance: {fileID: 24223742}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &475189354 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6985693113496225453, guid: 64ab5084686b37b4f9105c925741ba7b, type: 3}
-  m_PrefabInstance: {fileID: 6985693113155524295}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aea77a55cb6eb4647972eb8314747024, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &491204498 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8847019705524397143, guid: a79e7f0b284e4a2458af6982c7ce69f1, type: 3}
@@ -1656,10 +1645,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 3396950707163097385, guid: b1aa0240b7ab0e0449c59ba4474837dc, type: 3}
-      propertyPath: levelUIManager
-      value: 
-      objectReference: {fileID: 475189354}
     - target: {fileID: 3396950707163097390, guid: b1aa0240b7ab0e0449c59ba4474837dc, type: 3}
       propertyPath: m_RootOrder
       value: 0

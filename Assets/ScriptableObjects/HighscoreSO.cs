@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewHighscoreSO", menuName = "Highscore SO", order = 51)]
+[CreateAssetMenu(fileName = "NewHighscoreSO", menuName = "ScriptableObjects/Highscore SO", order = 51)]
 public class HighscoreSO : ScriptableObject
 {
     [SerializeField] private List<PlayerHighscore> highscores = new List<PlayerHighscore>();

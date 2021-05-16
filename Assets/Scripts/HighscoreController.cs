@@ -12,8 +12,9 @@ public class HighscoreController : MonoBehaviour
     [SerializeField] private Text lbl_newHS;
 
     [SerializeField] private HighscoreSO highscoresOfThisLevel;
-    [SerializeField] private List<PlayerHighscore> playerHSList;
-    [SerializeField] private LevelInfo levelInfo;
+    //[SerializeField] private List<PlayerHighscore> playerHSList;
+    [SerializeField] private List<PlayerHighscore> highscoresDB;
+    [SerializeField] private LevelInfoSO levelInfo;
 
     PlayerHighscore currentPlayerHighscore;
     private bool newTopHighscore;
@@ -22,14 +23,13 @@ public class HighscoreController : MonoBehaviour
 
     private void Start()
     {
-        levelInfo = GameObject.Find("LevelInfo").GetComponent<LevelInfo>();
-
+        
     }
 
     public void AddHighScore(string playerName, float time)
     {
         currentPlayerHighscore = new PlayerHighscore(playerName, time);
-        playerHSList = highscoresOfThisLevel.Highscores;
+        LoadHighscores();
         
         //reset values
         newTopHighscore = false; inTop10 = false; notInTop10 = false; 
@@ -41,36 +41,35 @@ public class HighscoreController : MonoBehaviour
             //ist neue zeit < als 1. zeit -> neue Nr 1 Highscore 
             //ist neue zeit > als maxNrOfHS -> kein Top 10 Platz erreicht
             //else neue zeit der liste hinzufügen, diese sortieren und letzte rauschmeißen
-        if (playerHSList.Count == 0)
+        if (highscoresDB.Count == 0)
         {
-            playerHSList.Add(currentPlayerHighscore);
+            highscoresDB.Add(currentPlayerHighscore);
             newTopHighscore = true;
         }
-        else if (playerHSList.Count < highscoresOfThisLevel.MaxNrOfHS)
+        else if (highscoresDB.Count < highscoresOfThisLevel.MaxNrOfHS)
         {
-            playerHSList.Sort(SortByTime);
+            highscoresDB.Sort(SortByTime);
             CheckIfNewTopScore(currentPlayerHighscore);
-            playerHSList.Add(currentPlayerHighscore);
+            highscoresDB.Add(currentPlayerHighscore);
         }
         else
         {
-            playerHSList.Sort(SortByTime);
+            highscoresDB.Sort(SortByTime);
             CheckIfNewTopScore(currentPlayerHighscore);
             CheckIfInTop10(currentPlayerHighscore);
-            playerHSList.RemoveAt(0);
-            playerHSList.Add(currentPlayerHighscore);
+            highscoresDB.RemoveAt(0);
+            highscoresDB.Add(currentPlayerHighscore);
         }
-        playerHSList.Sort(SortByTime);
+        highscoresDB.Sort(SortByTime);
 
-        //write back to SO
-        highscoresOfThisLevel.Highscores = playerHSList;
-        //highscoresOfThisLevel.printHS();
-        LoadAndShowHighScores();
+        
+        SaveHighscoresDB();
+        ShowHighScores();
     }
 
     private void CheckIfInTop10(PlayerHighscore ph)
     {
-        if (ph.Time < playerHSList[playerHSList.Count - 1].Time)
+        if (ph.Time < highscoresDB[highscoresDB.Count - 1].Time)
             inTop10 = true;
     }
 
@@ -78,30 +77,37 @@ public class HighscoreController : MonoBehaviour
     {
         //Debug.Log("TIME COMPARE: " + ph.Time + " < " + playerHSList[0].Time);
 
-        if (ph.Time < playerHSList[0].Time)
+        if (ph.Time < highscoresDB[0].Time)
         {
             newTopHighscore = true;
         }
     }
 
-    private void LoadAndShowHighScores()
+    private void LoadHighscores()
     {
-        List<PlayerHighscore> playerHighscores = highscoresOfThisLevel.Highscores;
-        PlayerHighscore tmpPH;
+        highscoresDB = FirebaseManagerGame.instance.getHighscoresOfLevel(levelInfo.LevelName);
+        Debug.Log("highscoresDB: " + highscoresDB + " count: " + highscoresDB.Count);
+    }
+    private void SaveHighscoresDB()
+    {
+        Debug.Log("SaveHighscoresDB - highscoresDB count: " + highscoresDB.Count);
+        //FirebaseManagerGame.instance.saveHighscores(highscoresDB);
+    }
 
+    private void ShowHighScores()
+    {
         txt_yourTime.text = currentPlayerHighscore.TimeFormatted;
         if (newTopHighscore)
             lbl_newHS.gameObject.SetActive(true);
+        else
+            lbl_newHS.gameObject.SetActive(false);
             
-
-        for (int i = 0; i < playerHighscores.Count; i++)
+        for (int i = 0; i < highscoresDB.Count; i++)
         {
-            tmpPH = playerHighscores[i];
-            txt_places_names[i].text = tmpPH.PlayerName;
-            txt_places_times[i].text = tmpPH.TimeFormatted;
+            txt_places_names[i].text = highscoresDB[i].PlayerName;
+            txt_places_times[i].text = highscoresDB[i].TimeFormatted;
         }
-
-         
+                 
     }
 
     private int SortByTime(PlayerHighscore p1, PlayerHighscore p2)
