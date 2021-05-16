@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewHighscoreSO", menuName = "Highscore SO", order = 51)]
 public class HighscoreSO : ScriptableObject
 {
-    private List<PlayerHighscore> highscores = new List<PlayerHighscore>();
+    [SerializeField] private List<PlayerHighscore> highscores = new List<PlayerHighscore>();
     [SerializeField] private int maxNrOfHS = 3;
 
     //public void Add(PlayerHighscore playerHS)

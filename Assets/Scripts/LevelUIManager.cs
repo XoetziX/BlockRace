@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class LevelUIManager : MonoBehaviour
 {
     [SerializeField] private GameSettingsSO gameSettings;
-    [SerializeField] private PlayerDataVar playerDataVar;
+    [SerializeField] private PlayerDataSO playerData;
 
     private Transform playerTransform;
     private Rigidbody playerRigidbody;
@@ -44,7 +44,7 @@ public class LevelUIManager : MonoBehaviour
     {
         if (!gameOver)
         {
-            txt_Distance.text = (playerTransform.position.z.ToString("0") + " m");
+            txt_Distance.text = ("Distanz: " + playerTransform.position.z.ToString("0") + " m");
         }
 
         ////show speed - * 3,6 for km/h
@@ -55,7 +55,7 @@ public class LevelUIManager : MonoBehaviour
         //show speed - * 3,6 for km/h - Project = only consider forward Vector
         Vector3 forwardVelocity = Vector3.Project(playerRigidbody.velocity, playerTransform.forward);
         float forwardSpeed = forwardVelocity.magnitude * 3.6f;
-        txt_ForwardSpeed.text = "Forward Speed: " + forwardSpeed.ToString("0") + " km/h";
+        txt_ForwardSpeed.text = "Geschwindigkeit: " + forwardSpeed.ToString("0") + " km/h";
     }
     
     public void StartCountdown()
@@ -73,7 +73,7 @@ public class LevelUIManager : MonoBehaviour
 
     internal void AddHighscore()
     {
-       highscoreController.AddHighScore(playerDataVar.PlayerName, stopWatch.Timer);
+       highscoreController.AddHighScore(playerData.PlayerName, stopWatch.Timer);
     }
 
     internal void ShowPauseMenuUI()

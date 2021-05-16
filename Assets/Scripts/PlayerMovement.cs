@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Rigidbody rigidBody;
-    [SerializeField] private PlayerDataFix playerDataFix;
+    [SerializeField] private PlayerDataSO playerData;
     //[SerializeField] private PlayerDataVar _playerDataVar;
     [SerializeField] private GameSettingsSO gameSettings;
 
@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public float GetCurrentSidewayForce()
     {
-        return playerDataFix.BaseSidewayForce;
+        return playerData.BaseSidewayForce;
     }
 
     // Update is called once per frame

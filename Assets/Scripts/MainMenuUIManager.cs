@@ -11,7 +11,7 @@ public class MainMenuUIManager : MonoBehaviour
     public static MainMenuUIManager instance;
 
     [SerializeField] private GameSettingsSO gameSettings;
-    [SerializeField] private PlayerDataVar playerDataVar;
+    [SerializeField] private PlayerDataSO playerData;
 
     //Login variables
     [Header("Login")]
@@ -27,6 +27,10 @@ public class MainMenuUIManager : MonoBehaviour
     [SerializeField] private TMP_InputField passwordRegisterField;
     [SerializeField] private TMP_InputField passwordRegisterVerifyField;
     [SerializeField] private TMP_Text warningRegisterText;
+
+    [Header("Start")]
+    [SerializeField] private TMP_Text usernameStartField;
+
 
     //Screen object variables
     [Header("Screen objects")]
@@ -64,7 +68,7 @@ public class MainMenuUIManager : MonoBehaviour
         //Lambda Expression = public void Transmission(string returnValue) { warningText = returnValue };
         //In the FirebaseManager - Register happens: Execute Transmission("I am a warning text")
         //-> this sets the warningText of (UIManager - RegisterButton) to the warningText of the (Firebase - Register) Method
-        StartCoroutine(FirebaseManager.instance.Register(emailRegisterField.text,
+        StartCoroutine(FirebaseManagerRegLogin.instance.Register(emailRegisterField.text,
                                                         passwordRegisterField.text,
                                                         passwordRegisterVerifyField.text,
                                                         usernameRegisterField.text,
@@ -82,7 +86,7 @@ public class MainMenuUIManager : MonoBehaviour
     {
         warningLoginText.text = ""; //if previous register failed
         //Call the login coroutine passing the email and password
-        StartCoroutine(FirebaseManager.instance.Login(emailLoginField.text, passwordLoginField.text, SetWarningLoginText, SetInfoLoginText));
+        StartCoroutine(FirebaseManagerRegLogin.instance.Login(emailLoginField.text, passwordLoginField.text, SetWarningLoginText, SetInfoLoginText));
     }
     private void SetWarningLoginText(string returnText)
     {
@@ -104,7 +108,7 @@ public class MainMenuUIManager : MonoBehaviour
     }
     public void SignOutButton()
     {
-        FirebaseManager.instance.SignOut();
+        FirebaseManagerRegLogin.instance.SignOut();
         ShowLoginScreen();
         ClearRegisterFields();
         ClearLoginFields();
@@ -133,12 +137,14 @@ public class MainMenuUIManager : MonoBehaviour
     {
         ClearScreen();
         startUI.SetActive(true);
+        usernameStartField.text = playerData.PlayerName;
     }
 
     public void ClearLoginFields()
     {
         emailLoginField.text = "";
         passwordLoginField.text = "";
+        warningLoginText.text = "";
     }
     public void ClearRegisterFields()
     {
@@ -146,6 +152,7 @@ public class MainMenuUIManager : MonoBehaviour
         emailRegisterField.text = "";
         passwordRegisterField.text = "";
         passwordRegisterVerifyField.text = "";
+        warningRegisterText.text = "";
     }
 
 
