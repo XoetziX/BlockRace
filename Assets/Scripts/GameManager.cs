@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (gameSettings.PauseGame){Resume();}
+            if (gameSettings.GameIsPaused){Resume();}
             else{PauseGameTime(); ShowPauseUI(); }
         }
 
@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
         gameSettings.PauseGame = false;
+        gameSettings.GameIsPaused = true;
         levelUIManager.StopStopWatch();
     }
     public void ShowPauseUI()
@@ -70,12 +71,13 @@ public class GameManager : MonoBehaviour
         levelUIManager.ShowPauseMenuUI();
     }
 
-    public void Resume()
+    private void Resume()
     {
         levelUIManager.HidePauseMenuUI();
         levelUIManager.StartStopWatch();
         Time.timeScale = 1f;
         gameSettings.ResumeGame = false;
+        gameSettings.GameIsPaused = false;
     }
 
 
@@ -112,7 +114,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    public void QuitGame()
+    private void QuitGame()
     {
         gameSettings.QuitGame = false;
         Debug.Log("Quit Game");

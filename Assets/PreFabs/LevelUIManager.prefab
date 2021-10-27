@@ -1362,8 +1362,8 @@ MonoBehaviour:
   - {fileID: 1531302641}
   txt_yourTime: {fileID: 275671765}
   lbl_newHS: {fileID: 6103479}
-  highscoresOfThisLevel: {fileID: 11400000, guid: dcd3d20bf1bd2f047bff896541fa58b0, type: 2}
   levelInfo: {fileID: 11400000, guid: 68463cffb641764458c9cf2e8a657adc, type: 2}
+  gameSettings: {fileID: 11400000, guid: aaeeda0eecdeec04badc44c0fbf19012, type: 2}
 --- !u!114 &496813755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2015,8 +2015,16 @@ PrefabInstance:
       value: 175
       objectReference: {fileID: 0}
     - target: {fileID: 6550736112140367789, guid: a304f1e869dc35d489acbcd335764b24, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6985693113496225453}
+    - target: {fileID: 6550736112140367789, guid: a304f1e869dc35d489acbcd335764b24, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResumeGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 6550736112140367789, guid: a304f1e869dc35d489acbcd335764b24, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GameManager, Assembly-CSharp
+      value: LevelUIManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6550736112283644281, guid: a304f1e869dc35d489acbcd335764b24, type: 3}
       propertyPath: m_IsActive

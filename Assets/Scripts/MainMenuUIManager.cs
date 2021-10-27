@@ -68,7 +68,7 @@ public class MainMenuUIManager : MonoBehaviour
         //Lambda Expression = public void Transmission(string returnValue) { warningText = returnValue };
         //In the FirebaseManager - Register happens: Execute Transmission("I am a warning text")
         //-> this sets the warningText of (UIManager - RegisterButton) to the warningText of the (Firebase - Register) Method
-        StartCoroutine(FirebaseManagerRegLogin.instance.Register(emailRegisterField.text,
+        StartCoroutine(FirebaseManagerAuth.instance.Register(emailRegisterField.text,
                                                         passwordRegisterField.text,
                                                         passwordRegisterVerifyField.text,
                                                         usernameRegisterField.text,
@@ -86,7 +86,7 @@ public class MainMenuUIManager : MonoBehaviour
     {
         warningLoginText.text = ""; //if previous register failed
         //Call the login coroutine passing the email and password
-        StartCoroutine(FirebaseManagerRegLogin.instance.Login(emailLoginField.text, passwordLoginField.text, SetWarningLoginText, SetInfoLoginText));
+        StartCoroutine(FirebaseManagerAuth.instance.Login(emailLoginField.text, passwordLoginField.text, SetWarningLoginText, SetInfoLoginText));
     }
     private void SetWarningLoginText(string returnText)
     {
@@ -108,10 +108,17 @@ public class MainMenuUIManager : MonoBehaviour
     }
     public void SignOutButton()
     {
-        FirebaseManagerRegLogin.instance.SignOut();
-        ShowLoginScreen();
+        Debug.Log("SignOutButton hit");
+        //FirebaseManagerRegLogin.instance.SignOut();
+        FirebaseManagerGame.instance.SavePlayerData();
+        //ShowLoginScreen();
         ClearRegisterFields();
         ClearLoginFields();
+    }
+
+    public void SignOutButton2()
+    {
+        
     }
 
 
@@ -160,17 +167,17 @@ public class MainMenuUIManager : MonoBehaviour
     public void SetDifficultyEasy(bool clicked)
     {
         if (clicked)
-            gameSettings.ChoosenDifficulty = GameSettingsSO.Difficulty.easy;
+            playerData.ChoosenDifficulty = PlayerDataSO.Difficulty.easy;
     }
     public void SetDifficultyMedium(bool clicked)
     {
         if (clicked)
-            gameSettings.ChoosenDifficulty = GameSettingsSO.Difficulty.medium;
+            playerData.ChoosenDifficulty = PlayerDataSO.Difficulty.medium;
     }
     public void SetDifficultyHard(bool clicked)
     {
         if (clicked)
-            gameSettings.ChoosenDifficulty = GameSettingsSO.Difficulty.hard;
+            playerData.ChoosenDifficulty = PlayerDataSO.Difficulty.hard;
     }
    
 }

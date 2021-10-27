@@ -25,13 +25,13 @@ public class PlayerMovement : MonoBehaviour
     {
         // save the horizontal center of the screen in order to determine the left and right touch control
         screenCenterX = Screen.width * 0.5f;
-        baseForwardForce = (int)gameSettings.ChoosenDifficulty;
+        baseForwardForce = (int)playerData.ChoosenDifficulty;
         currentForwardForce = GetCurrentForwardForce();
         currentSidewaysForce = GetCurrentSidewayForce();
     }
     private float GetCurrentForwardForce()
     {
-        return (int)gameSettings.ChoosenDifficulty;
+        return (int)playerData.ChoosenDifficulty;
     }
     public float GetCurrentSidewayForce()
     {

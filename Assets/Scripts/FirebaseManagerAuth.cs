@@ -7,9 +7,9 @@ using System.Linq;
 using System.Collections;
 using System;
 
-public class FirebaseManagerRegLogin : MonoBehaviour
+public class FirebaseManagerAuth : MonoBehaviour
 {
-    public static FirebaseManagerRegLogin instance;
+    public static FirebaseManagerAuth instance;
     [SerializeField] private PlayerDataSO playerData;
 
     //Firebase variables
@@ -40,6 +40,7 @@ public class FirebaseManagerRegLogin : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            Debug.Log("FirebaseManagerAuth - awake - instance was null");
         }
         else if (instance != null)
         {
@@ -48,13 +49,27 @@ public class FirebaseManagerRegLogin : MonoBehaviour
         }
     }
 
+    //private void InitializeFirebase()
+    //{
+    //    //Set the authentication instance object
+    //    fbAuth = FirebaseAuth.DefaultInstance;
+    //    //DBreference = FirebaseDatabase.DefaultInstance.RootReference;
+    //    Debug.Log("INIT FirebaseManagerAUTH + fbAuth: " + fbAuth.ToString());
+    //}
+
     private void InitializeFirebase()
     {
-        //Set the authentication instance object
-        fbAuth = FirebaseAuth.DefaultInstance;
-        //DBreference = FirebaseDatabase.DefaultInstance.RootReference;
-        Debug.Log("Initializing Firebase Auth + DB");
-
+        try
+        {
+            fbAuth = FirebaseAuth.DefaultInstance;
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Gotcha - AUTH! " + e.Message);
+            //throw e;
+        }
+        if (fbAuth == null)
+            Debug.Log("INIT FirebaseManagerAUTH + fbAuth = null");
     }
 
     //Function for the sign out button
@@ -115,7 +130,7 @@ public class FirebaseManagerRegLogin : MonoBehaviour
 
             playerData.PlayerName = fbUser.DisplayName;
             playerData.PlayerDBUserId = fbUser.UserId;
-            StartCoroutine(FirebaseManagerGame.instance.LoadPlayerData());
+            //StartCoroutine(FirebaseManagerGame.instance.LoadPlayerData());
 
             yield return new WaitForSeconds(1);
 

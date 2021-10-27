@@ -96,15 +96,19 @@ public class LevelUIManager : MonoBehaviour
         completeLevelUI.SetActive(true);
     }
 
-    public void GoToMainMenu()
-    {
-        //SceneManager.LoadScene(SceneManager.GetSceneByName("Menu").ToString());
-        SceneManager.LoadScene(0);
-    }
 
     public void SetGameOver()
     {
         gameOver = true;
+    }
+    public void ResumeGame()
+    {
+        gameSettings.ResumeGame = true;
+    }
+    public void GoToMainMenu()
+    {
+        //SceneManager.LoadScene(SceneManager.GetSceneByName("Menu").ToString());
+        SceneManager.LoadScene(0);
     }
     public void QuitGame()
     {

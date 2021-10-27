@@ -20,7 +20,7 @@ public class CountdownController : MonoBehaviour
         while (countdownTime > 0)
         {
             countdownText.text = countdownTime.ToString();
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return new WaitForSecondsRealtime(gameSettings.StartCountdownDelay);
             countdownTime--;
         }
         countdownText.text = "GO!";

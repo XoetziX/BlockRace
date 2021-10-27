@@ -7,27 +7,26 @@ using UnityEngine;
 public class GameSettingsSO : ScriptableObject
 {
 
-    [Header("Game stats")]
+    [Header("Game stats - var")]
     [SerializeField] private bool newLevelLoaded;                       //set TRUE before loading a new level, in order to allow the game manager to show the countdown first
     [SerializeField] private bool gameHasEnded;
-    [SerializeField] private bool pauseGame; 
+    [SerializeField] private bool pauseGame;
+    [SerializeField] private bool gameIsPaused;
     [SerializeField] private bool resumeGame; 
     [SerializeField] private bool quitGame;
+    [Header("Game stats - fix")]
+    [SerializeField] private float startCountdownDelay;
 
-    [Header("Player stats")]
-    [SerializeField] private Difficulty choosenDifficulty;
 
     [Header("Highscores")]
     [SerializeField] private int maxNrOfHS;
 
-    public enum Difficulty { easy = 2000, medium = 3000, hard = 4000 }
 
     private void OnEnable()
     {
-        //Debug.Log("_choosenDifficulty: " + choosenDifficulty);
-        choosenDifficulty = Difficulty.hard;
-        maxNrOfHS = 3;
         //Reset values if not want to use the stored ones from previous play
+        maxNrOfHS = 3;
+        startCountdownDelay = 0.1f;
     }
 
     public bool NewLevelLoaded
@@ -45,6 +44,11 @@ public class GameSettingsSO : ScriptableObject
         get => pauseGame;
         set => pauseGame = value;
     }
+    public bool GameIsPaused
+    {
+        get => gameIsPaused;
+        set => gameIsPaused = value;
+    }
     public bool ResumeGame
     {
         get => resumeGame;
@@ -55,15 +59,14 @@ public class GameSettingsSO : ScriptableObject
         get => quitGame;
         set => quitGame = value;
     }
-    public Difficulty ChoosenDifficulty
+    public float StartCountdownDelay
     {
-        get => choosenDifficulty;
-        set => choosenDifficulty = value;
+        get => startCountdownDelay;
     }
+   
     public int MaxNrOfHS
     {
         get => maxNrOfHS;
-        set => maxNrOfHS = value;
     }
 
 

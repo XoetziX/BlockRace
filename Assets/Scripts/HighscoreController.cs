@@ -11,10 +11,11 @@ public class HighscoreController : MonoBehaviour
     [SerializeField] private Text txt_yourTime;
     [SerializeField] private Text lbl_newHS;
 
-    [SerializeField] private HighscoreSO highscoresOfThisLevel;
+    //[SerializeField] private HighscoreSO highscoresOfThisLevel;
     //[SerializeField] private List<PlayerHighscore> playerHSList;
     [SerializeField] private List<PlayerHighscore> highscoresDB;
     [SerializeField] private LevelInfoSO levelInfo;
+    [SerializeField] private GameSettingsSO gameSettings;
 
     PlayerHighscore currentPlayerHighscore;
     private bool newTopHighscore;
@@ -46,7 +47,8 @@ public class HighscoreController : MonoBehaviour
             highscoresDB.Add(currentPlayerHighscore);
             newTopHighscore = true;
         }
-        else if (highscoresDB.Count < highscoresOfThisLevel.MaxNrOfHS)
+        //else if (highscoresDB.Count < highscoresOfThisLevel.MaxNrOfHS)
+        else if (highscoresDB.Count < gameSettings.MaxNrOfHS)
         {
             highscoresDB.Sort(SortByTime);
             CheckIfNewTopScore(currentPlayerHighscore);
@@ -86,12 +88,13 @@ public class HighscoreController : MonoBehaviour
     private void LoadHighscores()
     {
         highscoresDB = FirebaseManagerGame.instance.getHighscoresOfLevel(levelInfo.LevelName);
-        Debug.Log("highscoresDB: " + highscoresDB + " count: " + highscoresDB.Count);
+        Debug.Log("highscoresDB: " + highscoresDB);
+        Debug.Log(" count: " + highscoresDB.Count);
     }
     private void SaveHighscoresDB()
     {
         Debug.Log("SaveHighscoresDB - highscoresDB count: " + highscoresDB.Count);
-        //FirebaseManagerGame.instance.saveHighscores(highscoresDB);
+        FirebaseManagerGame.instance.SaveHighscores(highscoresDB, levelInfo.LevelName);
     }
 
     private void ShowHighScores()
