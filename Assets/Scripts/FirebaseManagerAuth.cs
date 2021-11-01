@@ -22,40 +22,20 @@ public class FirebaseManagerAuth : MonoBehaviour
 
     void Awake()
     {
-        //Check that all of the necessary dependencies for Firebase are present on the system
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
-        {
-            dependencyStatus = task.Result;
-            if (dependencyStatus == DependencyStatus.Available)
-            {
-                //If they are avalible Initialize Firebase
-                InitializeFirebase();
-            }
-            else
-            {
-                Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
-            }
-        });
+        InitializeFirebase();
 
         if (instance == null)
         {
             instance = this;
-            Debug.Log("FirebaseManagerAuth - awake - instance was null");
+            //Debug.Log("FirebaseManagerAuth - awake - instance was null ");
         }
         else if (instance != null)
         {
-            Debug.Log("Instance already exists, destroying object!");
+            //Debug.Log("Instance already exists, destroying object!");
             Destroy(this);
         }
     }
 
-    //private void InitializeFirebase()
-    //{
-    //    //Set the authentication instance object
-    //    fbAuth = FirebaseAuth.DefaultInstance;
-    //    //DBreference = FirebaseDatabase.DefaultInstance.RootReference;
-    //    Debug.Log("INIT FirebaseManagerAUTH + fbAuth: " + fbAuth.ToString());
-    //}
 
     private void InitializeFirebase()
     {
@@ -65,11 +45,13 @@ public class FirebaseManagerAuth : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.Log("Gotcha - AUTH! " + e.Message);
+            Debug.LogError("Gotcha - AUTH! " + e.Message);
             //throw e;
         }
         if (fbAuth == null)
-            Debug.Log("INIT FirebaseManagerAUTH + fbAuth = null");
+            Debug.LogError("INIT FirebaseManagerAUTH + fbAuth = null");
+        else
+            Debug.Log("INIT FirebaseManagerAUTH + sucessfull");
     }
 
     //Function for the sign out button

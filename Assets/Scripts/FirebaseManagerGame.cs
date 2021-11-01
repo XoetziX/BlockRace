@@ -35,41 +35,36 @@ public class FirebaseManagerGame : MonoBehaviour
 
     void Awake()
     {
-        try
-        {
-            //Check that all of the necessary dependencies for Firebase are present on the system
-            FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
-            {
-                dependencyStatus = task.Result;
-                if (dependencyStatus == DependencyStatus.Available)
-                {
-                    //If they are avalible Initialize Firebase
-                    InitializeFirebase();
-                }
-                else
-                {
-                    Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
-                }
-            });
-            if (instance == null)
-            {
-                Debug.Log("FirebaseManagerGame - awake - instance was null");
-                instance = this;
-            }
-            else if (instance != null)
-            {
-                Debug.Log("Instance already exists, destroying object!");
-                Destroy(this);
-            }
+        InitializeFirebase();
 
-        }
-        catch (Exception e)
+        if (instance == null)
         {
-            Debug.Log("CATCHED - FirebaseGame - awake -> " + e.Message);
-            //throw;
+            //Debug.Log("FirebaseManagerGame - awake - instance was null");
+            instance = this;
         }
-        
+        else if (instance != null)
+        {
+            //Debug.Log("Instance already exists, destroying object!");
+            Destroy(this);
+        }
+
     }
+
+
+    //async void CheckDependenciesSync()
+    //{
+    //    var dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
+    //    if (dependencyStatus == DependencyStatus.Available)
+    //    {
+    //        // all good, firebase init passed
+    //        Debug.Log("Firebase Loaded");
+    //        InitializeFirebase();
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("Firebase Failed");
+    //    }
+    //}
 
     private void InitializeFirebase()
     {
@@ -79,10 +74,10 @@ public class FirebaseManagerGame : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.Log("Gotcha - GAME! " + e.Message);
+            Debug.LogError("Gotcha - GAME! " + e.Message);
             throw e;
         }
-        Debug.Log("INIT FirebaseManagerGAME + DBreference: " + DBreference.ToString());
+        Debug.Log("INIT FirebaseManagerGAME -> DBreference: " + DBreference.ToString());
     }
 
     public void SavePlayerData()
