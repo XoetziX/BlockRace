@@ -28,12 +28,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (gameSettings.GameIsPaused){Resume();}
-            else{PauseGameTime(); ShowPauseUI(); }
-        }
-
         if (gameSettings.NewLevelLoaded)
         {
             levelUIManager.StartCountdown(); //at the end of the countdown -> _gameSettings.GameIsPaused = false;
@@ -66,14 +60,9 @@ public class GameManager : MonoBehaviour
         gameSettings.GameIsPaused = true;
         levelUIManager.StopStopWatch();
     }
-    public void ShowPauseUI()
-    {
-        levelUIManager.ShowPauseMenuUI();
-    }
-
+        
     private void Resume()
     {
-        levelUIManager.HidePauseMenuUI();
         levelUIManager.StartStopWatch();
         Time.timeScale = 1f;
         gameSettings.ResumeGame = false;

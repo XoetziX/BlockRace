@@ -56,6 +56,10 @@ public class MainMenu_Login : MonoBehaviour
         confirmLoginText.text = returnText;
     }
 
+    public void ShowStartScreen()
+    {
+        SceneManager.LoadScene("MainMenu_Start");
+    }
 
     public void ClearLoginFields()
     {

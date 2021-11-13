@@ -49,6 +49,10 @@ public class LevelUIManager : MonoBehaviour
             txt_Distance.text = ("Distanz: " + playerTransform.position.z.ToString("0") + " m");
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseResumeGame();
+        }
         ////show speed - * 3,6 for km/h
         //float tmpSpeed = playerRigidbody.velocity.magnitude * 3.6f;
         //CurrentSpeed = tmpSpeed.ToString();
@@ -59,7 +63,31 @@ public class LevelUIManager : MonoBehaviour
         float forwardSpeed = forwardVelocity.magnitude * 3.6f;
         txt_ForwardSpeed.text = "Geschwindigkeit: " + forwardSpeed.ToString("0") + " km/h";
     }
-    
+
+    private void PauseResumeGame()
+    {
+        if (gameSettings.GameIsPaused)
+        {
+            gameSettings.ResumeGame = true;
+            HidePauseMenuUI();
+        }
+        else
+        {
+            gameSettings.PauseGame = true;
+            ShowPauseMenuUI();
+        }
+    }
+
+    public void MenuClicked()
+    {
+        PauseResumeGame();
+    }
+    public void ResumeGame()
+    {
+        HidePauseMenuUI();
+        gameSettings.ResumeGame = true;
+    }
+
     public void StartCountdown()
     {
         countdownController.StartLevelCountdown();
@@ -78,11 +106,11 @@ public class LevelUIManager : MonoBehaviour
        highscoreController.AddHighScore(playerData.PlayerName, stopWatch.Timer);
     }
 
-    internal void ShowPauseMenuUI()
+    private void ShowPauseMenuUI()
     {
         pauseMenuUI.SetActive(true);
     }
-    internal void HidePauseMenuUI()
+    private void HidePauseMenuUI()
     {
         pauseMenuUI.SetActive(false);
     }
@@ -101,14 +129,10 @@ public class LevelUIManager : MonoBehaviour
     {
         gameOver = true;
     }
-    public void ResumeGame()
-    {
-        gameSettings.ResumeGame = true;
-    }
     public void GoToMainMenu()
     {
         //SceneManager.LoadScene(SceneManager.GetSceneByName("Menu").ToString());
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("MainMenu_Start");
     }
     public void QuitGame()
     {

@@ -116,7 +116,7 @@ public class FirebaseManagerAuth : MonoBehaviour
 
             yield return new WaitForSeconds(1);
 
-            MainMenuUIManager.instance.ShowStartScreen(); // Change to start UI
+            MainMenu_Login.instance.ShowStartScreen(); // Change to start UI
         }
     }
 

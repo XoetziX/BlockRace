@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb187e8a44e363a41ac82af383fb76cd, type: 3}
   m_Name: PlayerDataSO
   m_EditorClassIdentifier: 
-  playerName: oetzi
+  playerName: oetzixyz
+  playerDBUserId: Mi7Gp6joqjgAYHNiLHrfgOInZbU2
+  choosenDifficulty: 4000
   _baseSidewayForce: 50

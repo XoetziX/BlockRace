@@ -21,12 +21,21 @@ public class Stopwatch : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    //void Update()
+    //{
+    //    if (doCalculation)
+    //    {
+    //        StopWatchCalculation();
+    //    }
+    //}
+
+    void FixedUpdate()
     {
         if (doCalculation)
         {
             StopWatchCalculation();
         }
+
     }
 
     void StopWatchCalculation()
