@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -63,11 +64,13 @@ public class MainMenu_Register : MonoBehaviour
         warningRegisterText.text = warningText;
     }
 
-    public void QuitGameButton()
+    public void BackButton()
     {
-        gameSettings.QuitGame = true;
+        SceneManager.LoadScene("MainMenu_Login");
     }
-  
 
-
+    internal void ShowLoginScreen()
+    {
+        SceneManager.LoadScene("MainMenu_Login");
+    }
 }

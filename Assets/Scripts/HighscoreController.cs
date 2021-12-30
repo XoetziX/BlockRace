@@ -30,6 +30,7 @@ public class HighscoreController : MonoBehaviour
     public void AddHighScore(string playerName, float time)
     {
         currentPlayerHighscore = new PlayerHighscore(playerName, time);
+        Debug.LogWarning("WAIT UNTIL DATABASE RESULT IS THERE");
         LoadHighscores();
         
         //reset values
@@ -87,14 +88,13 @@ public class HighscoreController : MonoBehaviour
 
     private void LoadHighscores()
     {
-        highscoresDB = FirebaseManagerGame.instance.getHighscoresOfLevel(levelInfo.LevelName);
-        Debug.Log("highscoresDB: " + highscoresDB);
-        Debug.Log(" count: " + highscoresDB.Count);
+        highscoresDB = FirebaseManagerGame.instance.LoadHighscoresOfLevel(levelInfo.LevelName);
+        //Debug.Log("HighscoreController - LoadHighscores - count: " + highscoresDB.Count);
     }
     private void SaveHighscoresDB()
     {
         Debug.Log("SaveHighscoresDB - highscoresDB count: " + highscoresDB.Count);
-        FirebaseManagerGame.instance.SaveHighscores(highscoresDB, levelInfo.LevelName);
+        StartCoroutine(FirebaseManagerGame.instance.SaveHighscores(highscoresDB, levelInfo.LevelName));
     }
 
     private void ShowHighScores()

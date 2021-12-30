@@ -47,7 +47,7 @@ public class FirebaseManagerGame : MonoBehaviour
             //Debug.Log("Instance already exists, destroying object!");
             Destroy(this);
         }
-
+        Debug.Log("FirebaseManagerGame - instance: " + instance.ToString()) ;
     }
 
 
@@ -82,12 +82,11 @@ public class FirebaseManagerGame : MonoBehaviour
 
     public void SavePlayerData()
     {
-        Debug.Log("Start SavePlayerData");
         StartCoroutine(SavePlayerDataToDB());
     }
     private IEnumerator SavePlayerDataToDB()
     {
-        Debug.Log("Start SavePlayerDataToDB");
+        Debug.Log("Start SavePlayerDataToDB - DB-ID: " + playerData.PlayerDBUserId + " Difficulty: " + playerData.ChoosenDifficulty + " name (not stored): " + playerData.PlayerName);
         //Set the currently logged in user username in the database
         var DBTask = DBreference.Child("users").Child(playerData.PlayerDBUserId).SetValueAsync(playerData.ChoosenDifficulty.ToString());
         
@@ -153,17 +152,14 @@ public class FirebaseManagerGame : MonoBehaviour
         }
     }
 
+
     public IEnumerator SaveHighscores(List<PlayerHighscore> highscoresDB, String levelName)
     {
+        //Debug.Log("SaveHighscores START");
         string jsonNet = JsonConvert.SerializeObject(highscoresDB);
-        Debug.Log("SaveListOfObject " + jsonNet);
-        //DBreference.Child("LevelHighscores").SetRawJsonValueAsync(jsonNet);
+        //Debug.Log("SaveListOfObject " + jsonNet);
 
-
-
-        
-        //var DBTask = DBreference.Child("LevelHighscores").Child(levelName).SetRawJsonValueAsync(jsonNet);
-        var DBTask = DBreference.Child("LevelHighscores").SetValueAsync("123 test");
+        var DBTask = DBreference.Child("levelHighscores").Child(levelName).SetRawJsonValueAsync(jsonNet);
 
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
 
@@ -174,20 +170,63 @@ public class FirebaseManagerGame : MonoBehaviour
         else
         {
             //Highscore is now updated
-            Debug.Log("Done - " + DBTask.Status);
-                
+            Debug.Log("SaveHighscores " + levelName + DBTask.Status);
+
         }
+
     }
 
-    internal List<PlayerHighscore> getHighscoresOfLevel(string levelName)
+    public List<PlayerHighscore> LoadHighscoresOfLevel(string levelName)
     {
+        Debug.Log("FireBaseGame - LoadHighscoresOfLevel START");
+        List<PlayerHighscore> tmpList = new List<PlayerHighscore>();
+        //IEnumerator cannot return any internal values / variables. Hence, the following way can be used:
+        //pass a place holder (= returnValue) to the IEnumerator. Within the IEnumerator this placeholder can be set to any value. Outside the Enumerator / here it can be further processed. 
+        StartCoroutine(GetHighscoresOfLevel(levelName, returnValue =>
+        {
+            tmpList = returnValue; 
+        }));
+        Debug.Log("LoadHighscoresOfLevel List.count: " + tmpList.Count);
+        return tmpList;
+    }
+
+    private IEnumerator GetHighscoresOfLevel(string levelName, System.Action<List<PlayerHighscore>> callback)
+    {
+        Debug.Log("FireBaseGame - getHighscoresOfLevel START");
+
+        List<PlayerHighscore> tmpHighscores = new List<PlayerHighscore>();
         
-        List<PlayerHighscore> tmpListe = new List<PlayerHighscore>();
+        var DBTask = DBreference.Child("levelHighscores").Child(levelName).GetValueAsync();
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.Result.Value == null) //No data exists yet
+        {
+            Debug.Log("getHighscoresOfLevel - NO DATA EXISTS");
+
+            //xpField.text = "0";
+            //killsField.text = "0";
+            //deathsField.text = "0";
+        }
+        else //Data has been retrieved
+        {
+
+            DataSnapshot snapshot = DBTask.Result;
+            Debug.Log("JSON?!? LoadListOfObjects --> " + snapshot.GetRawJsonValue());
+            tmpHighscores = JsonConvert.DeserializeObject<List<PlayerHighscore>>(snapshot.GetRawJsonValue());
+
+            Debug.Log("getHighscoresOfLevel - FOUND DATA - count: " + tmpHighscores.Count);
+            foreach (var item in tmpHighscores)
+            {
+                item.DebugOut();
+            }
+            callback(tmpHighscores);
+        }
 
 
-        tmpListe.Add(new PlayerHighscore("dummy1", 1.11f));
-        Debug.LogWarning("FireBaseGame - getHighscoresOfLevel DUMMY MODE");
-        return tmpListe;
+
     }
 
     private IEnumerator UpdateXp(int _xp)

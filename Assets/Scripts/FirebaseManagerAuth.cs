@@ -191,7 +191,8 @@ public class FirebaseManagerAuth : MonoBehaviour
                     {
                         //Username is now set
                         //Now return to login screen
-                        MainMenuUIManager.instance.ShowLoginScreen();
+                        //MainMenuUIManager.instance.ShowLoginScreen();
+                        MainMenu_Register.instance.ShowLoginScreen();
                         callbackWarningText("");
                     }
                 }

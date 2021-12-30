@@ -1159,9 +1159,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1217560122}
-        m_TargetAssemblyTypeName: MainMenuUIManager, Assembly-CSharp
-        m_MethodName: ShowLoginScreen
+      - m_Target: {fileID: 1217560123}
+        m_TargetAssemblyTypeName: MainMenu_Register, Assembly-CSharp
+        m_MethodName: BackButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2922,6 +2922,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1217560121}
   - component: {fileID: 1217560122}
+  - component: {fileID: 1217560123}
   m_Layer: 0
   m_Name: UIManagerMainMenu
   m_TagString: Untagged
@@ -2956,22 +2957,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b9a48252c79f24fad824294e2d5043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1217560123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217560120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b00650c35f88f24ca6fc6a72fe0dcf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   testModeActive: 1
   gameSettings: {fileID: 11400000, guid: aaeeda0eecdeec04badc44c0fbf19012, type: 2}
   playerData: {fileID: 11400000, guid: ca93809d1fb3fca4b983294a91e8b65d, type: 2}
-  emailLoginField: {fileID: 0}
-  passwordLoginField: {fileID: 0}
-  warningLoginText: {fileID: 0}
-  confirmLoginText: {fileID: 0}
   usernameRegisterField: {fileID: 636992258}
   emailRegisterField: {fileID: 1378059981}
   passwordRegisterField: {fileID: 620755861}
   passwordRegisterVerifyField: {fileID: 1047281162}
   warningRegisterText: {fileID: 80630311}
-  usernameStartField: {fileID: 0}
-  loginUI: {fileID: 0}
-  registerUI: {fileID: 2941652}
-  startUI: {fileID: 0}
 --- !u!1 &1268753957
 GameObject:
   m_ObjectHideFlags: 0
@@ -4008,8 +4013,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1217560122}
-        m_TargetAssemblyTypeName: MainMenuUIManager, Assembly-CSharp
+      - m_Target: {fileID: 1217560123}
+        m_TargetAssemblyTypeName: MainMenu_Register, Assembly-CSharp
         m_MethodName: RegisterButton
         m_Mode: 1
         m_Arguments:

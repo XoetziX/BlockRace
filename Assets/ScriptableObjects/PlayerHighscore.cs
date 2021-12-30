@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public class PlayerHighscore
 {
@@ -41,4 +42,8 @@ public class PlayerHighscore
         set => dateTimeHSWasReached = value;
     }
 
+    internal void DebugOut()
+    {
+        Debug.Log("PlayerName: " + playerName + " | time: " + timeFormatted);
+    }
 }

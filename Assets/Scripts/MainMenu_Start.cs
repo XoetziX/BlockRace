@@ -69,7 +69,9 @@ public class MainMenu_Start : MonoBehaviour
     public void SetDifficultyEasy(bool clicked)
     {
         if (clicked)
+        {
             playerData.ChoosenDifficulty = PlayerDataSO.Difficulty.easy;
+        }
     }
     public void SetDifficultyMedium(bool clicked)
     {

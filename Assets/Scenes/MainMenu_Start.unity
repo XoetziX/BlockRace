@@ -1640,8 +1640,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenuUIManager, Assembly-CSharp
+      - m_Target: {fileID: 1217560122}
+        m_TargetAssemblyTypeName: MainMenu_Start, Assembly-CSharp
         m_MethodName: SetDifficultyHard
         m_Mode: 0
         m_Arguments:
@@ -3522,8 +3522,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenuUIManager, Assembly-CSharp
+      - m_Target: {fileID: 1217560122}
+        m_TargetAssemblyTypeName: MainMenu_Start, Assembly-CSharp
         m_MethodName: SetDifficultyEasy
         m_Mode: 0
         m_Arguments:
@@ -4289,8 +4289,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenuUIManager, Assembly-CSharp
+      - m_Target: {fileID: 1217560122}
+        m_TargetAssemblyTypeName: MainMenu_Start, Assembly-CSharp
         m_MethodName: SetDifficultyMedium
         m_Mode: 0
         m_Arguments:
