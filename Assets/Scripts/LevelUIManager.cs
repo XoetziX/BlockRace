@@ -41,6 +41,7 @@ public class LevelUIManager : MonoBehaviour
 
     }
 
+    
 
     void Update()
     {
@@ -103,7 +104,7 @@ public class LevelUIManager : MonoBehaviour
 
     internal void AddHighscore()
     {
-       highscoreController.AddHighScore(playerData.PlayerName, stopWatch.Timer);
+       StartCoroutine(highscoreController.AddHighScore(playerData.PlayerName, stopWatch.Timer));
     }
 
     private void ShowPauseMenuUI()
