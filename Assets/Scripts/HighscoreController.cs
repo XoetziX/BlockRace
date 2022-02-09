@@ -21,7 +21,6 @@ public class HighscoreController : MonoBehaviour
     PlayerHighscore currentPlayerHighscore;
     private bool newTopHighscore;
     private bool inTop10;
-    private bool notInTop10;
 
     private void Start()
     {
@@ -38,12 +37,11 @@ public class HighscoreController : MonoBehaviour
         {
             highscoresDB = returnValue;
         }));
-        Debug.Log("AFTER COROUTINE List.count: " + highscoresDB.Count);
-
+        //Debug.Log("AFTER COROUTINE List.count: " + highscoresDB.Count);
 
 
         //reset values
-        newTopHighscore = false; inTop10 = false; notInTop10 = false;
+        newTopHighscore = false; inTop10 = false;
 
         //wenn liste leer ist einfach hinzufügen -> neuer Nr 1 Score
         //wenn liste noch nicht voll ist -> sortieren, prüfen ob 1. -> ggf. neue Nr 1 Score, neue zeit hinzufügen
@@ -67,18 +65,24 @@ public class HighscoreController : MonoBehaviour
         else
         {
             highscoresDB.Sort(SortByTime);
-            Debug.LogWarning("List Items: ");
+            Debug.LogWarning("List Items - VORHER: ");
             foreach (var item in highscoresDB)
             {
                 item.DebugOut();
             }
             CheckIfNewTopScore(currentPlayerHighscore);
             CheckIfInTop10(currentPlayerHighscore);
-            highscoresDB.RemoveAt(gameSettings.MaxNrOfHS -1);
             highscoresDB.Add(currentPlayerHighscore);
+            highscoresDB.Sort(SortByTime);
+            highscoresDB.RemoveAt(gameSettings.MaxNrOfHS);
         }
         highscoresDB.Sort(SortByTime);
 
+        Debug.LogWarning("List Items - ENDE: ");
+        foreach (var item in highscoresDB)
+        {
+            item.DebugOut();
+        }
 
         SaveHighscoresDB();
         ShowHighScores();
@@ -88,12 +92,15 @@ public class HighscoreController : MonoBehaviour
     private void CheckIfInTop10(PlayerHighscore ph)
     {
         if (ph.Time < highscoresDB[highscoresDB.Count - 1].Time)
+        {
             inTop10 = true;
+            Debug.Log("NEW TOP 10 HIGHSCORE");
+        }
     }
 
     private void CheckIfNewTopScore(PlayerHighscore ph)
     {
-        //Debug.Log("TIME COMPARE: " + ph.Time + " < " + playerHSList[0].Time);
+        Debug.Log("TIME COMPARE: " + ph.Time + " < " + highscoresDB[0].Time);
 
         if (ph.Time < highscoresDB[0].Time)
         {
@@ -101,17 +108,9 @@ public class HighscoreController : MonoBehaviour
         }
     }
 
-    private void LoadHighscores()
-    {
-        //highscoresDB = FirebaseManagerGame.instance.LoadHighscoresOfLevelSync(levelInfo.LevelName);
-        //Debug.Log("1");
-        //highscoresDB = FirebaseManagerGame.instance.LoadHighscoresOfLevel(levelInfo.LevelName);
-        //Debug.Log("2");
-        //Debug.Log("HighscoreController - LoadHighscores - count: " + highscoresDB.Count);
-    }
     private void SaveHighscoresDB()
     {
-        Debug.Log("SaveHighscoresDB - highscoresDB count: " + highscoresDB.Count);
+        //Debug.Log("SaveHighscoresDB - highscoresDB count: " + highscoresDB.Count);
         StartCoroutine(FirebaseManagerGame.instance.SaveHighscores(highscoresDB, levelInfo.LevelName));
     }
 
