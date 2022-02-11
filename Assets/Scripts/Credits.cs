@@ -13,6 +13,6 @@ public class Credits : MonoBehaviour
     public void GoToMainMenu()
     {
         //SceneManager.LoadScene(SceneManager.GetSceneByName("Menu").ToString());
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("MainMenu_Start");
     }
 }

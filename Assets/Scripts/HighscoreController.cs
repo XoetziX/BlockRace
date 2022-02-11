@@ -100,7 +100,8 @@ public class HighscoreController : MonoBehaviour
 
     private void CheckIfNewTopScore(PlayerHighscore ph)
     {
-        Debug.Log("TIME COMPARE: " + ph.Time + " < " + highscoresDB[0].Time);
+        //Debug.Log("TIME COMPARE: " + ph.Time + " < " + highscoresDB[0].Time);suppemkx
+
 
         if (ph.Time < highscoresDB[0].Time)
         {

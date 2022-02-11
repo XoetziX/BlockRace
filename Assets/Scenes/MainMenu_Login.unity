@@ -474,8 +474,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenuUIManager, Assembly-CSharp
+      - m_Target: {fileID: 1217560122}
+        m_TargetAssemblyTypeName: MainMenu_Login, Assembly-CSharp
         m_MethodName: ShowRegisterScreen
         m_Mode: 1
         m_Arguments:

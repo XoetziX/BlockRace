@@ -81,26 +81,28 @@ public class FirebaseManagerGame : MonoBehaviour
         Debug.Log("INIT FirebaseManagerGAME -> DBreference: " + DBreference.ToString());
     }
 
-    public void SavePlayerData()
-    {
-        StartCoroutine(SavePlayerDataToDB());
-    }
-    private IEnumerator SavePlayerDataToDB()
-    {
-        Debug.Log("Start SavePlayerDataToDB - DB-ID: " + playerData.PlayerDBUserId + " Difficulty: " + playerData.ChoosenDifficulty + " name (not stored): " + playerData.PlayerName);
-        //Set the currently logged in user username in the database
-        var DBTask = DBreference.Child("users").Child(playerData.PlayerDBUserId).SetValueAsync(playerData.ChoosenDifficulty.ToString());
-        
-        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+    //public IEnumerator SavePlayerDataToDB()
+    //{
+    //    Debug.Log("Start SavePlayerDataToDB - DB-ID: " + playerData.PlayerDBUserId + " Difficulty: " + playerData.ChoosenDifficulty + " name (not stored): " + playerData.PlayerName);
+    //    //Set the currently logged in user username in the database
 
-        if (DBTask.Exception != null)
-        {
-            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
-        }
-        else
-        {
-            //Database username is now updated
-        }
+    //    var DBTask = DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("username").SetValueAsync(playerData.PlayerName); //PlayerName        
+    //    yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+    //    if (DBTask.Exception != null)
+    //        Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+
+    //    DBTask = DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("choosenDifficulty").SetValueAsync(playerData.ChoosenDifficulty.ToString()); //ChoosenDifficulty
+    //    yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+    //    if (DBTask.Exception != null)
+    //        Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+    //}
+
+    public void SavePlayerDataToDBWithoutTask()
+    {
+        //without analyzing the task result
+        DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("username").SetValueAsync(playerData.PlayerName); //PlayerName       
+        DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("choosenDifficulty").SetValueAsync(playerData.ChoosenDifficulty.ToString()); //ChoosenDifficulty
+
     }
 
     public IEnumerator LoadPlayerData()

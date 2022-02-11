@@ -32,6 +32,8 @@ public class MainMenu_Start : MonoBehaviour
         }
 
         usernameStartField.text = playerData.PlayerName;
+
+
     }
 
 
@@ -56,7 +58,9 @@ public class MainMenu_Start : MonoBehaviour
         Debug.Log("SignOutButton hit");
         //FirebaseManagerRegLogin.instance.SignOut();
         Debug.LogWarning("MainMenu_Start -> SignOutButton not fully implemented");
-        FirebaseManagerGame.instance.SavePlayerData();
+        //StartCoroutine(FirebaseManagerGame.instance.SavePlayerDataToDB());
+        FirebaseManagerGame.instance.SavePlayerDataToDBWithoutTask();
+
         //ShowLoginScreen();
     }
 
@@ -71,17 +75,24 @@ public class MainMenu_Start : MonoBehaviour
         if (clicked)
         {
             playerData.ChoosenDifficulty = PlayerDataSO.Difficulty.easy;
+            FirebaseManagerGame.instance.SavePlayerDataToDBWithoutTask();
         }
     }
     public void SetDifficultyMedium(bool clicked)
     {
         if (clicked)
+        {
             playerData.ChoosenDifficulty = PlayerDataSO.Difficulty.medium;
+            FirebaseManagerGame.instance.SavePlayerDataToDBWithoutTask();
+        }
     }
     public void SetDifficultyHard(bool clicked)
     {
         if (clicked)
+        {   
             playerData.ChoosenDifficulty = PlayerDataSO.Difficulty.hard;
+            FirebaseManagerGame.instance.SavePlayerDataToDBWithoutTask();
+        }
     }
 
     
