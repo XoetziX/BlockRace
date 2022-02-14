@@ -15,6 +15,7 @@ public class MainMenu_Start : MonoBehaviour
 
     [Header("Start")]
     [SerializeField] private TMP_Text usernameStartField;
+    [SerializeField] private ToggleGroup tg_difficulty;
 
 
 
@@ -32,10 +33,13 @@ public class MainMenu_Start : MonoBehaviour
         }
 
         usernameStartField.text = playerData.PlayerName;
-
-
     }
 
+    private void Start()
+    {
+        var toggles = tg_difficulty.GetComponentsInChildren<Toggle>();
+        toggles[2].isOn = true;
+    }
 
     public void StartGameButton()
     {

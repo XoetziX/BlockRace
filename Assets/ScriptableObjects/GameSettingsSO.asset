@@ -18,6 +18,5 @@ MonoBehaviour:
   gameIsPaused: 0
   resumeGame: 0
   quitGame: 0
-  startCountdownDelay: 0.1
-  choosenDifficulty: 4000
-  maxNrOfHS: 3
+  startCountdownDelay: 0.5
+  maxNrOfHS: 5

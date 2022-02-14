@@ -25,8 +25,8 @@ public class GameSettingsSO : ScriptableObject
     private void OnEnable()
     {
         //Reset values if not want to use the stored ones from previous play
-        maxNrOfHS = 3;
-        startCountdownDelay = 0.1f;
+        maxNrOfHS = 5;
+        startCountdownDelay = 0.5f;
     }
 
     public bool NewLevelLoaded
