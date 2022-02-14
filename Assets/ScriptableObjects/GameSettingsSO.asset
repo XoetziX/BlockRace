@@ -20,3 +20,4 @@ MonoBehaviour:
   quitGame: 0
   startCountdownDelay: 0.5
   maxNrOfHS: 5
+  testmode: 0

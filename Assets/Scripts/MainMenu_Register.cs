@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 public class MainMenu_Register : MonoBehaviour
 {
-    public bool testModeActive;
     public static MainMenu_Register instance;
 
     [SerializeField] private GameSettingsSO gameSettings;
@@ -34,7 +33,7 @@ public class MainMenu_Register : MonoBehaviour
             Debug.Log("Instance already exists, destroying object!");
             Destroy(this);
         }
-        if (testModeActive)
+        if (gameSettings.Testmode)
         {
             usernameRegisterField.text = "oetzi";
             emailRegisterField.text = "oetzi@oetzi.de";

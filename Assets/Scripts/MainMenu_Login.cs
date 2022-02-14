@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class MainMenu_Login : MonoBehaviour
 {
-    public bool testModeActive;
     public static MainMenu_Login instance;
 
     [SerializeField] private GameSettingsSO gameSettings;
@@ -32,7 +31,7 @@ public class MainMenu_Login : MonoBehaviour
             Debug.Log("Instance already exists, destroying object!");
             Destroy(this);
         }
-        if (testModeActive)
+        if (gameSettings.Testmode)
         {
             emailLoginField.text = "oetzi@oetzi.de";
             passwordLoginField.text = "oetzi1!";

@@ -14,6 +14,7 @@ public class GameSettingsSO : ScriptableObject
     [SerializeField] private bool gameIsPaused;
     [SerializeField] private bool resumeGame; 
     [SerializeField] private bool quitGame;
+
     [Header("Game stats - fix")]
     [SerializeField] private float startCountdownDelay;
 
@@ -21,6 +22,8 @@ public class GameSettingsSO : ScriptableObject
     [Header("Highscores")]
     [SerializeField] private int maxNrOfHS;
 
+    [Header("# TEST #")]
+    [SerializeField] private bool testmode;
 
     private void OnEnable()
     {
@@ -70,5 +73,10 @@ public class GameSettingsSO : ScriptableObject
     }
 
 
+    public bool Testmode
+    {
+        get => testmode;
+        set => testmode = value;
+    }
 
 }

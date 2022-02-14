@@ -279,7 +279,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Emailadresse (optional)
+  m_text: Email >Fake geht auch<
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3015,7 +3015,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b00650c35f88f24ca6fc6a72fe0dcf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testModeActive: 1
   gameSettings: {fileID: 11400000, guid: aaeeda0eecdeec04badc44c0fbf19012, type: 2}
   playerData: {fileID: 11400000, guid: ca93809d1fb3fca4b983294a91e8b65d, type: 2}
   usernameRegisterField: {fileID: 636992258}
