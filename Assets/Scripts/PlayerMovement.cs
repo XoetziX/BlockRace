@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
     private void CheckGameOver()
     {
         //fall of the track? -> Game Over
-        if (rigidBody.position.y < 0.9f)
+        if (rigidBody.position.y < 0.7f)
         {
             GameManager gm = FindObjectOfType<GameManager>();
             gm.GameOver();

@@ -17,7 +17,8 @@ public class PlayerDataSO : ScriptableObject
 
     private void OnEnable()
     {
-        choosenDifficulty = Difficulty.hard;
+        //choosenDifficulty = Difficulty.hard;
+        Debug.LogWarning("PlayerDataSO OnEnable - difficulty set correctly? also for new players? -> " + choosenDifficulty);
         _baseSidewayForce = 50;
     }
 

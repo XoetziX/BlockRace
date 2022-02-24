@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static PlayerDataSO;
 
 public class MainMenu_Start : MonoBehaviour
 {
@@ -32,13 +33,24 @@ public class MainMenu_Start : MonoBehaviour
             Destroy(this);
         }
 
-        usernameStartField.text = playerData.PlayerName;
+
+        
     }
 
     private void Start()
     {
+        //Show Username
+        usernameStartField.text = playerData.PlayerName;
+
+        //Set difficulty 
         var toggles = tg_difficulty.GetComponentsInChildren<Toggle>();
-        toggles[2].isOn = true;
+        //Debug.Log("TOGGLE - playerData: " + playerData.ChoosenDifficulty + " Difficulty: " + Difficulty.easy + " true? " + (playerData.ChoosenDifficulty == Difficulty.easy));
+        if (playerData.ChoosenDifficulty == Difficulty.easy)
+            toggles[0].isOn = true;
+        else if (playerData.ChoosenDifficulty == Difficulty.medium)
+            toggles[1].isOn = true;
+        else
+            toggles[2].isOn = true;
     }
 
     public void StartGameButton()

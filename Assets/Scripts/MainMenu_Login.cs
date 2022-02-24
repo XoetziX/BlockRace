@@ -65,6 +65,12 @@ public class MainMenu_Login : MonoBehaviour
         SceneManager.LoadScene("MainMenu_Register");
     }
 
+    public void FillLoginFields()
+    {
+        emailLoginField.text = "oetzi@oetzi.de";
+        passwordLoginField.text = "oetzi1!";
+    }
+
     public void ClearLoginFields()
     {
         emailLoginField.text = "";
