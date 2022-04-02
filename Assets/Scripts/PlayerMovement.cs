@@ -38,10 +38,21 @@ public class PlayerMovement : MonoBehaviour
         return playerData.BaseSidewayForce;
     }
 
+    //private double x = 1;
+    private double y = 1;
+    //private double z = 1;
+
     // Update is called once per frame
     void Update()
     {
-
+        //if (playerTransform.position.y > y)
+        //{
+        //    Debug.LogWarning("Player too High --> " + playerTransform.position.y);
+        //}
+        //if (playerTransform.position.y < y)
+        //{
+        //    Debug.LogWarning("Player too Low --> " + playerTransform.position.y);
+        //}
     }
 
     private void FixedUpdate()

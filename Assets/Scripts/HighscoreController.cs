@@ -65,11 +65,11 @@ public class HighscoreController : MonoBehaviour
         else
         {
             highscoresDB.Sort(SortByTime);
-            Debug.LogWarning("List Items - VORHER: ");
-            foreach (var item in highscoresDB)
-            {
-                item.DebugOut();
-            }
+            //Debug.LogWarning("List Items - VORHER: ");
+            //foreach (var item in highscoresDB)
+            //{
+            //    item.DebugOut();
+            //}
             CheckIfNewTopScore(currentPlayerHighscore);
             CheckIfInTop10(currentPlayerHighscore);
             highscoresDB.Add(currentPlayerHighscore);
@@ -78,11 +78,11 @@ public class HighscoreController : MonoBehaviour
         }
         highscoresDB.Sort(SortByTime);
 
-        Debug.LogWarning("List Items - ENDE: ");
-        foreach (var item in highscoresDB)
-        {
-            item.DebugOut();
-        }
+        //Debug.LogWarning("List Items - ENDE: ");
+        //foreach (var item in highscoresDB)
+        //{
+        //    item.DebugOut();
+        //}
 
         SaveHighscoresDB();
         ShowHighScores();
