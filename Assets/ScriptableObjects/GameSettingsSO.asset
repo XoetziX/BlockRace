@@ -18,6 +18,7 @@ MonoBehaviour:
   gameIsPaused: 0
   resumeGame: 0
   quitGame: 0
+  moveCamera: 0
   startCountdownDelay: 0.5
   maxNrOfHS: 5
   testmode: 1

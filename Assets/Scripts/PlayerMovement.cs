@@ -41,6 +41,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+    }
+
+    private void FixedUpdate()
+    {
         DoForwardMovement();
         DoKeyBoardMovement();
         DoTouchMovement();
@@ -117,6 +122,7 @@ public class PlayerMovement : MonoBehaviour
         {
             playerTransform.position += new Vector3(0, 0.5f, 0);
             playerTransform.localScale += new Vector3(1, 1, 1);
+            rigidBody.mass = 2; 
             Invoke("MakeMeNormalAgain", 2f);
             powerupBigger = false;
         }
@@ -136,5 +142,6 @@ public class PlayerMovement : MonoBehaviour
     private void MakeMeNormalAgain()
     {
         playerTransform.localScale -= new Vector3(1, 1, 1);
+        rigidBody.mass = 1;
     }
 }

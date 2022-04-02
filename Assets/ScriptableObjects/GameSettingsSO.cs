@@ -14,6 +14,7 @@ public class GameSettingsSO : ScriptableObject
     [SerializeField] private bool gameIsPaused;
     [SerializeField] private bool resumeGame; 
     [SerializeField] private bool quitGame;
+    [SerializeField] private bool moveCamera;
 
     [Header("Game stats - fix")]
     [SerializeField] private float startCountdownDelay;
@@ -62,6 +63,13 @@ public class GameSettingsSO : ScriptableObject
         get => quitGame;
         set => quitGame = value;
     }
+    public bool MoveCamera
+    {
+        get => moveCamera;
+        set => moveCamera = value;
+    }
+
+
     public float StartCountdownDelay
     {
         get => startCountdownDelay;

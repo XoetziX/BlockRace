@@ -6,11 +6,24 @@ public class FollowPlayer : MonoBehaviour
 {
 
     public Transform player;
-    public Vector3 offset; 
+    public Vector3 offset;
+    [SerializeField] private GameSettingsSO gameSettings;
+
+    private void Start()
+    {
+        gameSettings.MoveCamera = true;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = player.position + offset;
+        if (gameSettings.MoveCamera)
+        {
+            transform.position = player.position + offset;
+        }
+        else
+        {
+            //Debug.Log("TODO Smooth Camera Stop");
+        }
     }
 }
