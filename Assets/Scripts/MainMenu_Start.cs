@@ -65,6 +65,10 @@ public class MainMenu_Start : MonoBehaviour
     {
         SceneManager.LoadScene("aLongLevel");
     }
+    public void StartFogLevel()
+    {
+        SceneManager.LoadScene("aFogTestingLevel");
+    }
     public void QuitGameButton()
     {
         gameSettings.QuitGame = true;
