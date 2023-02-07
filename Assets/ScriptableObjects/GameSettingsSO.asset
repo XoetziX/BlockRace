@@ -21,4 +21,4 @@ MonoBehaviour:
   moveCamera: 0
   startCountdownDelay: 0.5
   maxNrOfHS: 5
-  testmode: 0
+  testmode: 1
