@@ -10,10 +10,14 @@ public class PlayerDataSO : ScriptableObject
     [SerializeField] private string playerName;
     [SerializeField] private string playerDBUserId;
     [SerializeField] private Difficulty choosenDifficulty;
+    [SerializeField] private List<LevelPassed> easyLevelPassed = new List<LevelPassed>();
+    [SerializeField] private List<LevelPassed> mediumLevelPassed = new List<LevelPassed>();
+    [SerializeField] private List<LevelPassed> hardLevelPassed = new List<LevelPassed>();
     public enum Difficulty { easy = 2000, medium = 3000, hard = 4000 }
 
     [Header("Fixed Values")]
     [SerializeField] private float _baseSidewayForce;
+    //[SerializeField] private ArrayList<LevelPassed> passedLevelList;
 
     private void OnEnable()
     {
@@ -46,5 +50,14 @@ public class PlayerDataSO : ScriptableObject
         }
     }
 
-
+    public List<LevelPassed> EasyLevelPassed { get => easyLevelPassed; set => easyLevelPassed = value; }
+    public List<LevelPassed> MediumLevelPassed { get => mediumLevelPassed; set => mediumLevelPassed = value; }
+    public List<LevelPassed> HardLevelPassed { get => hardLevelPassed; set => hardLevelPassed = value; }
+    public void DebugOutLevelPassedLists()
+    {
+        Debug.Log("DEBUG OUT - PlayerDataSO - DebugOutLevelPassedLists: ");
+        foreach (LevelPassed lvl in easyLevelPassed) { lvl.DebugOut(); }
+        foreach (LevelPassed lvl in mediumLevelPassed) { lvl.DebugOut(); }
+        foreach (LevelPassed lvl in hardLevelPassed) { lvl.DebugOut(); }
+    }
 }
