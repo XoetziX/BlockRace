@@ -12,6 +12,10 @@ public class TESTSCENE_UI : MonoBehaviour
     public Color toggleOnColor;
     public Color toggleOffColor;
 
+    [SerializeField] private Sprite level_background_accessable;
+    [SerializeField] private Sprite level_background_not_accessable;
+    [SerializeField] private Button level_button;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,11 +34,12 @@ public class TESTSCENE_UI : MonoBehaviour
     }
     public void DoItBaby1()
     {
-        tgl_1.isOn = true;
+        //tgl_1.isOn = true;
+        level_button.image.sprite = level_background_accessable;
     }
     public void DoItBaby2()
     {
-        tgl_2.isOn = true;
+        level_button.image.sprite = level_background_not_accessable;
     }
     // Update is called once per frame
     void Update()

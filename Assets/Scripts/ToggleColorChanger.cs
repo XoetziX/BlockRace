@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class ToggleColorChanger : MonoBehaviour
 {
-    public Color toggleOnColor;
-    public Color toggleOffColor;
+    //public Color toggleOnColor;
+    //private Color toggleOnColor = new Color(207,175,245,255);
+    private Color toggleOnColor = new Color(207f / 255f, 175f / 255f, 245f / 255f);
+    private Color toggleOffColor = new Color(240f / 255f, 240f / 255f, 240f / 255f);
 
     private Toggle toggle;
     private Image toggleBackground;
