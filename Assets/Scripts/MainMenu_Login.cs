@@ -44,6 +44,8 @@ public class MainMenu_Login : MonoBehaviour
         warningLoginText.text = ""; //if previous register failed
         //Call the login coroutine passing the email and password
         StartCoroutine(FirebaseManagerAuth.instance.Login(emailLoginField.text, passwordLoginField.text, SetWarningLoginText, SetInfoLoginText));
+        Debug.LogWarning("TODO - check wether the following method is called before the login (and therewith the User-DB-ID) has been loaded");
+        StartCoroutine(FirebaseManagerGame.instance.LoadAllPlayerData());
     }
     private void SetWarningLoginText(string returnText)
     {

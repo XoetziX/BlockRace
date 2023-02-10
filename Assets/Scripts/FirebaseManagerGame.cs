@@ -105,37 +105,12 @@ public class FirebaseManagerGame : MonoBehaviour
 
     }
 
-    public IEnumerator LoadPlayerData()
+    /*
+     * loads all player information and stores them directly into the PlayerDataSO (hence, no return value neccessary)
+     */
+    public IEnumerator LoadAllPlayerData()
     {
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>> Load User Data and set PlayerDataVarSO
-        Debug.LogWarning("LoadUserData not implemented yet! ToDo: Load User Data and set PlayerDataVarSO");
-        //playerDataVar
-
-        //Get the currently logged in user data
-        var DBTask = DBreference.Child("users").Child(playerData.PlayerDBUserId).GetValueAsync();
-
-        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
-
-        if (DBTask.Exception != null)
-        {
-            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
-        }
-        else if (DBTask.Result.Value == null)
-        {
-            //No data exists yet
-            //xpField.text = "0";
-            //killsField.text = "0";
-            //deathsField.text = "0";
-        }
-        else
-        {
-            //Data has been retrieved
-            DataSnapshot snapshot = DBTask.Result;
-
-            //xpField.text = snapshot.Child("xp").Value.ToString();
-            //killsField.text = snapshot.Child("kills").Value.ToString();
-            //deathsField.text = snapshot.Child("deaths").Value.ToString();
-        }
+        yield return LoadLevelPassed(); 
     }
 
     public IEnumerator UpdateUsernameDatabase(string _username)
@@ -229,6 +204,9 @@ public class FirebaseManagerGame : MonoBehaviour
 
     }
 
+    /*
+     * loads every information below the node "levelPassed" and stores them directly into the PlayerDataSO (hence, no return value neccessary)
+     */
     public IEnumerator LoadLevelPassed()
     {
         Debug.Log("GetLevelPassed START - DB User ID: " + playerData.PlayerDBUserId);
