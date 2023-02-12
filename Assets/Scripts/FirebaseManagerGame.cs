@@ -383,6 +383,7 @@ public class FirebaseManagerGame : MonoBehaviour
                 playerData.EasyLevelPassed = easyLevelPassed;
                 playerData.MediumLevelPassed = mediumLevelPassed;
                 playerData.HardLevelPassed = hardLevelPassed;
+                Debug.Log("LoadLevelPassedAsync - END: Loaded lists:");
                 playerData.DebugOutLevelPassedLists();
 
             }

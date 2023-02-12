@@ -355,8 +355,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86a7559a8343f5449946fa5347981ac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggleOnColor: {r: 0.8117647, g: 0.6862745, b: 0.9607843, a: 1}
-  toggleOffColor: {r: 0.9607844, g: 0.9607844, b: 0.9607844, a: 1}
 --- !u!1 &58121455
 GameObject:
   m_ObjectHideFlags: 0
@@ -1648,8 +1646,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86a7559a8343f5449946fa5347981ac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggleOnColor: {r: 0.8117648, g: 0.6862745, b: 0.9607844, a: 1}
-  toggleOffColor: {r: 0.9607844, g: 0.9607844, b: 0.9607844, a: 1}
 --- !u!1 &242949690
 GameObject:
   m_ObjectHideFlags: 0
@@ -7894,8 +7890,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86a7559a8343f5449946fa5347981ac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggleOnColor: {r: 0.8117648, g: 0.6862745, b: 0.9607844, a: 1}
-  toggleOffColor: {r: 0.9607844, g: 0.9607844, b: 0.9607844, a: 1}
 --- !u!1 &812510324
 GameObject:
   m_ObjectHideFlags: 0
@@ -8204,8 +8198,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86a7559a8343f5449946fa5347981ac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggleOnColor: {r: 0.8117647, g: 0.6862745, b: 0.9607843, a: 1}
-  toggleOffColor: {r: 0.9607844, g: 0.9607844, b: 0.9607844, a: 1}
 --- !u!1 &828012537
 GameObject:
   m_ObjectHideFlags: 0
@@ -9899,8 +9891,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86a7559a8343f5449946fa5347981ac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggleOnColor: {r: 0.8117647, g: 0.6862745, b: 0.9607843, a: 1}
-  toggleOffColor: {r: 0.9607844, g: 0.9607844, b: 0.9607844, a: 1}
 --- !u!1 &1008716690
 GameObject:
   m_ObjectHideFlags: 0
@@ -10916,8 +10906,9 @@ MonoBehaviour:
   tgl_firstMap: {fileID: 229001782}
   tgl_firstDifficulty: {fileID: 1002888068}
   playerDataSO: {fileID: 11400000, guid: ca93809d1fb3fca4b983294a91e8b65d, type: 2}
-  level_background_accessable: {fileID: 21300000, guid: bf78bde9e46122b4cb6945078fd24b2a, type: 3}
+  level_background_accessable: {fileID: 21300000, guid: 61cdc7350fcdf0d439fcb5c586d06784, type: 3}
   level_background_not_accessable: {fileID: 21300000, guid: 8cefbc665c0fbea48b9f29fc8b70603e, type: 3}
+  level_background_next: {fileID: 21300000, guid: decc44678288ab24dbc5900e49d6b01a, type: 3}
 --- !u!1 &1226772239
 GameObject:
   m_ObjectHideFlags: 0

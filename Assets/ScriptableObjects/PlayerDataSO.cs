@@ -37,6 +37,45 @@ public class PlayerDataSO : ScriptableObject
         get => playerDBUserId;
         set => playerDBUserId = value;
     }
+
+    public bool HasMainLevelBeenPlayed(Difficulty diffToCheck, string mainLevelToCheck)
+    {
+        if (diffToCheck == Difficulty.easy)
+        {
+            foreach (LevelPassed lvlPassed in easyLevelPassed)
+            {
+                if (lvlPassed.MainLevel == mainLevelToCheck)
+                {
+                    return true; 
+                }
+            }
+
+        }
+        else if (diffToCheck == Difficulty.medium)
+        {
+            foreach (LevelPassed lvlPassed in mediumLevelPassed)
+            {
+                if (lvlPassed.MainLevel == mainLevelToCheck)
+                {
+                    return true;
+                }
+            }
+
+        }
+        else if (diffToCheck == Difficulty.hard)
+        {
+            foreach (LevelPassed lvlPassed in hardLevelPassed)
+            {
+                if (lvlPassed.MainLevel == mainLevelToCheck)
+                {
+                    return true;
+                }
+            }
+
+        }
+        return false; 
+    }
+
     public Difficulty ChoosenDifficulty
     {
         get => choosenDifficulty;
