@@ -8,6 +8,7 @@ public class MainMenu_MapLevel : MonoBehaviour
     [SerializeField] private Toggle tgl_firstMap;
     [SerializeField] private Toggle tgl_firstDifficulty;
     [SerializeField] private PlayerDataSO playerDataSO;
+    [SerializeField] private LevelInfoSO levelInfoSO;
     [SerializeField] private Sprite level_background_accessable;
     [SerializeField] private Sprite level_background_not_accessable;
     [SerializeField] private Sprite level_background_next;
@@ -163,8 +164,21 @@ public class MainMenu_MapLevel : MonoBehaviour
         }
     }
 
-    void Update()
+    public void SetDifficultyEasy(bool clicked)
     {
-        
+        if (clicked)
+        {
+            levelInfoSO.Difficulty = PlayerDataSO.Difficulty.easy;
+        }
+    }
+    public void SetDifficultyMedium(bool clicked)
+    {
+        if (clicked)
+            levelInfoSO.Difficulty = PlayerDataSO.Difficulty.medium;
+    }
+    public void SetDifficultyHard(bool clicked)
+    {
+        if (clicked)
+            levelInfoSO.Difficulty = PlayerDataSO.Difficulty.hard;
     }
 }

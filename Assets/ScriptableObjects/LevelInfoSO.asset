@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: LevelInfoSO
   m_EditorClassIdentifier: 
   levelName: Level 1-4
-  mainLevel: 2
-  subLevel: 3
+  mainLevel: 1
+  subLevel: 5
   difficulty: 2000
