@@ -133,7 +133,7 @@ public class LevelUIManager : MonoBehaviour
     public void GoToMainMenu()
     {
         //SceneManager.LoadScene(SceneManager.GetSceneByName("Menu").ToString());
-        SceneManager.LoadScene("MainMenu_Start");
+        SceneManager.LoadScene("MainMenu_Map-Level");
     }
     public void QuitGame()
     {

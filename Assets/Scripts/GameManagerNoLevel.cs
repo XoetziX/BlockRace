@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManagerNoLevel : MonoBehaviour
 {
     [SerializeField] private GameSettingsSO gameSettings;
+    [SerializeField] private LevelInfoSO levelInfoSO;
 
     private void Start()
     {
@@ -51,5 +52,22 @@ public class GameManagerNoLevel : MonoBehaviour
         gameSettings.QuitGame = false;
         Debug.Log("Quit Game");
         Application.Quit();
+    }
+
+
+    public void LoadThisLevel(string mainLevel, string subLevel)
+    {
+
+        try
+        {
+            levelInfoSO.MainLevel = mainLevel;
+            levelInfoSO.SubLevel = subLevel;
+            Debug.Log("Going to load level: " + mainLevel + "-" + subLevel);
+            SceneManager.LoadScene("Level " + mainLevel + "-" + subLevel);
+        }
+        catch (System.Exception)
+        {
+            Debug.Log("Could not load level / scene. ------------->>>>>>>>> TODO: Pop-Up Info");
+        }
     }
 }
