@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class MainMenu_MapLevel : MonoBehaviour
 {
     [SerializeField] private Toggle tgl_firstMap;
-    [SerializeField] private Toggle tgl_firstDifficulty;
+    [SerializeField] private Toggle tgl_DifficultyEasy;
+    [SerializeField] private Toggle tgl_DifficultyMedium;
+    [SerializeField] private Toggle tgl_DifficultyHard;
     [SerializeField] private PlayerDataSO playerDataSO;
     [SerializeField] private LevelInfoSO levelInfoSO;
     [SerializeField] private Sprite level_background_accessable;
@@ -18,8 +20,27 @@ public class MainMenu_MapLevel : MonoBehaviour
         //initialize UI fields - set colors of first toggles
         tgl_firstMap.isOn = false;
         tgl_firstMap.isOn = true;
-        tgl_firstDifficulty.isOn = false;
-        tgl_firstDifficulty.isOn = true;
+        Debug.Log("##################### |" + levelInfoSO.ChoosenDifficulty.ToString() + "|");
+        Debug.Log("###### |" + LevelInfoSO.Difficulty.easy + "|");
+        if (levelInfoSO.ChoosenDifficulty == LevelInfoSO.Difficulty.easy || levelInfoSO.ChoosenDifficulty.ToString() == "0")
+        {
+            tgl_DifficultyEasy.isOn = false;
+            tgl_DifficultyEasy.isOn = true;
+        }
+        else if (levelInfoSO.ChoosenDifficulty == LevelInfoSO.Difficulty.medium)
+        {
+            tgl_DifficultyMedium.isOn = false;
+            tgl_DifficultyMedium.isOn = true;
+        }
+        else if (levelInfoSO.ChoosenDifficulty == LevelInfoSO.Difficulty.hard)
+        {
+            tgl_DifficultyHard.isOn = false;
+            tgl_DifficultyHard.isOn = true;
+        }
+        else
+        {
+            Debug.LogError("MainMenu_MapLevel - Start - OH OH - no difficulty");
+        }
 
 
         Debug.Log("Count vorher: " + playerDataSO.EasyLevelPassed.Count);
@@ -39,9 +60,9 @@ public class MainMenu_MapLevel : MonoBehaviour
         //for each row / main level
         for (int iMainLevel = 1; iMainLevel <= 5; iMainLevel++)
         {
-            Debug.Log("HasMainLevelBeenPlayed -> " + playerDataSO.HasMainLevelBeenPlayed(PlayerDataSO.Difficulty.easy, iMainLevel.ToString()));
+            Debug.Log("HasMainLevelBeenPlayed -> " + playerDataSO.HasMainLevelBeenPlayed(LevelInfoSO.Difficulty.easy, iMainLevel.ToString()));
             //has player already passed at least one level of this mainLevel?
-            if (playerDataSO.HasMainLevelBeenPlayed(PlayerDataSO.Difficulty.easy, iMainLevel.ToString()))
+            if (playerDataSO.HasMainLevelBeenPlayed(LevelInfoSO.Difficulty.easy, iMainLevel.ToString()))
             {
                 lvlPassed = playerDataSO.EasyLevelPassed[(iMainLevel - 1)];
                 Debug.Log("Processing MainLevel -> "); lvlPassed.DebugOut();
@@ -168,17 +189,17 @@ public class MainMenu_MapLevel : MonoBehaviour
     {
         if (clicked)
         {
-            levelInfoSO.Difficulty = PlayerDataSO.Difficulty.easy;
+            levelInfoSO.ChoosenDifficulty = LevelInfoSO.Difficulty.easy;
         }
     }
     public void SetDifficultyMedium(bool clicked)
     {
         if (clicked)
-            levelInfoSO.Difficulty = PlayerDataSO.Difficulty.medium;
+            levelInfoSO.ChoosenDifficulty = LevelInfoSO.Difficulty.medium;
     }
     public void SetDifficultyHard(bool clicked)
     {
         if (clicked)
-            levelInfoSO.Difficulty = PlayerDataSO.Difficulty.hard;
+            levelInfoSO.ChoosenDifficulty = LevelInfoSO.Difficulty.hard;
     }
 }

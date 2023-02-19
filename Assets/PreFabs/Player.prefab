@@ -134,6 +134,7 @@ MonoBehaviour:
   playerTransform: {fileID: 5248882238904205761}
   rigidBody: {fileID: 5248882238904205766}
   playerData: {fileID: 11400000, guid: ca93809d1fb3fca4b983294a91e8b65d, type: 2}
+  levelInfoSO: {fileID: 11400000, guid: 68463cffb641764458c9cf2e8a657adc, type: 2}
   gameSettings: {fileID: 11400000, guid: aaeeda0eecdeec04badc44c0fbf19012, type: 2}
 --- !u!114 &7852501337631336270
 MonoBehaviour:

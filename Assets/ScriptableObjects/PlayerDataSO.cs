@@ -9,11 +9,11 @@ public class PlayerDataSO : ScriptableObject
     [Header("Variable Values")]
     [SerializeField] private string playerName;
     [SerializeField] private string playerDBUserId;
-    [SerializeField] private Difficulty choosenDifficulty;
+    //[SerializeField] private Difficulty choosenDifficulty;
     [SerializeField] private List<LevelPassed> easyLevelPassed = new List<LevelPassed>();
     [SerializeField] private List<LevelPassed> mediumLevelPassed = new List<LevelPassed>();
     [SerializeField] private List<LevelPassed> hardLevelPassed = new List<LevelPassed>();
-    public enum Difficulty { easy = 2000, medium = 3000, hard = 4000 }
+    //public enum Difficulty { easy = 2000, medium = 3000, hard = 4000 }
 
     [Header("Fixed Values")]
     [SerializeField] private float _baseSidewayForce;
@@ -22,7 +22,6 @@ public class PlayerDataSO : ScriptableObject
     private void OnEnable()
     {
         //choosenDifficulty = Difficulty.hard;
-        Debug.LogWarning("PlayerDataSO OnEnable - difficulty set correctly? also for new players? -> " + choosenDifficulty);
         _baseSidewayForce = 50;
     }
 
@@ -38,9 +37,9 @@ public class PlayerDataSO : ScriptableObject
         set => playerDBUserId = value;
     }
 
-    public bool HasMainLevelBeenPlayed(Difficulty diffToCheck, string mainLevelToCheck)
+    public bool HasMainLevelBeenPlayed(LevelInfoSO.Difficulty diffToCheck, string mainLevelToCheck)
     {
-        if (diffToCheck == Difficulty.easy)
+        if (diffToCheck == LevelInfoSO.Difficulty.easy)
         {
             foreach (LevelPassed lvlPassed in easyLevelPassed)
             {
@@ -51,7 +50,7 @@ public class PlayerDataSO : ScriptableObject
             }
 
         }
-        else if (diffToCheck == Difficulty.medium)
+        else if (diffToCheck == LevelInfoSO.Difficulty.medium)
         {
             foreach (LevelPassed lvlPassed in mediumLevelPassed)
             {
@@ -62,7 +61,7 @@ public class PlayerDataSO : ScriptableObject
             }
 
         }
-        else if (diffToCheck == Difficulty.hard)
+        else if (diffToCheck == LevelInfoSO.Difficulty.hard)
         {
             foreach (LevelPassed lvlPassed in hardLevelPassed)
             {
@@ -76,11 +75,11 @@ public class PlayerDataSO : ScriptableObject
         return false; 
     }
 
-    public Difficulty ChoosenDifficulty
-    {
-        get => choosenDifficulty;
-        set => choosenDifficulty = value;
-    }
+    //public Difficulty ChoosenDifficulty
+    //{
+    //    get => choosenDifficulty;
+    //    set => choosenDifficulty = value;
+    //}
     public float BaseSidewayForce
     {
         get

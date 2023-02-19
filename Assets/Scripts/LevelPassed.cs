@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelPassed
 {
     
-    private PlayerDataSO.Difficulty levelDifficulty;
+    private LevelInfoSO.Difficulty levelDifficulty;
     private string mainLevel;
     //private ArrayList subLevel = new ArrayList();
     private List<string> subLevel = new List<string>(); 
@@ -13,7 +13,7 @@ public class LevelPassed
 
    
 
-    public PlayerDataSO.Difficulty LevelDifficulty
+    public LevelInfoSO.Difficulty LevelDifficulty
     {
         get => levelDifficulty;
         set => levelDifficulty = value;

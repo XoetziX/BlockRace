@@ -8,7 +8,8 @@ public class LevelInfoSO : ScriptableObject
     [SerializeField] string levelName;
     [SerializeField] string mainLevel;
     [SerializeField] string subLevel;
-    [SerializeField] PlayerDataSO.Difficulty difficulty; 
+    [SerializeField] Difficulty choosenDifficulty;
+    public enum Difficulty { easy = 2000, medium = 3000, hard = 4000 }
 
     //TODO: Compose levelname from mainlevel and sublevel
     public string LevelName
@@ -18,5 +19,5 @@ public class LevelInfoSO : ScriptableObject
     }
     public string MainLevel { get => mainLevel; set => mainLevel = value; }
     public string SubLevel { get => subLevel; set => subLevel = value; }
-    public PlayerDataSO.Difficulty Difficulty { get => difficulty; set => difficulty = value; }
+    public Difficulty ChoosenDifficulty { get => choosenDifficulty; set => choosenDifficulty = value; }
 }

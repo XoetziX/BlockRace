@@ -81,31 +81,6 @@ public class MainMenu_Start : MonoBehaviour
     }
 
 
-    public void SetDifficultyEasy(bool clicked)
-    {
-        if (clicked)
-        {
-            playerData.ChoosenDifficulty = PlayerDataSO.Difficulty.easy;
-            FirebaseManagerGame.instance.SavePlayerDataToDBWithoutTask();
-        }
-    }
-    public void SetDifficultyMedium(bool clicked)
-    {
-        if (clicked)
-        {
-            playerData.ChoosenDifficulty = PlayerDataSO.Difficulty.medium;
-            FirebaseManagerGame.instance.SavePlayerDataToDBWithoutTask();
-        }
-    }
-    public void SetDifficultyHard(bool clicked)
-    {
-        if (clicked)
-        {   
-            playerData.ChoosenDifficulty = PlayerDataSO.Difficulty.hard;
-            FirebaseManagerGame.instance.SavePlayerDataToDBWithoutTask();
-        }
-    }
-
     
     public void TestSortList()
     {

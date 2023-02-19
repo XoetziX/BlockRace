@@ -118,7 +118,7 @@ public class HighscoreController : MonoBehaviour
     public void SaveLevelPassed()
     {
         //Debug.Log("SaveHighscoresDB - highscoresDB count: " + highscoresDB.Count);
-        StartCoroutine(FirebaseManagerGame.instance.SaveLevelPassed(levelInfo.Difficulty.ToString(), levelInfo.MainLevel, levelInfo.SubLevel)) ;
+        StartCoroutine(FirebaseManagerGame.instance.SaveLevelPassed(levelInfo.ChoosenDifficulty.ToString(), levelInfo.MainLevel, levelInfo.SubLevel)) ;
     }
 
 

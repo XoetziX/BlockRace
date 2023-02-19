@@ -101,7 +101,7 @@ public class FirebaseManagerGame : MonoBehaviour
     {
         //without analyzing the task result
         DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("username").SetValueAsync(playerData.PlayerName); //PlayerName       
-        DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("choosenDifficulty").SetValueAsync(playerData.ChoosenDifficulty.ToString()); //ChoosenDifficulty
+        //DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("choosenDifficulty").SetValueAsync(playerData.ChoosenDifficulty.ToString()); //ChoosenDifficulty
 
     }
 
@@ -235,13 +235,13 @@ public class FirebaseManagerGame : MonoBehaviour
                 foreach (DataSnapshot difficultySnapshot in snapshot.Children) //easy, medium, hard
                 {
                     //Debug.Log("difficultySnapshot Key: " + difficultySnapshot.Key); 
-                    if (difficultySnapshot.Key == PlayerDataSO.Difficulty.easy.ToString() & difficultySnapshot.HasChildren)
+                    if (difficultySnapshot.Key == LevelInfoSO.Difficulty.easy.ToString() & difficultySnapshot.HasChildren)
                     {
                         foreach (DataSnapshot mainLevelSnapshot in difficultySnapshot.Children)//1 main level
                         {
                             //Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key); 
                             LevelPassed tmpLevelPassed = new LevelPassed();
-                            tmpLevelPassed.LevelDifficulty = PlayerDataSO.Difficulty.easy; 
+                            tmpLevelPassed.LevelDifficulty = LevelInfoSO.Difficulty.easy; 
                             tmpLevelPassed.MainLevel = mainLevelSnapshot.Key;
 
                             foreach (DataSnapshot subLevelSnapshot in mainLevelSnapshot.Children)//1,2,3,4,5 sub level
@@ -254,13 +254,13 @@ public class FirebaseManagerGame : MonoBehaviour
                         }
 
                     }
-                    else if (difficultySnapshot.Key == PlayerDataSO.Difficulty.medium.ToString() & difficultySnapshot.HasChildren)
+                    else if (difficultySnapshot.Key == LevelInfoSO.Difficulty.medium.ToString() & difficultySnapshot.HasChildren)
                     {
                         foreach (DataSnapshot mainLevelSnapshot in difficultySnapshot.Children)//1 main level
                         {
                             //Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key);
                             LevelPassed tmpLevelPassed = new LevelPassed();
-                            tmpLevelPassed.LevelDifficulty = PlayerDataSO.Difficulty.medium;
+                            tmpLevelPassed.LevelDifficulty = LevelInfoSO.Difficulty.medium;
                             tmpLevelPassed.MainLevel = mainLevelSnapshot.Key;
 
                             foreach (DataSnapshot subLevelSnapshot in mainLevelSnapshot.Children)//1,2,3,4,5 sub level
@@ -273,13 +273,13 @@ public class FirebaseManagerGame : MonoBehaviour
                         }
 
                     }
-                    else if (difficultySnapshot.Key == PlayerDataSO.Difficulty.hard.ToString() & difficultySnapshot.HasChildren)
+                    else if (difficultySnapshot.Key == LevelInfoSO.Difficulty.hard.ToString() & difficultySnapshot.HasChildren)
                     {
                         foreach (DataSnapshot mainLevelSnapshot in difficultySnapshot.Children)//1 main level
                         {
                             //Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key);
                             LevelPassed tmpLevelPassed = new LevelPassed();
-                            tmpLevelPassed.LevelDifficulty = PlayerDataSO.Difficulty.hard;
+                            tmpLevelPassed.LevelDifficulty = LevelInfoSO.Difficulty.hard;
                             tmpLevelPassed.MainLevel = mainLevelSnapshot.Key;
 
                             foreach (DataSnapshot subLevelSnapshot in mainLevelSnapshot.Children)//1,2,3,4,5 sub level
@@ -322,13 +322,13 @@ public class FirebaseManagerGame : MonoBehaviour
                 foreach (DataSnapshot difficultySnapshot in snapshot.Children) //easy, medium, hard
                 {
                     //Debug.Log("difficultySnapshot Key: " + difficultySnapshot.Key); 
-                    if (difficultySnapshot.Key == PlayerDataSO.Difficulty.easy.ToString() & difficultySnapshot.HasChildren)
+                    if (difficultySnapshot.Key == LevelInfoSO.Difficulty.easy.ToString() & difficultySnapshot.HasChildren)
                     {
                         foreach (DataSnapshot mainLevelSnapshot in difficultySnapshot.Children)//1 main level
                         {
                             //Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key); 
                             LevelPassed tmpLevelPassed = new LevelPassed();
-                            tmpLevelPassed.LevelDifficulty = PlayerDataSO.Difficulty.easy;
+                            tmpLevelPassed.LevelDifficulty = LevelInfoSO.Difficulty.easy;
                             tmpLevelPassed.MainLevel = mainLevelSnapshot.Key;
 
                             foreach (DataSnapshot subLevelSnapshot in mainLevelSnapshot.Children)//1,2,3,4,5 sub level
@@ -341,13 +341,13 @@ public class FirebaseManagerGame : MonoBehaviour
                         }
 
                     }
-                    else if (difficultySnapshot.Key == PlayerDataSO.Difficulty.medium.ToString() & difficultySnapshot.HasChildren)
+                    else if (difficultySnapshot.Key == LevelInfoSO.Difficulty.medium.ToString() & difficultySnapshot.HasChildren)
                     {
                         foreach (DataSnapshot mainLevelSnapshot in difficultySnapshot.Children)//1 main level
                         {
                             //Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key);
                             LevelPassed tmpLevelPassed = new LevelPassed();
-                            tmpLevelPassed.LevelDifficulty = PlayerDataSO.Difficulty.medium;
+                            tmpLevelPassed.LevelDifficulty = LevelInfoSO.Difficulty.medium;
                             tmpLevelPassed.MainLevel = mainLevelSnapshot.Key;
 
                             foreach (DataSnapshot subLevelSnapshot in mainLevelSnapshot.Children)//1,2,3,4,5 sub level
@@ -360,13 +360,13 @@ public class FirebaseManagerGame : MonoBehaviour
                         }
 
                     }
-                    else if (difficultySnapshot.Key == PlayerDataSO.Difficulty.hard.ToString() & difficultySnapshot.HasChildren)
+                    else if (difficultySnapshot.Key == LevelInfoSO.Difficulty.hard.ToString() & difficultySnapshot.HasChildren)
                     {
                         foreach (DataSnapshot mainLevelSnapshot in difficultySnapshot.Children)//1 main level
                         {
                             //Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key);
                             LevelPassed tmpLevelPassed = new LevelPassed();
-                            tmpLevelPassed.LevelDifficulty = PlayerDataSO.Difficulty.hard;
+                            tmpLevelPassed.LevelDifficulty = LevelInfoSO.Difficulty.hard;
                             tmpLevelPassed.MainLevel = mainLevelSnapshot.Key;
 
                             foreach (DataSnapshot subLevelSnapshot in mainLevelSnapshot.Children)//1,2,3,4,5 sub level

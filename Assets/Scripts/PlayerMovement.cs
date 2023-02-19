@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Rigidbody rigidBody;
     [SerializeField] private PlayerDataSO playerData;
+    [SerializeField] private LevelInfoSO levelInfoSO;
     //[SerializeField] private PlayerDataVar _playerDataVar;
     [SerializeField] private GameSettingsSO gameSettings;
 
@@ -25,13 +26,13 @@ public class PlayerMovement : MonoBehaviour
     {
         // save the horizontal center of the screen in order to determine the left and right touch control
         screenCenterX = Screen.width * 0.5f;
-        baseForwardForce = (int)playerData.ChoosenDifficulty;
+        baseForwardForce = (int)levelInfoSO.ChoosenDifficulty;
         currentForwardForce = GetCurrentForwardForce();
         currentSidewaysForce = GetCurrentSidewayForce();
     }
     private float GetCurrentForwardForce()
     {
-        return (int)playerData.ChoosenDifficulty;
+        return (int)levelInfoSO.ChoosenDifficulty;
     }
     public float GetCurrentSidewayForce()
     {

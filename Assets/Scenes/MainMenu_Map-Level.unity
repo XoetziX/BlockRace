@@ -10952,7 +10952,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tgl_firstMap: {fileID: 229001782}
-  tgl_firstDifficulty: {fileID: 1002888068}
+  tgl_DifficultyEasy: {fileID: 1002888068}
+  tgl_DifficultyMedium: {fileID: 57078450}
+  tgl_DifficultyHard: {fileID: 822233715}
   playerDataSO: {fileID: 11400000, guid: ca93809d1fb3fca4b983294a91e8b65d, type: 2}
   levelInfoSO: {fileID: 11400000, guid: 68463cffb641764458c9cf2e8a657adc, type: 2}
   level_background_accessable: {fileID: 21300000, guid: 61cdc7350fcdf0d439fcb5c586d06784, type: 3}
