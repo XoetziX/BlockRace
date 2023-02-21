@@ -321,22 +321,22 @@ public class FirebaseManagerGame : MonoBehaviour
             {
                 foreach (DataSnapshot difficultySnapshot in snapshot.Children) //easy, medium, hard
                 {
-                    //Debug.Log("difficultySnapshot Key: " + difficultySnapshot.Key); 
+                    Debug.Log("difficultySnapshot Key: " + difficultySnapshot.Key); 
                     if (difficultySnapshot.Key == LevelInfoSO.Difficulty.easy.ToString() & difficultySnapshot.HasChildren)
                     {
                         foreach (DataSnapshot mainLevelSnapshot in difficultySnapshot.Children)//1 main level
                         {
-                            //Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key); 
+                            Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key); 
                             LevelPassed tmpLevelPassed = new LevelPassed();
                             tmpLevelPassed.LevelDifficulty = LevelInfoSO.Difficulty.easy;
                             tmpLevelPassed.MainLevel = mainLevelSnapshot.Key;
 
                             foreach (DataSnapshot subLevelSnapshot in mainLevelSnapshot.Children)//1,2,3,4,5 sub level
                             {
-                                //Debug.Log("subLevelSnapshot Key: " + subLevelSnapshot.Key);
+                                Debug.Log("subLevelSnapshot Key: " + subLevelSnapshot.Key);
                                 tmpLevelPassed.AddSubLevel(subLevelSnapshot.Key);
                             }
-                            //tmpLevelPassed.DebugOut();
+                            tmpLevelPassed.DebugOut();
                             easyLevelPassed.Add(tmpLevelPassed);
                         }
 

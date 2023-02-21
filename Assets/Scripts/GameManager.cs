@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameSettingsSO gameSettings;
+    [SerializeField] private LevelInfoSO levelInfo;
 
     private LevelUIManager levelUIManager;
 
@@ -72,10 +73,18 @@ public class GameManager : MonoBehaviour
 
     public void CompleteLevel()
     {
+        SaveLevelPassed();
+
         levelUIManager.SetGameOver();
         levelUIManager.ShowLevelCompleteUI();
         levelUIManager.StopStopWatch();
         levelUIManager.AddHighscore();
+    }
+
+    public void SaveLevelPassed()
+    {
+        Debug.Log("SaveLevelPassed - Difficulty: " + levelInfo.ChoosenDifficulty.ToString() + " - Main: " + levelInfo.MainLevel + " - Sub: " + levelInfo.SubLevel);
+        StartCoroutine(FirebaseManagerGame.instance.SaveLevelPassed(levelInfo.ChoosenDifficulty.ToString(), levelInfo.MainLevel, levelInfo.SubLevel));
     }
 
     public void GameOver()

@@ -17,7 +17,6 @@ public class PlayerDataSO : ScriptableObject
 
     [Header("Fixed Values")]
     [SerializeField] private float _baseSidewayForce;
-    //[SerializeField] private ArrayList<LevelPassed> passedLevelList;
 
     private void OnEnable()
     {

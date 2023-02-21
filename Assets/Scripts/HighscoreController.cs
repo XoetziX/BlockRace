@@ -85,7 +85,7 @@ public class HighscoreController : MonoBehaviour
         //}
 
         SaveHighscoresDB();
-        SaveLevelPassed();
+        //SaveLevelPassed();
         ShowHighScores();
     }
 
@@ -114,11 +114,6 @@ public class HighscoreController : MonoBehaviour
     {
         //Debug.Log("SaveHighscoresDB - highscoresDB count: " + highscoresDB.Count);
         StartCoroutine(FirebaseManagerGame.instance.SaveHighscores(highscoresDB, levelInfo.LevelName));
-    }
-    public void SaveLevelPassed()
-    {
-        //Debug.Log("SaveHighscoresDB - highscoresDB count: " + highscoresDB.Count);
-        StartCoroutine(FirebaseManagerGame.instance.SaveLevelPassed(levelInfo.ChoosenDifficulty.ToString(), levelInfo.MainLevel, levelInfo.SubLevel)) ;
     }
 
 

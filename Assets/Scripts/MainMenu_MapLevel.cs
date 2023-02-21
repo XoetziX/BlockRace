@@ -20,8 +20,8 @@ public class MainMenu_MapLevel : MonoBehaviour
         //initialize UI fields - set colors of first toggles
         tgl_firstMap.isOn = false;
         tgl_firstMap.isOn = true;
-        Debug.Log("##################### |" + levelInfoSO.ChoosenDifficulty.ToString() + "|");
-        Debug.Log("###### |" + LevelInfoSO.Difficulty.easy + "|");
+        Debug.Log("Set Difficulty from SO - levelInfoSO.ChoosenDifficulty: |" + levelInfoSO.ChoosenDifficulty.ToString() + "|");
+        //Debug.Log("###### |" + LevelInfoSO.Difficulty.easy + "|");
         if (levelInfoSO.ChoosenDifficulty == LevelInfoSO.Difficulty.easy || levelInfoSO.ChoosenDifficulty.ToString() == "0")
         {
             tgl_DifficultyEasy.isOn = false;
