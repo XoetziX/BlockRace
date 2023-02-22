@@ -22,16 +22,6 @@ public class FirebaseManagerGame : MonoBehaviour
     //public FirebaseUser fbUser; // instead --> playerData.PlayerDBUserId
     public DatabaseReference DBreference;
 
-    //User Data variables
-    //[Header("UserData")]
-
-    //public TMP_InputField usernameField;
-    //public TMP_InputField xpField;
-    //public TMP_InputField killsField;
-    //public TMP_InputField deathsField;
-    //public GameObject scoreElement;
-    //public Transform scoreboardContent;
-
 
 
     void Awake()
@@ -69,9 +59,21 @@ public class FirebaseManagerGame : MonoBehaviour
 
     private void InitializeFirebase()
     {
+
+        Debug.Log("INIT FirebaseManagerGAME START");
         try
         {
+            //FirebaseDatabase.DefaultInstance.SetPersistenceEnabled(false); 
             DBreference = FirebaseDatabase.DefaultInstance.RootReference;
+            //DBreference.KeepSynced(false);
+            
+
+            /*Wenn KeepSynced auf false gesetzt wird, werden Änderungen an den Daten nur heruntergeladen, wenn der Client eine Anfrage an die Firebase-Datenbank sendet. 
+             * Dies kann dazu führen, dass der Client veraltete oder inkonsistente Daten anzeigt, wenn Änderungen an den Daten vorgenommen wurden, 
+             * aber der Client die Daten nicht aktualisiert hat. */
+            /*Insgesamt sind SetPersistenceEnabled(false) und DBreference.KeepSynced(false) unterschiedliche Funktionen mit unterschiedlichen Auswirkungen auf die Synchronisation von Daten 
+             * auf dem Gerät des Benutzers. Während SetPersistenceEnabled(false) die lokale Speicherung von Daten deaktiviert, um Speicherplatz auf dem Gerät zu sparen, 
+             * deaktiviert DBreference.KeepSynced(false) die automatische Synchronisation von Daten, um die Netzwerk- und CPU-Auslastung zu reduzieren.*/
         }
         catch (Exception e)
         {
@@ -108,7 +110,7 @@ public class FirebaseManagerGame : MonoBehaviour
     /*
      * loads all player information and stores them directly into the PlayerDataSO (hence, no return value neccessary)
      */
-    public IEnumerator LoadAllPlayerData()
+            public IEnumerator LoadAllPlayerData()
     {
         yield return LoadLevelPassed(); 
     }
@@ -306,12 +308,16 @@ public class FirebaseManagerGame : MonoBehaviour
 
     public async Task LoadLevelPassedAsync()
     {
-        Debug.Log("GetLevelPassedASYNC START - DB User ID: " + playerData.PlayerDBUserId);
+        bool doDebug = false; 
+        if (doDebug) Debug.Log("GetLevelPassedASYNC START - DB User ID: " + playerData.PlayerDBUserId); 
+        
         List<LevelPassed> levelPassed = new List<LevelPassed>();
 
         //Task<DataSnapshot> DBTask = DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("levelPassed").GetValueAsync();
         try
         {
+            FirebaseDatabase.DefaultInstance.GoOffline();
+            FirebaseDatabase.DefaultInstance.GoOnline();
             DataSnapshot snapshot = await DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("levelPassed").GetValueAsync();
             List<LevelPassed> easyLevelPassed = new List<LevelPassed>();
             List<LevelPassed> mediumLevelPassed = new List<LevelPassed>();
@@ -321,22 +327,22 @@ public class FirebaseManagerGame : MonoBehaviour
             {
                 foreach (DataSnapshot difficultySnapshot in snapshot.Children) //easy, medium, hard
                 {
-                    Debug.Log("difficultySnapshot Key: " + difficultySnapshot.Key); 
+                    if (doDebug) Debug.Log("difficultySnapshot Key: " + difficultySnapshot.Key); 
                     if (difficultySnapshot.Key == LevelInfoSO.Difficulty.easy.ToString() & difficultySnapshot.HasChildren)
                     {
                         foreach (DataSnapshot mainLevelSnapshot in difficultySnapshot.Children)//1 main level
                         {
-                            Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key); 
+                            if (doDebug) Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key); 
                             LevelPassed tmpLevelPassed = new LevelPassed();
                             tmpLevelPassed.LevelDifficulty = LevelInfoSO.Difficulty.easy;
                             tmpLevelPassed.MainLevel = mainLevelSnapshot.Key;
 
                             foreach (DataSnapshot subLevelSnapshot in mainLevelSnapshot.Children)//1,2,3,4,5 sub level
                             {
-                                Debug.Log("subLevelSnapshot Key: " + subLevelSnapshot.Key);
+                                if (doDebug) Debug.Log("subLevelSnapshot Key: " + subLevelSnapshot.Key);
                                 tmpLevelPassed.AddSubLevel(subLevelSnapshot.Key);
                             }
-                            tmpLevelPassed.DebugOut();
+                            if (doDebug) tmpLevelPassed.DebugOut();
                             easyLevelPassed.Add(tmpLevelPassed);
                         }
 
@@ -345,17 +351,17 @@ public class FirebaseManagerGame : MonoBehaviour
                     {
                         foreach (DataSnapshot mainLevelSnapshot in difficultySnapshot.Children)//1 main level
                         {
-                            //Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key);
+                            if (doDebug) Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key);
                             LevelPassed tmpLevelPassed = new LevelPassed();
                             tmpLevelPassed.LevelDifficulty = LevelInfoSO.Difficulty.medium;
                             tmpLevelPassed.MainLevel = mainLevelSnapshot.Key;
 
                             foreach (DataSnapshot subLevelSnapshot in mainLevelSnapshot.Children)//1,2,3,4,5 sub level
                             {
-                                //Debug.Log("subLevelSnapshot Key: " + subLevelSnapshot.Key);
+                                if (doDebug) Debug.Log("subLevelSnapshot Key: " + subLevelSnapshot.Key);
                                 tmpLevelPassed.AddSubLevel(subLevelSnapshot.Key);
                             }
-                            //tmpLevelPassed.DebugOut();
+                            if (doDebug) tmpLevelPassed.DebugOut();
                             mediumLevelPassed.Add(tmpLevelPassed);
                         }
 
@@ -364,17 +370,17 @@ public class FirebaseManagerGame : MonoBehaviour
                     {
                         foreach (DataSnapshot mainLevelSnapshot in difficultySnapshot.Children)//1 main level
                         {
-                            //Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key);
+                            if (doDebug) Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key);
                             LevelPassed tmpLevelPassed = new LevelPassed();
                             tmpLevelPassed.LevelDifficulty = LevelInfoSO.Difficulty.hard;
                             tmpLevelPassed.MainLevel = mainLevelSnapshot.Key;
 
                             foreach (DataSnapshot subLevelSnapshot in mainLevelSnapshot.Children)//1,2,3,4,5 sub level
                             {
-                                //Debug.Log("subLevelSnapshot Key: " + subLevelSnapshot.Key);
+                                if (doDebug) Debug.Log("subLevelSnapshot Key: " + subLevelSnapshot.Key);
                                 tmpLevelPassed.AddSubLevel(subLevelSnapshot.Key);
                             }
-                            //tmpLevelPassed.DebugOut();
+                            if (doDebug) tmpLevelPassed.DebugOut();
                             hardLevelPassed.Add(tmpLevelPassed);
                         }
 
@@ -383,7 +389,7 @@ public class FirebaseManagerGame : MonoBehaviour
                 playerData.EasyLevelPassed = easyLevelPassed;
                 playerData.MediumLevelPassed = mediumLevelPassed;
                 playerData.HardLevelPassed = hardLevelPassed;
-                Debug.Log("LoadLevelPassedAsync - END: Loaded lists:");
+                if (doDebug) Debug.Log("LoadLevelPassedAsync - END: Loaded lists:");
                 playerData.DebugOutLevelPassedLists();
 
             }
@@ -393,9 +399,19 @@ public class FirebaseManagerGame : MonoBehaviour
             Debug.LogError("Error accessing Firebase: " + e.Message);
         }
         
-
-            
-
         
+    }
+
+    public void DeleteLevelProgressOfUser()
+    {
+        Debug.Log("FirebaseManagerGame - DeleteLevelProgressOfUser - START ");
+        try
+        {
+            DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("levelPassed").RemoveValueAsync();
+        }
+        catch (FirebaseException e)
+        {
+            Debug.LogError("Error accessing Firebase: " + e.Message);
+        }
     }
 }

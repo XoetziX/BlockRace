@@ -74,11 +74,45 @@ public class PlayerDataSO : ScriptableObject
         return false; 
     }
 
-    //public Difficulty ChoosenDifficulty
-    //{
-    //    get => choosenDifficulty;
-    //    set => choosenDifficulty = value;
-    //}
+    public LevelPassed CheckIfAndGetMainLevelBeenPlayed(LevelInfoSO.Difficulty diffToCheck, string mainLevelToCheck)
+    {
+        if (diffToCheck == LevelInfoSO.Difficulty.easy)
+        {
+            foreach (LevelPassed lvlPassed in easyLevelPassed)
+            {
+                if (lvlPassed.MainLevel == mainLevelToCheck)
+                {
+                    return lvlPassed;
+                }
+            }
+
+        }
+        else if (diffToCheck == LevelInfoSO.Difficulty.medium)
+        {
+            foreach (LevelPassed lvlPassed in mediumLevelPassed)
+            {
+                if (lvlPassed.MainLevel == mainLevelToCheck)
+                {
+                    return lvlPassed;
+                }
+            }
+
+        }
+        else if (diffToCheck == LevelInfoSO.Difficulty.hard)
+        {
+            foreach (LevelPassed lvlPassed in hardLevelPassed)
+            {
+                if (lvlPassed.MainLevel == mainLevelToCheck)
+                {
+                    return lvlPassed;
+                }
+            }
+
+        }
+        return null;
+    }
+
+
     public float BaseSidewayForce
     {
         get

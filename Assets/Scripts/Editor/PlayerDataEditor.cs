@@ -9,10 +9,13 @@ public class PlayerDataEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
+        GUILayout.Space(10);
 
         PlayerDataSO playerDataSO = (PlayerDataSO)target;
 
-        GUILayout.Label("Easy Level Passed: ");
+        GUIStyle style = new GUIStyle(GUI.skin.label);
+        style.fontStyle = FontStyle.Bold; 
+        GUILayout.Label("Easy Level Passed: ", style);
 
         if (playerDataSO.EasyLevelPassed == null || playerDataSO.EasyLevelPassed.Count == 0)
         {

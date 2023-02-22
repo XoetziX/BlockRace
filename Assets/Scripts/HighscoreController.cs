@@ -117,10 +117,10 @@ public class HighscoreController : MonoBehaviour
     }
 
 
-    public void LoadLevelPassed()
-    {
-        StartCoroutine(FirebaseManagerGame.instance.LoadLevelPassed());
-    }
+    //public void LoadLevelPassed()
+    //{
+    //    StartCoroutine(FirebaseManagerGame.instance.LoadLevelPassed());
+    //}
 
     private void ShowHighScores()
     {

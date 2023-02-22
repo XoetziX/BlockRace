@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu_MapLevel : MonoBehaviour
@@ -60,7 +61,7 @@ public class MainMenu_MapLevel : MonoBehaviour
         //for each row / main level
         for (int iMainLevel = 1; iMainLevel <= 5; iMainLevel++)
         {
-            Debug.Log("HasMainLevelBeenPlayed -> " + playerDataSO.HasMainLevelBeenPlayed(LevelInfoSO.Difficulty.easy, iMainLevel.ToString()));
+            Debug.Log("HasMainLevel: " + iMainLevel + " BeenPlayed? -> " + playerDataSO.HasMainLevelBeenPlayed(LevelInfoSO.Difficulty.easy, iMainLevel.ToString()));
             //has player already passed at least one level of this mainLevel?
             if (playerDataSO.HasMainLevelBeenPlayed(LevelInfoSO.Difficulty.easy, iMainLevel.ToString()))
             {
@@ -119,70 +120,25 @@ public class MainMenu_MapLevel : MonoBehaviour
                 myButton = myButtonObject.GetComponent<Button>();
                 myButton.image.sprite = level_background_next;
                 myButton.interactable = true;
-            }
-        }
-    }
-
-    private void EnableLevelButtons()
-    {
-        GameObject myButtonObject;
-        Button myButton;
-        Debug.Log("Level enable / disable START");
-        foreach (LevelPassed lvlPassed in playerDataSO.EasyLevelPassed)
-        {
-            lvlPassed.DebugOut();
-            if (lvlPassed.SubLevel.Count == 0)
-            {
-                Debug.Log("lvlPassed.SubLevel.Count == 0 - Mainlevel: " + lvlPassed.MainLevel);
-                myButtonObject = GameObject.Find("lvl." + lvlPassed.MainLevel + "-1");
-                myButton = myButtonObject.GetComponent<Button>();
-                myButton.image.sprite = level_background_next;
-                myButton.interactable = true;
-            }
-            else if (lvlPassed.SubLevel.Count < 5)
-            {
-                Debug.Log("lvlPassed.SubLevel.Count < 5");
-                Debug.Log("lvlPassed.SubLevel.Count: " + lvlPassed.SubLevel.Count);
-
-                //already passed level
-                for (int i = 1; i <= lvlPassed.SubLevel.Count; i++)
-                {
-                    Debug.Log("ENABLE lvl name = " + "lvl." + lvlPassed.MainLevel + "-" + i);
-                    myButtonObject = GameObject.Find("lvl." + lvlPassed.MainLevel + "-" + i);
-                    myButton = myButtonObject.GetComponent<Button>();
-                    myButton.image.sprite = level_background_accessable;
-                    myButton.interactable = true;
-                }
-
-                //next - not already passed - level
-                Debug.Log("ENABLE NEXT lvl name = " + "lvl." + lvlPassed.MainLevel + "-" + (lvlPassed.SubLevel.Count + 1));
-                myButtonObject = GameObject.Find("lvl." + lvlPassed.MainLevel + "-" + (lvlPassed.SubLevel.Count + 1));
-                myButton = myButtonObject.GetComponent<Button>();
-                myButton.image.sprite = level_background_next;
-                myButton.interactable = true;
 
                 //disable all other level
-                for (int i = lvlPassed.SubLevel.Count + 2; i < 6; i++)
+                for (int xSubLevel = 2; xSubLevel < 6; xSubLevel++)
                 {
-                    Debug.Log("DISABLE lvl name = " + "lvl." + lvlPassed.MainLevel + "-" + i);
-                    myButtonObject = GameObject.Find("lvl." + lvlPassed.MainLevel + "-" + i);
+                    Debug.Log("DISABLE (mainLevel not played yet) lvl name = " + "lvl." + iMainLevel + "-" + xSubLevel);
+                    myButtonObject = GameObject.Find("lvl." + iMainLevel + "-" + xSubLevel);
                     myButton = myButtonObject.GetComponent<Button>();
                     myButton.image.sprite = level_background_not_accessable;
                     myButton.interactable = false;
                 }
             }
-            else if (lvlPassed.SubLevel.Count == 5)
-            {
-                Debug.Log("lvlPassed.SubLevel.Count == 5");
-                for (int i = 1; i <= lvlPassed.SubLevel.Count; i++)
-                {
-                    myButtonObject = GameObject.Find("lvl." + lvlPassed.MainLevel + "-" + i);
-                    myButton = myButtonObject.GetComponent<Button>();
-                    myButton.image.sprite = level_background_accessable;
-                    myButton.interactable = true;
-                }
-            }
         }
+    }
+
+    public void DeleteLevelProgressOfCurrentUser()
+    {
+        //Debug.Log("MainMenu_MapLevel - DeleteLevelProgressOfCurrentUser - START ");
+        FirebaseManagerGame.instance.DeleteLevelProgressOfUser();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
     }
 
     public void SetDifficultyEasy(bool clicked)
