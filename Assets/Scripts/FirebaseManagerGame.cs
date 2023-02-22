@@ -110,7 +110,7 @@ public class FirebaseManagerGame : MonoBehaviour
     /*
      * loads all player information and stores them directly into the PlayerDataSO (hence, no return value neccessary)
      */
-            public IEnumerator LoadAllPlayerData()
+    public IEnumerator LoadAllPlayerData()
     {
         yield return LoadLevelPassed(); 
     }

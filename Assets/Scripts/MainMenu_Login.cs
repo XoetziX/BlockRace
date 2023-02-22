@@ -39,14 +39,24 @@ public class MainMenu_Login : MonoBehaviour
     }
 
 
-    public void LoginButton()
+    public async void LoginButton()
     {
         warningLoginText.text = ""; //if previous register failed
-        //Call the login coroutine passing the email and password
-        StartCoroutine(FirebaseManagerAuth.instance.Login(emailLoginField.text, passwordLoginField.text, SetWarningLoginText, SetInfoLoginText));
-        Debug.LogWarning("TODO - check wether the following method is called before the login (and therewith the User-DB-ID) has been loaded");
-        StartCoroutine(FirebaseManagerGame.instance.LoadAllPlayerData());
+        string loginError = await FirebaseManagerAuth.instance.LoginAwait(emailLoginField.text, passwordLoginField.text); 
+        if (loginError != null)
+        {
+            warningLoginText.text = loginError; 
+        }
+        else
+        {
+            Debug.LogWarning("TODO - check wether the following method is called before the login (and therewith the User-DB-ID) has been loaded");
+            confirmLoginText.text = "Login successful";
+            await FirebaseManagerGame.instance.LoadLevelPassedAsync();
+            Debug.Log("Level should have been loaded, going to load map-level scene");
+            ShowStartScreen();
+        }
     }
+
     private void SetWarningLoginText(string returnText)
     {
         string warningText = returnText;

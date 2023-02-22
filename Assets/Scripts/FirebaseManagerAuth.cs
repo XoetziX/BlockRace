@@ -6,6 +6,7 @@ using TMPro;
 using System.Linq;
 using System.Collections;
 using System;
+using System.Threading.Tasks;
 
 public class FirebaseManagerAuth : MonoBehaviour
 {
@@ -65,6 +66,48 @@ public class FirebaseManagerAuth : MonoBehaviour
     {
         StartCoroutine(UpdateUsernameAuth(_newUserName));
         StartCoroutine(FirebaseManagerGame.instance.UpdateUsernameDatabase(_newUserName));
+    }
+
+    public async Task<string> LoginAwait(string email, string password)
+    {
+        FirebaseUser user = null;
+        try
+        {
+            //Call the Firebase auth signin function passing the email and password
+            user = await fbAuth.SignInWithEmailAndPasswordAsync(email, password);
+            Debug.Log("LoginAwait - Login successful! User-ID: " + user.UserId + " DisplayName: " + user.DisplayName);
+            playerData.PlayerName = user.DisplayName;
+            playerData.PlayerDBUserId = user.UserId; 
+            return null; 
+        }
+        catch (AggregateException ex)
+        {
+            FirebaseException authEx = ex.InnerExceptions[0] as FirebaseException;
+            if (authEx != null)
+            {
+                Debug.LogError("Login fehlgeschlagen: " + authEx.Message);
+                switch (authEx.ErrorCode)
+                {
+                    case (int)AuthError.MissingEmail:
+                        return ("Missing Email");
+                    case (int)AuthError.MissingPassword:
+                        return ("Missing Password");
+                    case (int)AuthError.WrongPassword:
+                        return ("Wrong Password");
+                    case (int)AuthError.InvalidEmail:
+                        return ("Invalid Email");
+                    case (int)AuthError.UserNotFound:
+                        return ("Account does not exist");
+                }
+            }
+            else
+            {
+                Debug.LogError("LoginAwait - unknown error: " + ex.Message);
+                return ("unknown login error");
+            }
+        }
+
+        return null;
     }
 
     public IEnumerator Login(string _email, string _password, Action<string> callbackWarningText, Action<string> callbackInfoText)
