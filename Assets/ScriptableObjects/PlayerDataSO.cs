@@ -126,7 +126,7 @@ public class PlayerDataSO : ScriptableObject
     public List<LevelPassed> HardLevelPassed { get => hardLevelPassed; set => hardLevelPassed = value; }
     public void DebugOutLevelPassedLists()
     {
-        Debug.Log("DEBUG OUT - PlayerDataSO - DebugOutLevelPassedLists: ");
+        //Debug.Log("DEBUG OUT - PlayerDataSO - DebugOutLevelPassedLists: ");
         foreach (LevelPassed lvl in easyLevelPassed) { lvl.DebugOut(); }
         foreach (LevelPassed lvl in mediumLevelPassed) { lvl.DebugOut(); }
         foreach (LevelPassed lvl in hardLevelPassed) { lvl.DebugOut(); }

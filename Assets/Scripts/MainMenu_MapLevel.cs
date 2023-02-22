@@ -54,28 +54,31 @@ public class MainMenu_MapLevel : MonoBehaviour
 
     private void EnableLevelButtons2()
     {
+        bool doDebugImportant = true; 
+        bool doDebugAdditional = false; 
         GameObject myButtonObject;
         Button myButton;
         LevelPassed lvlPassed;
-        Debug.Log("EnableLevelButtons2 START ");
+        if (doDebugImportant) Debug.Log("EnableLevelButtons2 START ");
         //for each row / main level
         for (int iMainLevel = 1; iMainLevel <= 5; iMainLevel++)
         {
-            Debug.Log("HasMainLevel: " + iMainLevel + " BeenPlayed? -> " + playerDataSO.HasMainLevelBeenPlayed(LevelInfoSO.Difficulty.easy, iMainLevel.ToString()));
+            if (doDebugImportant) Debug.Log("HasMainLevel: " + iMainLevel + " BeenPlayed? -> " + playerDataSO.HasMainLevelBeenPlayed(LevelInfoSO.Difficulty.easy, iMainLevel.ToString()));
+            lvlPassed = playerDataSO.CheckIfAndGetMainLevelBeenPlayed(LevelInfoSO.Difficulty.easy, iMainLevel.ToString());
             //has player already passed at least one level of this mainLevel?
-            if (playerDataSO.HasMainLevelBeenPlayed(LevelInfoSO.Difficulty.easy, iMainLevel.ToString()))
+            if (lvlPassed != null)
             {
-                lvlPassed = playerDataSO.EasyLevelPassed[(iMainLevel - 1)];
-                Debug.Log("Processing MainLevel -> "); lvlPassed.DebugOut();
+                //lvlPassed = playerDataSO.EasyLevelPassed[(iMainLevel - 1)];
+                if (doDebugImportant) Debug.Log("Processing MainLevel -> "); lvlPassed.DebugOut();
                 if (lvlPassed.SubLevel.Count < 5)
                 {
-                    Debug.Log("lvlPassed.SubLevel.Count < 5");
-                    Debug.Log("lvlPassed.SubLevel.Count: " + lvlPassed.SubLevel.Count);
+                    if (doDebugAdditional) Debug.Log("lvlPassed.SubLevel.Count < 5");
+                    if (doDebugAdditional) Debug.Log("lvlPassed.SubLevel.Count: " + lvlPassed.SubLevel.Count);
 
                     //already passed level
                     for (int xSubLevel = 1; xSubLevel <= lvlPassed.SubLevel.Count; xSubLevel++)
                     {
-                        Debug.Log("ENABLE lvl name = " + "lvl." + lvlPassed.MainLevel + "-" + xSubLevel);
+                        if (doDebugAdditional) Debug.Log("ENABLE lvl name = " + "lvl." + lvlPassed.MainLevel + "-" + xSubLevel);
                         myButtonObject = GameObject.Find("lvl." + lvlPassed.MainLevel + "-" + xSubLevel);
                         myButton = myButtonObject.GetComponent<Button>();
                         myButton.image.sprite = level_background_accessable;
@@ -83,7 +86,7 @@ public class MainMenu_MapLevel : MonoBehaviour
                     }
 
                     //next - not already passed - level
-                    Debug.Log("ENABLE NEXT lvl name = " + "lvl." + lvlPassed.MainLevel + "-" + (lvlPassed.SubLevel.Count + 1));
+                    if (doDebugAdditional) Debug.Log("ENABLE NEXT lvl name = " + "lvl." + lvlPassed.MainLevel + "-" + (lvlPassed.SubLevel.Count + 1));
                     myButtonObject = GameObject.Find("lvl." + lvlPassed.MainLevel + "-" + (lvlPassed.SubLevel.Count + 1));
                     myButton = myButtonObject.GetComponent<Button>();
                     myButton.image.sprite = level_background_next;
@@ -92,7 +95,7 @@ public class MainMenu_MapLevel : MonoBehaviour
                     //disable all other level
                     for (int xSubLevel = lvlPassed.SubLevel.Count + 2; xSubLevel < 6; xSubLevel++)
                     {
-                        Debug.Log("DISABLE lvl name = " + "lvl." + lvlPassed.MainLevel + "-" + xSubLevel);
+                        if (doDebugAdditional) Debug.Log("DISABLE lvl name = " + "lvl." + lvlPassed.MainLevel + "-" + xSubLevel);
                         myButtonObject = GameObject.Find("lvl." + lvlPassed.MainLevel + "-" + xSubLevel);
                         myButton = myButtonObject.GetComponent<Button>();
                         myButton.image.sprite = level_background_not_accessable;
@@ -101,7 +104,7 @@ public class MainMenu_MapLevel : MonoBehaviour
                 }
                 else if (lvlPassed.SubLevel.Count == 5)
                 {
-                    Debug.Log("lvlPassed.SubLevel.Count == 5");
+                    if (doDebugAdditional) Debug.Log("lvlPassed.SubLevel.Count == 5");
                     for (int x = 1; x <= lvlPassed.SubLevel.Count; x++)
                     {
                         myButtonObject = GameObject.Find("lvl." + lvlPassed.MainLevel + "-" + x);
@@ -115,7 +118,7 @@ public class MainMenu_MapLevel : MonoBehaviour
             //mainLevel not played yet
             else
             {
-                Debug.Log("not lvl passed - Mainlevel: " + iMainLevel);
+                if (doDebugImportant) Debug.Log("not lvl passed - Mainlevel: " + iMainLevel);
                 myButtonObject = GameObject.Find("lvl." + iMainLevel + "-1");
                 myButton = myButtonObject.GetComponent<Button>();
                 myButton.image.sprite = level_background_next;
@@ -124,7 +127,7 @@ public class MainMenu_MapLevel : MonoBehaviour
                 //disable all other level
                 for (int xSubLevel = 2; xSubLevel < 6; xSubLevel++)
                 {
-                    Debug.Log("DISABLE (mainLevel not played yet) lvl name = " + "lvl." + iMainLevel + "-" + xSubLevel);
+                    if (doDebugAdditional) Debug.Log("DISABLE (mainLevel not played yet) lvl name = " + "lvl." + iMainLevel + "-" + xSubLevel);
                     myButtonObject = GameObject.Find("lvl." + iMainLevel + "-" + xSubLevel);
                     myButton = myButtonObject.GetComponent<Button>();
                     myButton.image.sprite = level_background_not_accessable;
@@ -138,7 +141,16 @@ public class MainMenu_MapLevel : MonoBehaviour
     {
         //Debug.Log("MainMenu_MapLevel - DeleteLevelProgressOfCurrentUser - START ");
         FirebaseManagerGame.instance.DeleteLevelProgressOfUser();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void DoManyDBRequests()
+    {
+        Debug.Log("MainMenu_MapLevel - DoManyDBRequests - START ");
+        DoTheDBCall();
+    }
+    async void DoTheDBCall()
+    {
+        await FirebaseManagerGame.instance.DoManyDBRequestsAsync();
     }
 
     public void SetDifficultyEasy(bool clicked)

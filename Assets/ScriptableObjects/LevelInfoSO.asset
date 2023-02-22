@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 050238a42ee130144afd2aaaffbb4b50, type: 3}
   m_Name: LevelInfoSO
   m_EditorClassIdentifier: 
-  levelName: Level 1-4
-  mainLevel: 1
-  subLevel: 5
-  difficulty: 2000
+  levelName: Level 2-5
+  mainLevel: 5
+  subLevel: 2
+  choosenDifficulty: 4000
