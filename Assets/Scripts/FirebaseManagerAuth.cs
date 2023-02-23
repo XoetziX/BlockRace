@@ -110,58 +110,58 @@ public class FirebaseManagerAuth : MonoBehaviour
         return null;
     }
 
-    public IEnumerator Login(string _email, string _password, Action<string> callbackWarningText, Action<string> callbackInfoText)
-    {
-        //Call the Firebase auth signin function passing the email and password
-        var LoginTask = fbAuth.SignInWithEmailAndPasswordAsync(_email, _password);
-        //Wait until the task completes
-        yield return new WaitUntil(predicate: () => LoginTask.IsCompleted);
+    //public IEnumerator Login(string _email, string _password, Action<string> callbackWarningText, Action<string> callbackInfoText)
+    //{
+    //    //Call the Firebase auth signin function passing the email and password
+    //    var LoginTask = fbAuth.SignInWithEmailAndPasswordAsync(_email, _password);
+    //    //Wait until the task completes
+    //    yield return new WaitUntil(predicate: () => LoginTask.IsCompleted);
 
-        if (LoginTask.Exception != null)
-        {
-            //If there are errors handle them
-            Debug.LogWarning(message: $"Failed to register task with {LoginTask.Exception}");
-            FirebaseException firebaseEx = LoginTask.Exception.GetBaseException() as FirebaseException;
-            AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
+    //    if (LoginTask.Exception != null)
+    //    {
+    //        //If there are errors handle them
+    //        Debug.LogWarning(message: $"Failed to register task with {LoginTask.Exception}");
+    //        FirebaseException firebaseEx = LoginTask.Exception.GetBaseException() as FirebaseException;
+    //        AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
 
-            string message = "Login Failed!";
-            switch (errorCode)
-            {
-                case AuthError.MissingEmail:
-                    message = "Missing Email";
-                    break;
-                case AuthError.MissingPassword:
-                    message = "Missing Password";
-                    break;
-                case AuthError.WrongPassword:
-                    message = "Wrong Password";
-                    break;
-                case AuthError.InvalidEmail:
-                    message = "Invalid Email";
-                    break;
-                case AuthError.UserNotFound:
-                    message = "Account does not exist";
-                    break;
-            }
-            callbackWarningText(message);
-        }
-        else
-        {
-            //User is now logged in
-            //Now get the result
-            fbUser = LoginTask.Result;
-            Debug.LogFormat("User signed in successfully: {0} ({1})", fbUser.DisplayName, fbUser.Email);
-            callbackInfoText("Logged In");
+    //        string message = "Login Failed!";
+    //        switch (errorCode)
+    //        {
+    //            case AuthError.MissingEmail:
+    //                message = "Missing Email";
+    //                break;
+    //            case AuthError.MissingPassword:
+    //                message = "Missing Password";
+    //                break;
+    //            case AuthError.WrongPassword:
+    //                message = "Wrong Password";
+    //                break;
+    //            case AuthError.InvalidEmail:
+    //                message = "Invalid Email";
+    //                break;
+    //            case AuthError.UserNotFound:
+    //                message = "Account does not exist";
+    //                break;
+    //        }
+    //        callbackWarningText(message);
+    //    }
+    //    else
+    //    {
+    //        //User is now logged in
+    //        //Now get the result
+    //        fbUser = LoginTask.Result;
+    //        Debug.LogFormat("User signed in successfully: {0} ({1})", fbUser.DisplayName, fbUser.Email);
+    //        callbackInfoText("Logged In");
 
-            playerData.PlayerName = fbUser.DisplayName;
-            playerData.PlayerDBUserId = fbUser.UserId;
-            //StartCoroutine(FirebaseManagerGame.instance.LoadPlayerData());
+    //        playerData.PlayerName = fbUser.DisplayName;
+    //        playerData.PlayerDBUserId = fbUser.UserId;
+    //        //StartCoroutine(FirebaseManagerGame.instance.LoadPlayerData());
 
-            yield return new WaitForSeconds(1);
+    //        yield return new WaitForSeconds(1);
 
-            MainMenu_Login.instance.ShowStartScreen(); // Change to start UI
-        }
-    }
+    //        MainMenu_Login.instance.ShowStartScreen(); // Change to start UI
+    //    }
+    //}
 
 
     public IEnumerator Register(string _email, string _password, string _confirmPassword, string _username, Action<string> callbackWarningText)
@@ -243,6 +243,45 @@ public class FirebaseManagerAuth : MonoBehaviour
         }
     }
 
+
+    /*By default, Firebase Realtime Database rules restrict read and write access to only authenticated users. So, if you try to read data from the database without 
+     * authenticating the user first, you may get a permission denied error.
+    When you authenticate the user using Firebase Authentication, you get an instance of the FirebaseUser class that represents the currently authenticated user. 
+    You can use this user object to check if the user is authenticated and to access the user's information, such as the user ID and email address.
+     */
+    public async Task<bool> CheckIfDisplayNameAlreadyExists(string displayName)
+    {
+        FirebaseAuth auth = FirebaseAuth.DefaultInstance;
+        FirebaseUser user = auth.CurrentUser;
+        if (user != null)
+        {
+            // Get a reference to the Firebase Realtime Database
+            DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
+            // Create a query to check if the display name is already taken
+            Query query = reference.Child("users").OrderByChild("displayName").EqualTo(displayName);
+            DataSnapshot snapshot = await query.GetValueAsync();
+            if (snapshot.HasChildren)
+            {
+                // Display name is already taken
+                // Display an error message or prompt the user to choose a different display name
+                return true;
+            }
+            else
+            {
+                // Display name is available
+                // Proceed with setting the display name for the new user
+                return false;
+            }
+        }
+        else
+        {
+            // User is not authenticated
+            // Display an error message or prompt the user to sign in
+            return true;
+        }
+    }
+
+  
     private IEnumerator UpdateUsernameAuth(string _username)
     {
         //Create a user profile and set the username
