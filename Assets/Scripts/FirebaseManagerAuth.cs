@@ -17,10 +17,11 @@ public class FirebaseManagerAuth : MonoBehaviour
     public DependencyStatus dependencyStatus;
     public FirebaseAuth fbAuth;
     public FirebaseUser fbUser;
+    public DatabaseReference DBreference;
 
     [Header("Debug")]
-    [SerializeField] private bool doDebugImportant = false;
-    [SerializeField] private bool doDebugAdditional = false;
+    [SerializeField] private bool doDebugImportant;
+    [SerializeField] private bool doDebugAdditional;
 
     void Awake()
     {
@@ -44,6 +45,7 @@ public class FirebaseManagerAuth : MonoBehaviour
         try
         {
             fbAuth = FirebaseAuth.DefaultInstance;
+            DBreference = FirebaseDatabase.DefaultInstance.RootReference;
         }
         catch (Exception e)
         {
@@ -231,9 +233,23 @@ public class FirebaseManagerAuth : MonoBehaviour
         return message; 
     }
 
-    private void AddUsernameDbId(string displayName, string userId)
+    public IEnumerator AddUsernameDbId(string displayName, string userId)
     {
-        throw new NotImplementedException();
+        if (doDebugImportant) Debug.Log($"Auth - AddUsernameDbId - Displayname: {displayName} and userId: {userId}");
+
+        Task DBTask = DBreference.Child("usernames_dbid").Child(displayName).Child(userId).SetValueAsync("bla");
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            if (doDebugImportant) Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else
+        {
+            if (doDebugImportant) Debug.Log($"Auth - AddUsernameDbId - Added successfully");
+        }
+
     }
 
     public IEnumerator Register(string _email, string _password, string _confirmPassword, string _username, Action<string> callbackWarningText)

@@ -4095,6 +4095,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: ca93809d1fb3fca4b983294a91e8b65d, type: 2}
   dependencyStatus: 0
+  doDebugImportant: 1
+  doDebugAdditional: 0
 --- !u!4 &1876865230
 Transform:
   m_ObjectHideFlags: 0
