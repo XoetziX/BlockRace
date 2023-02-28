@@ -13,13 +13,14 @@ public class FirebaseManagerAuth : MonoBehaviour
     public static FirebaseManagerAuth instance;
     [SerializeField] private PlayerDataSO playerData;
 
-    //Firebase variables
     [Header("Firebase")]
     public DependencyStatus dependencyStatus;
     public FirebaseAuth fbAuth;
     public FirebaseUser fbUser;
-    //public DatabaseReference DBreference;
 
+    [Header("Debug")]
+    [SerializeField] private bool doDebugImportant = false;
+    [SerializeField] private bool doDebugAdditional = false;
 
     void Awake()
     {
@@ -47,7 +48,6 @@ public class FirebaseManagerAuth : MonoBehaviour
         catch (Exception e)
         {
             Debug.LogError("Gotcha - AUTH! " + e.Message);
-            //throw e;
         }
         if (fbAuth == null)
             Debug.LogError("INIT FirebaseManagerAUTH + fbAuth = null");
@@ -55,18 +55,27 @@ public class FirebaseManagerAuth : MonoBehaviour
             Debug.Log("INIT FirebaseManagerAUTH + sucessfull");
     }
 
+    public void CheckIfUserIsAuthenticatedTEST()
+    {
+        if (fbAuth.CurrentUser != null)
+        {
+            // a valid token exists for the current user
+            Debug.Log("CheckIfUserIsAuthenticated() - FirebaseAuth.DefaultInstance.CurrentUser - VALID: " + fbAuth.CurrentUser.UserId + " DisplayName: " + fbAuth.CurrentUser.DisplayName);
+        }
+        else
+        {
+            // no valid token exists
+            Debug.Log("CheckIfUserIsAuthenticated() - FirebaseAuth.DefaultInstance.CurrentUser - NOT valid ");
+        }
+    }
+
     //Function for the sign out button
     public void SignOut()
     {
         fbAuth.SignOut();
+        Debug.Log("Signed out");
     }
 
-    //Function for the save button
-    public void SaveDataButton(string _newUserName)
-    {
-        StartCoroutine(UpdateUsernameAuth(_newUserName));
-        StartCoroutine(FirebaseManagerGame.instance.UpdateUsernameDatabase(_newUserName));
-    }
 
     public async Task<string> LoginAwait(string email, string password)
     {
@@ -110,59 +119,122 @@ public class FirebaseManagerAuth : MonoBehaviour
         return null;
     }
 
-    public IEnumerator Login(string _email, string _password, Action<string> callbackWarningText, Action<string> callbackInfoText)
+    //public IEnumerator Login(string _email, string _password, Action<string> callbackWarningText, Action<string> callbackInfoText)
+    //{
+    //    //Call the Firebase auth signin function passing the email and password
+    //    var LoginTask = fbAuth.SignInWithEmailAndPasswordAsync(_email, _password);
+    //    //Wait until the task completes
+    //    yield return new WaitUntil(predicate: () => LoginTask.IsCompleted);
+
+    //    if (LoginTask.Exception != null)
+    //    {
+    //        //If there are errors handle them
+    //        Debug.LogWarning(message: $"Failed to register task with {LoginTask.Exception}");
+    //        FirebaseException firebaseEx = LoginTask.Exception.GetBaseException() as FirebaseException;
+    //        AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
+
+    //        string message = "Login Failed!";
+    //        switch (errorCode)
+    //        {
+    //            case AuthError.MissingEmail:
+    //                message = "Missing Email";
+    //                break;
+    //            case AuthError.MissingPassword:
+    //                message = "Missing Password";
+    //                break;
+    //            case AuthError.WrongPassword:
+    //                message = "Wrong Password";
+    //                break;
+    //            case AuthError.InvalidEmail:
+    //                message = "Invalid Email";
+    //                break;
+    //            case AuthError.UserNotFound:
+    //                message = "Account does not exist";
+    //                break;
+    //        }
+    //        callbackWarningText(message);
+    //    }
+    //    else
+    //    {
+    //        //User is now logged in
+    //        //Now get the result
+    //        fbUser = LoginTask.Result;
+    //        Debug.LogFormat("User signed in successfully: {0} ({1})", fbUser.DisplayName, fbUser.Email);
+    //        callbackInfoText("Logged In");
+
+    //        playerData.PlayerName = fbUser.DisplayName;
+    //        playerData.PlayerDBUserId = fbUser.UserId;
+    //        //StartCoroutine(FirebaseManagerGame.instance.LoadPlayerData());
+
+    //        yield return new WaitForSeconds(1);
+
+    //        MainMenu_Login.instance.ShowStartScreen(); // Change to start UI
+    //    }
+    //}
+
+    public async Task<string> RegisterAsync(string email, string password, string username)
     {
-        //Call the Firebase auth signin function passing the email and password
-        var LoginTask = fbAuth.SignInWithEmailAndPasswordAsync(_email, _password);
-        //Wait until the task completes
-        yield return new WaitUntil(predicate: () => LoginTask.IsCompleted);
+        string message = "registration_successful"; //will be returned if no error occurs
 
-        if (LoginTask.Exception != null)
+        try
         {
-            //If there are errors handle them
-            Debug.LogWarning(message: $"Failed to register task with {LoginTask.Exception}");
-            FirebaseException firebaseEx = LoginTask.Exception.GetBaseException() as FirebaseException;
-            AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
+            //Call the Firebase auth signin function passing the email and password and wait for the result
+            FirebaseUser fbUser = await fbAuth.CreateUserWithEmailAndPasswordAsync(email, password);
+            //User has now been created
 
-            string message = "Login Failed!";
+            //Create a user profile and set the username
+            UserProfile profile = new UserProfile { DisplayName = username };
+
+            //Call the Firebase auth update user profile function passing the profile with the username
+            await fbUser.UpdateUserProfileAsync(profile);
+
+            if (doDebugImportant) Debug.Log($"Auth - RegisterAsync - Going to add username: {fbAuth.CurrentUser.DisplayName} and db-id: {fbAuth.CurrentUser.UserId} into usernames_dbid");
+            AddUsernameDbId(fbAuth.CurrentUser.DisplayName, fbAuth.CurrentUser.UserId); 
+
+            // Optional: Verify that the profile has been updated
+            //FirebaseUser user = fbAuth.CurrentUser;
+            Debug.LogWarning("ask ChatGPT how to handle an possible error at this late stage where the user is already created"); 
+            //if (user != null && user.DisplayName == username)
+            //{
+            //    // Profile updated successfully
+            //}
+            //else
+            //{
+            //    // Profile update failed
+            //}
+
+        }
+        catch (AggregateException ex)
+        {
+            FirebaseException authEx = ex.InnerExceptions[0] as FirebaseException;
+            //If there are errors handle them
+            Debug.LogError($"Failed to register the new user");
+            AuthError errorCode = (AuthError)authEx.ErrorCode;
+            message = "registration_failed"; 
             switch (errorCode)
             {
                 case AuthError.MissingEmail:
-                    message = "Missing Email";
+                    message = "Missing email";
                     break;
                 case AuthError.MissingPassword:
-                    message = "Missing Password";
+                    message = "Missing password";
                     break;
-                case AuthError.WrongPassword:
-                    message = "Wrong Password";
+                case AuthError.WeakPassword:
+                    message = "Weak password";
                     break;
-                case AuthError.InvalidEmail:
-                    message = "Invalid Email";
-                    break;
-                case AuthError.UserNotFound:
-                    message = "Account does not exist";
+                case AuthError.EmailAlreadyInUse:
+                    message = "Email already in use";
                     break;
             }
-            callbackWarningText(message);
         }
-        else
-        {
-            //User is now logged in
-            //Now get the result
-            fbUser = LoginTask.Result;
-            Debug.LogFormat("User signed in successfully: {0} ({1})", fbUser.DisplayName, fbUser.Email);
-            callbackInfoText("Logged In");
 
-            playerData.PlayerName = fbUser.DisplayName;
-            playerData.PlayerDBUserId = fbUser.UserId;
-            //StartCoroutine(FirebaseManagerGame.instance.LoadPlayerData());
-
-            yield return new WaitForSeconds(1);
-
-            MainMenu_Login.instance.ShowStartScreen(); // Change to start UI
-        }
+        return message; 
     }
 
+    private void AddUsernameDbId(string displayName, string userId)
+    {
+        throw new NotImplementedException();
+    }
 
     public IEnumerator Register(string _email, string _password, string _confirmPassword, string _username, Action<string> callbackWarningText)
     {
@@ -243,23 +315,22 @@ public class FirebaseManagerAuth : MonoBehaviour
         }
     }
 
-    private IEnumerator UpdateUsernameAuth(string _username)
+
+    public async Task<bool> CheckIfUsernameExists(string username)
     {
-        //Create a user profile and set the username
-        UserProfile profile = new UserProfile { DisplayName = _username };
 
-        //Call the Firebase auth update user profile function passing the profile with the username
-        var ProfileTask = fbUser.UpdateUserProfileAsync(profile);
-        //Wait until the task completes
-        yield return new WaitUntil(predicate: () => ProfileTask.IsCompleted);
-
-        if (ProfileTask.Exception != null)
-        {
-            Debug.LogWarning(message: $"Failed to register task with {ProfileTask.Exception}");
-        }
-        else
-        {
-            //Auth username is now updated
-        }
+        DatabaseReference reference = FirebaseDatabase.DefaultInstance.GetReference("usernames_dbid");
+        DataSnapshot snapshot = await reference.Child(username).GetValueAsync();
+        //if (snapshot.Exists)
+        //{
+        //   Debug.Log($"FirebaseManagerAuth - CheckIfUsernameExists - Username already exists: {snapshot.Key}");            
+        //}
+        //else
+        //{
+        //    Debug.Log("FirebaseManagerAuth - CheckIfUsernameExists - Username is available. >> " + username);
+        //}
+        return snapshot.Exists;
     }
+
+
 }

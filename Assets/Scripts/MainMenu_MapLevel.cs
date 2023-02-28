@@ -6,23 +6,30 @@ using UnityEngine.UI;
 
 public class MainMenu_MapLevel : MonoBehaviour
 {
+
+    [Header("Toggles")]
     [SerializeField] private Toggle tgl_firstMap;
     [SerializeField] private Toggle tgl_DifficultyEasy;
     [SerializeField] private Toggle tgl_DifficultyMedium;
     [SerializeField] private Toggle tgl_DifficultyHard;
-    [SerializeField] private PlayerDataSO playerDataSO;
-    [SerializeField] private LevelInfoSO levelInfoSO;
     [SerializeField] private Sprite level_background_accessable;
     [SerializeField] private Sprite level_background_not_accessable;
     [SerializeField] private Sprite level_background_next;
+
+    [Header("Scriptable Objects")]
+    [SerializeField] private PlayerDataSO playerDataSO;
+    [SerializeField] private LevelInfoSO levelInfoSO;
+
+    [Header("Debug")]
+    [SerializeField] private bool doDebugImportant = false;
+    [SerializeField] private bool doDebugAdditional = false;
 
     async void Start()
     {
         //initialize UI fields - set colors of first toggles
         tgl_firstMap.isOn = false;
         tgl_firstMap.isOn = true;
-        Debug.Log("Set Difficulty from SO - levelInfoSO.ChoosenDifficulty: |" + levelInfoSO.ChoosenDifficulty.ToString() + "|");
-        //Debug.Log("###### |" + LevelInfoSO.Difficulty.easy + "|");
+        if (doDebugAdditional) Debug.Log("Set Difficulty from SO - levelInfoSO.ChoosenDifficulty: |" + levelInfoSO.ChoosenDifficulty.ToString() + "|");
         if (levelInfoSO.ChoosenDifficulty == LevelInfoSO.Difficulty.easy || levelInfoSO.ChoosenDifficulty.ToString() == "0")
         {
             tgl_DifficultyEasy.isOn = false;
@@ -44,18 +51,16 @@ public class MainMenu_MapLevel : MonoBehaviour
         }
 
 
-        Debug.Log("Count vorher: " + playerDataSO.EasyLevelPassed.Count);
-        Debug.Log("LOAD Level information from database");
+        if (doDebugAdditional) Debug.Log("Count vorher: " + playerDataSO.EasyLevelPassed.Count);
+        if (doDebugImportant) Debug.Log("MainMenu_MapLevel - LOAD Level information from database");
         //playerDataSO.EasyLevelPassed = new List<LevelPassed>();
         await FirebaseManagerGame.instance.LoadLevelPassedAsync();
-        Debug.Log("Count nachher: " + playerDataSO.EasyLevelPassed.Count);
+        if (doDebugAdditional) Debug.Log("Count nachher: " + playerDataSO.EasyLevelPassed.Count);
         EnableLevelButtons2();
     }
 
     private void EnableLevelButtons2()
     {
-        bool doDebugImportant = true; 
-        bool doDebugAdditional = false; 
         GameObject myButtonObject;
         Button myButton;
         LevelPassed lvlPassed;
@@ -69,7 +74,8 @@ public class MainMenu_MapLevel : MonoBehaviour
             if (lvlPassed != null)
             {
                 //lvlPassed = playerDataSO.EasyLevelPassed[(iMainLevel - 1)];
-                if (doDebugImportant) Debug.Log("Processing MainLevel -> "); lvlPassed.DebugOut();
+                if (doDebugImportant) Debug.Log("Processing MainLevel -> ");
+                if (doDebugImportant) lvlPassed.DebugOut();
                 if (lvlPassed.SubLevel.Count < 5)
                 {
                     if (doDebugAdditional) Debug.Log("lvlPassed.SubLevel.Count < 5");
@@ -151,6 +157,16 @@ public class MainMenu_MapLevel : MonoBehaviour
     async void DoTheDBCall()
     {
         await FirebaseManagerGame.instance.DoManyDBRequestsAsync();
+    }
+
+    public void TestAuthentication()
+    {
+        FirebaseManagerAuth.instance.CheckIfUserIsAuthenticatedTEST();
+    }
+
+    public void DoSignOut() //only test purpose
+    {
+        FirebaseManagerAuth.instance.SignOut();
     }
 
     public void SetDifficultyEasy(bool clicked)

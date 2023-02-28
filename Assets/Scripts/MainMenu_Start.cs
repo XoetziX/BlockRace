@@ -67,18 +67,10 @@ public class MainMenu_Start : MonoBehaviour
     public void SignOutButton()
     {
         Debug.Log("SignOutButton hit");
-        //FirebaseManagerRegLogin.instance.SignOut();
-        Debug.LogWarning("MainMenu_Start -> SignOutButton not fully implemented");
-        //StartCoroutine(FirebaseManagerGame.instance.SavePlayerDataToDB());
-        FirebaseManagerGame.instance.SavePlayerDataToDBWithoutTask();
-
-        //ShowLoginScreen();
+        FirebaseManagerAuth.instance.SignOut();
+        SceneManager.LoadScene("MainMenu_Login");
     }
 
-    public void SignOutButton2()
-    {
-        
-    }
 
 
     

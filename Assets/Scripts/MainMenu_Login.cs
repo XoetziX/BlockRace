@@ -49,8 +49,7 @@ public class MainMenu_Login : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("TODO - check wether the following method is called before the login (and therewith the User-DB-ID) has been loaded");
-            confirmLoginText.text = "Login successful";
+            //confirmLoginText.text = "Login successful";
             await FirebaseManagerGame.instance.LoadLevelPassedAsync();
             Debug.Log("Level should have been loaded, going to load map-level scene");
             ShowStartScreen();

@@ -15,15 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "405450486383-hvlautel62gple4hjc9oadr4b19ssu71.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "de.indiegames.oetzi.blockracemanager",
-            "certificate_hash": "dc28dca608fc6c0e456768cb997d4eb089826138"
-          }
-        },
-        {
-          "client_id": "405450486383-hqsdfsvvfq69d5u1pj908uvnli8rapkt.apps.googleusercontent.com",
+          "client_id": "405450486383-jj40vh24rtpv5gv9pfdeipd9es58k4hi.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -36,7 +28,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "405450486383-hqsdfsvvfq69d5u1pj908uvnli8rapkt.apps.googleusercontent.com",
+              "client_id": "405450486383-jj40vh24rtpv5gv9pfdeipd9es58k4hi.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

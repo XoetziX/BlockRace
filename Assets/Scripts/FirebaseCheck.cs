@@ -17,7 +17,7 @@ public class FirebaseCheck : MonoBehaviour
             // all good, enable our gameobjects
             // they need not perform the check and can just Initialize
             // as 'instances' 
-            Debug.Log("Firebase CHECK successful");
+            Debug.Log("Firebase CHECK successful - ### TODO ### Check whether this makes sense. It will likley be executed after the awake of the two FirebaseManager GOs");
             FirebaseManagerAuth.SetActive(true);
             FirebaseManagerGame.SetActive(true);
         }

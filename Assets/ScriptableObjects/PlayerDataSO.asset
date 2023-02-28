@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: oetzi
   playerDBUserId: Mi7Gp6joqjgAYHNiLHrfgOInZbU2
-  choosenDifficulty: 4000
   _baseSidewayForce: 50

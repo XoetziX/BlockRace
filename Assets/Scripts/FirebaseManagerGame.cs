@@ -16,10 +16,8 @@ public class FirebaseManagerGame : MonoBehaviour
     public static FirebaseManagerGame instance;
     [SerializeField] private PlayerDataSO playerData;
 
-    //Firebase variables
     [Header("Firebase")]
     public DependencyStatus dependencyStatus;
-    //public FirebaseUser fbUser; // instead --> playerData.PlayerDBUserId
     public DatabaseReference DBreference;
 
 
@@ -38,35 +36,20 @@ public class FirebaseManagerGame : MonoBehaviour
             //Debug.Log("Instance already exists, destroying object!");
             Destroy(this);
         }
-        Debug.Log("FirebaseManagerGame - instance: " + instance.ToString()) ;
+        Debug.Log("FirebaseManagerGame - instance: " + instance.ToString());
     }
 
-
-    //async void CheckDependenciesSync()
-    //{
-    //    var dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
-    //    if (dependencyStatus == DependencyStatus.Available)
-    //    {
-    //        // all good, firebase init passed
-    //        Debug.Log("Firebase Loaded");
-    //        InitializeFirebase();
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("Firebase Failed");
-    //    }
-    //}
 
     private void InitializeFirebase()
     {
 
-        Debug.Log("INIT FirebaseManagerGAME START");
+        //Debug.Log("INIT FirebaseManagerGAME START");
         try
         {
-            FirebaseDatabase.DefaultInstance.SetPersistenceEnabled(false); 
+            //FirebaseDatabase.DefaultInstance.SetPersistenceEnabled(false); 
             DBreference = FirebaseDatabase.DefaultInstance.RootReference;
-            DBreference.KeepSynced(false);
-            
+            //DBreference.KeepSynced(false);
+
 
             /*Wenn KeepSynced auf false gesetzt wird, werden Änderungen an den Daten nur heruntergeladen, wenn der Client eine Anfrage an die Firebase-Datenbank sendet. 
              * Dies kann dazu führen, dass der Client veraltete oder inkonsistente Daten anzeigt, wenn Änderungen an den Daten vorgenommen wurden, 
@@ -83,54 +66,6 @@ public class FirebaseManagerGame : MonoBehaviour
         Debug.Log("INIT FirebaseManagerGAME -> DBreference: " + DBreference.ToString());
     }
 
-    //public IEnumerator SavePlayerDataToDB()
-    //{
-    //    Debug.Log("Start SavePlayerDataToDB - DB-ID: " + playerData.PlayerDBUserId + " Difficulty: " + playerData.ChoosenDifficulty + " name (not stored): " + playerData.PlayerName);
-    //    //Set the currently logged in user username in the database
-
-    //    var DBTask = DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("username").SetValueAsync(playerData.PlayerName); //PlayerName        
-    //    yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
-    //    if (DBTask.Exception != null)
-    //        Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
-
-    //    DBTask = DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("choosenDifficulty").SetValueAsync(playerData.ChoosenDifficulty.ToString()); //ChoosenDifficulty
-    //    yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
-    //    if (DBTask.Exception != null)
-    //        Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
-    //}
-
-    public void SavePlayerDataToDBWithoutTask()
-    {
-        //without analyzing the task result
-        DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("username").SetValueAsync(playerData.PlayerName); //PlayerName       
-        //DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("choosenDifficulty").SetValueAsync(playerData.ChoosenDifficulty.ToString()); //ChoosenDifficulty
-
-    }
-
-    /*
-     * loads all player information and stores them directly into the PlayerDataSO (hence, no return value neccessary)
-     */
-    public IEnumerator LoadAllPlayerData()
-    {
-        yield return LoadLevelPassed(); 
-    }
-
-    public IEnumerator UpdateUsernameDatabase(string _username)
-    {
-        //Set the currently logged in user username in the database
-        var DBTask = DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("username").SetValueAsync(_username);
-
-        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
-
-        if (DBTask.Exception != null)
-        {
-            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
-        }
-        else
-        {
-            //Database username is now updated
-        }
-    }
 
 
     public IEnumerator SaveHighscores(List<PlayerHighscore> highscoresDB, String levelName)
@@ -161,7 +96,7 @@ public class FirebaseManagerGame : MonoBehaviour
     {
 
         List<PlayerHighscore> tmpHighscores = new List<PlayerHighscore>();
-        
+
         Task<DataSnapshot> DBTask = DBreference.Child("levelHighscores").Child(levelName).GetValueAsync();
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
         if (DBTask.Exception != null)
@@ -188,7 +123,7 @@ public class FirebaseManagerGame : MonoBehaviour
 
     public async Task DoManyDBRequestsAsync()
     {
-        int number = 10; 
+        int number = 10;
         try
         {
             for (int i = 0; i < number; i++)
@@ -307,111 +242,110 @@ public class FirebaseManagerGame : MonoBehaviour
     /*
      * loads every information below the node "levelPassed" and stores them directly into the PlayerDataSO (hence, no return value neccessary)
      */
-    public IEnumerator LoadLevelPassed()
-    {
-        Debug.Log("GetLevelPassed IEnumerator START - DB User ID: " + playerData.PlayerDBUserId);
-        List <LevelPassed> levelPassed = new List<LevelPassed>();
+    //public IEnumerator LoadLevelPassed()
+    //{
+    //    Debug.Log("GetLevelPassed IEnumerator START - DB User ID: " + playerData.PlayerDBUserId);
+    //    List<LevelPassed> levelPassed = new List<LevelPassed>();
 
-        Task<DataSnapshot> DBTask = DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("levelPassed").GetValueAsync();
-        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
-        if (DBTask.Exception != null)
-        {
-            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
-        }
-        else if (DBTask.Result.Value == null) //No data exists yet
-        {
-            Debug.Log("FirebaseManagerGame - GetLevelPassed - NO DATA EXISTS");
-        }
-        else //Data has been retrieved
-        {
-            DataSnapshot snapshot = DBTask.Result;
+    //    Task<DataSnapshot> DBTask = DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("levelPassed").GetValueAsync();
+    //    yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+    //    if (DBTask.Exception != null)
+    //    {
+    //        Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+    //    }
+    //    else if (DBTask.Result.Value == null) //No data exists yet
+    //    {
+    //        Debug.Log("FirebaseManagerGame - GetLevelPassed - NO DATA EXISTS");
+    //    }
+    //    else //Data has been retrieved
+    //    {
+    //        DataSnapshot snapshot = DBTask.Result;
 
-            List<LevelPassed> easyLevelPassed = new List<LevelPassed>();
-            List<LevelPassed> mediumLevelPassed = new List<LevelPassed>();
-            List<LevelPassed> hardLevelPassed = new List<LevelPassed>();
-            
-            if (snapshot.HasChildren)//snapshot = levelPassed --> children = easy, medium, hard
-            {
-                foreach (DataSnapshot difficultySnapshot in snapshot.Children) //easy, medium, hard
-                {
-                    //Debug.Log("difficultySnapshot Key: " + difficultySnapshot.Key); 
-                    if (difficultySnapshot.Key == LevelInfoSO.Difficulty.easy.ToString() & difficultySnapshot.HasChildren)
-                    {
-                        foreach (DataSnapshot mainLevelSnapshot in difficultySnapshot.Children)//1 main level
-                        {
-                            //Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key); 
-                            LevelPassed tmpLevelPassed = new LevelPassed();
-                            tmpLevelPassed.LevelDifficulty = LevelInfoSO.Difficulty.easy; 
-                            tmpLevelPassed.MainLevel = mainLevelSnapshot.Key;
+    //        List<LevelPassed> easyLevelPassed = new List<LevelPassed>();
+    //        List<LevelPassed> mediumLevelPassed = new List<LevelPassed>();
+    //        List<LevelPassed> hardLevelPassed = new List<LevelPassed>();
 
-                            foreach (DataSnapshot subLevelSnapshot in mainLevelSnapshot.Children)//1,2,3,4,5 sub level
-                            {
-                                //Debug.Log("subLevelSnapshot Key: " + subLevelSnapshot.Key);
-                                tmpLevelPassed.AddSubLevel(subLevelSnapshot.Key);
-                            }
-                            //tmpLevelPassed.DebugOut();
-                            easyLevelPassed.Add(tmpLevelPassed);
-                        }
+    //        if (snapshot.HasChildren)//snapshot = levelPassed --> children = easy, medium, hard
+    //        {
+    //            foreach (DataSnapshot difficultySnapshot in snapshot.Children) //easy, medium, hard
+    //            {
+    //                //Debug.Log("difficultySnapshot Key: " + difficultySnapshot.Key); 
+    //                if (difficultySnapshot.Key == LevelInfoSO.Difficulty.easy.ToString() & difficultySnapshot.HasChildren)
+    //                {
+    //                    foreach (DataSnapshot mainLevelSnapshot in difficultySnapshot.Children)//1 main level
+    //                    {
+    //                        //Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key); 
+    //                        LevelPassed tmpLevelPassed = new LevelPassed();
+    //                        tmpLevelPassed.LevelDifficulty = LevelInfoSO.Difficulty.easy;
+    //                        tmpLevelPassed.MainLevel = mainLevelSnapshot.Key;
 
-                    }
-                    else if (difficultySnapshot.Key == LevelInfoSO.Difficulty.medium.ToString() & difficultySnapshot.HasChildren)
-                    {
-                        foreach (DataSnapshot mainLevelSnapshot in difficultySnapshot.Children)//1 main level
-                        {
-                            //Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key);
-                            LevelPassed tmpLevelPassed = new LevelPassed();
-                            tmpLevelPassed.LevelDifficulty = LevelInfoSO.Difficulty.medium;
-                            tmpLevelPassed.MainLevel = mainLevelSnapshot.Key;
+    //                        foreach (DataSnapshot subLevelSnapshot in mainLevelSnapshot.Children)//1,2,3,4,5 sub level
+    //                        {
+    //                            //Debug.Log("subLevelSnapshot Key: " + subLevelSnapshot.Key);
+    //                            tmpLevelPassed.AddSubLevel(subLevelSnapshot.Key);
+    //                        }
+    //                        //tmpLevelPassed.DebugOut();
+    //                        easyLevelPassed.Add(tmpLevelPassed);
+    //                    }
 
-                            foreach (DataSnapshot subLevelSnapshot in mainLevelSnapshot.Children)//1,2,3,4,5 sub level
-                            {
-                                //Debug.Log("subLevelSnapshot Key: " + subLevelSnapshot.Key);
-                                tmpLevelPassed.AddSubLevel(subLevelSnapshot.Key);
-                            }
-                            //tmpLevelPassed.DebugOut();
-                            mediumLevelPassed.Add(tmpLevelPassed);
-                        }
+    //                }
+    //                else if (difficultySnapshot.Key == LevelInfoSO.Difficulty.medium.ToString() & difficultySnapshot.HasChildren)
+    //                {
+    //                    foreach (DataSnapshot mainLevelSnapshot in difficultySnapshot.Children)//1 main level
+    //                    {
+    //                        //Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key);
+    //                        LevelPassed tmpLevelPassed = new LevelPassed();
+    //                        tmpLevelPassed.LevelDifficulty = LevelInfoSO.Difficulty.medium;
+    //                        tmpLevelPassed.MainLevel = mainLevelSnapshot.Key;
 
-                    }
-                    else if (difficultySnapshot.Key == LevelInfoSO.Difficulty.hard.ToString() & difficultySnapshot.HasChildren)
-                    {
-                        foreach (DataSnapshot mainLevelSnapshot in difficultySnapshot.Children)//1 main level
-                        {
-                            //Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key);
-                            LevelPassed tmpLevelPassed = new LevelPassed();
-                            tmpLevelPassed.LevelDifficulty = LevelInfoSO.Difficulty.hard;
-                            tmpLevelPassed.MainLevel = mainLevelSnapshot.Key;
+    //                        foreach (DataSnapshot subLevelSnapshot in mainLevelSnapshot.Children)//1,2,3,4,5 sub level
+    //                        {
+    //                            //Debug.Log("subLevelSnapshot Key: " + subLevelSnapshot.Key);
+    //                            tmpLevelPassed.AddSubLevel(subLevelSnapshot.Key);
+    //                        }
+    //                        //tmpLevelPassed.DebugOut();
+    //                        mediumLevelPassed.Add(tmpLevelPassed);
+    //                    }
 
-                            foreach (DataSnapshot subLevelSnapshot in mainLevelSnapshot.Children)//1,2,3,4,5 sub level
-                            {
-                                //Debug.Log("subLevelSnapshot Key: " + subLevelSnapshot.Key);
-                                tmpLevelPassed.AddSubLevel(subLevelSnapshot.Key);
-                            }
-                            //tmpLevelPassed.DebugOut();
-                            hardLevelPassed.Add(tmpLevelPassed);
-                        }
+    //                }
+    //                else if (difficultySnapshot.Key == LevelInfoSO.Difficulty.hard.ToString() & difficultySnapshot.HasChildren)
+    //                {
+    //                    foreach (DataSnapshot mainLevelSnapshot in difficultySnapshot.Children)//1 main level
+    //                    {
+    //                        //Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key);
+    //                        LevelPassed tmpLevelPassed = new LevelPassed();
+    //                        tmpLevelPassed.LevelDifficulty = LevelInfoSO.Difficulty.hard;
+    //                        tmpLevelPassed.MainLevel = mainLevelSnapshot.Key;
 
-                    }
-                }
-                playerData.EasyLevelPassed = easyLevelPassed;
-                playerData.MediumLevelPassed = mediumLevelPassed;
-                playerData.HardLevelPassed = hardLevelPassed;
-                playerData.DebugOutLevelPassedLists();
+    //                        foreach (DataSnapshot subLevelSnapshot in mainLevelSnapshot.Children)//1,2,3,4,5 sub level
+    //                        {
+    //                            //Debug.Log("subLevelSnapshot Key: " + subLevelSnapshot.Key);
+    //                            tmpLevelPassed.AddSubLevel(subLevelSnapshot.Key);
+    //                        }
+    //                        //tmpLevelPassed.DebugOut();
+    //                        hardLevelPassed.Add(tmpLevelPassed);
+    //                    }
 
-            }
+    //                }
+    //            }
+    //            playerData.EasyLevelPassed = easyLevelPassed;
+    //            playerData.MediumLevelPassed = mediumLevelPassed;
+    //            playerData.HardLevelPassed = hardLevelPassed;
+    //            playerData.DebugOutLevelPassedLists();
+
+    //        }
 
 
-        }
-    }
+    //    }
+    //}
 
     public async Task LoadLevelPassedAsync()
     {
-        bool doDebug = false; 
-        if (doDebug) Debug.Log("GetLevelPassedASYNC START - DB User ID: " + playerData.PlayerDBUserId); 
-        
+        bool doDebug = false;
+        if (doDebug) Debug.Log("GetLevelPassedASYNC START - DB User ID: " + playerData.PlayerDBUserId);
+
         List<LevelPassed> levelPassed = new List<LevelPassed>();
 
-        //Task<DataSnapshot> DBTask = DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("levelPassed").GetValueAsync();
         try
         {
             //FirebaseDatabase.DefaultInstance.GoOnline();
@@ -425,12 +359,12 @@ public class FirebaseManagerGame : MonoBehaviour
             {
                 foreach (DataSnapshot difficultySnapshot in snapshot.Children) //easy, medium, hard
                 {
-                    if (doDebug) Debug.Log("difficultySnapshot Key: " + difficultySnapshot.Key); 
+                    if (doDebug) Debug.Log("difficultySnapshot Key: " + difficultySnapshot.Key);
                     if (difficultySnapshot.Key == LevelInfoSO.Difficulty.easy.ToString() & difficultySnapshot.HasChildren)
                     {
                         foreach (DataSnapshot mainLevelSnapshot in difficultySnapshot.Children)//1 main level
                         {
-                            if (doDebug) Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key); 
+                            if (doDebug) Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key);
                             LevelPassed tmpLevelPassed = new LevelPassed();
                             tmpLevelPassed.LevelDifficulty = LevelInfoSO.Difficulty.easy;
                             tmpLevelPassed.MainLevel = mainLevelSnapshot.Key;
@@ -488,7 +422,7 @@ public class FirebaseManagerGame : MonoBehaviour
                 playerData.MediumLevelPassed = mediumLevelPassed;
                 playerData.HardLevelPassed = hardLevelPassed;
                 if (doDebug) Debug.Log("LoadLevelPassedAsync - END: Loaded lists:");
-                playerData.DebugOutLevelPassedLists();
+                if (doDebug) playerData.DebugOutLevelPassedLists();
 
             }
         }
@@ -496,8 +430,8 @@ public class FirebaseManagerGame : MonoBehaviour
         {
             Debug.LogError("Error accessing Firebase: " + e.Message);
         }
-        
-        
+
+
     }
 
     public void DeleteLevelProgressOfUser()
@@ -513,4 +447,33 @@ public class FirebaseManagerGame : MonoBehaviour
         }
         Debug.Log("FirebaseManagerGame - DeleteLevelProgressOfUser - END ");
     }
+
+    public void TestReadDB_Button()
+    {
+        //Debug.Log("FirebaseManagerGame TestReadDB_Button START"); 
+        _ = TestReadDB();
+        //Debug.Log("FirebaseManagerGame TestReadDB_Button END");
+    }
+
+    public async Task TestReadDB()
+    {
+        Debug.Log("FirebaseManagerGame TestReadDB START"); 
+
+        if (FirebaseManagerAuth.instance.fbAuth.CurrentUser != null)
+        {
+            Debug.Log("FirebaseManagerGame TestReadDB - DB User ID: " + FirebaseManagerAuth.instance.fbAuth.CurrentUser.UserId);
+        }
+        else
+        {
+            Debug.Log("Nothing there, especially not CurrentUser -> good or bad...?");
+        }
+
+        DataSnapshot snapshot = await DBreference.Child("users").Child(playerData.PlayerDBUserId).Child("levelPassed").Child("easy").GetValueAsync();
+
+        foreach (DataSnapshot mainLevelSnapshot in snapshot.Children)
+        {
+            Debug.Log("mainLevelSnapshot Key: " + mainLevelSnapshot.Key);
+        }
+    }
 }
+        
