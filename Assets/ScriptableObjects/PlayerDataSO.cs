@@ -124,6 +124,16 @@ public class PlayerDataSO : ScriptableObject
     public List<LevelPassed> EasyLevelPassed { get => easyLevelPassed; set => easyLevelPassed = value; }
     public List<LevelPassed> MediumLevelPassed { get => mediumLevelPassed; set => mediumLevelPassed = value; }
     public List<LevelPassed> HardLevelPassed { get => hardLevelPassed; set => hardLevelPassed = value; }
+    
+    public void DeleteLevelProgress()
+    {
+        easyLevelPassed = new List<LevelPassed>();
+        mediumLevelPassed = new List<LevelPassed>();
+        hardLevelPassed = new List<LevelPassed>();
+    }
+
+
+    
     public void DebugOutLevelPassedLists()
     {
         //Debug.Log("DEBUG OUT - PlayerDataSO - DebugOutLevelPassedLists: ");

@@ -147,6 +147,7 @@ public class MainMenu_MapLevel : MonoBehaviour
     {
         //Debug.Log("MainMenu_MapLevel - DeleteLevelProgressOfCurrentUser - START ");
         FirebaseManagerGame.instance.DeleteLevelProgressOfUser();
+        playerDataSO.DeleteLevelProgress();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void DoManyDBRequests()

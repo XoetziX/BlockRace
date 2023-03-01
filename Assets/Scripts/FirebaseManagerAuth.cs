@@ -176,6 +176,7 @@ public class FirebaseManagerAuth : MonoBehaviour
 
     public async Task<string> RegisterAsync(string email, string password, string username)
     {
+        if (doDebugAdditional) Debug.Log($"Auth - RegisterAsync - START");
         string message = "registration_successful"; //will be returned if no error occurs
 
         try
@@ -191,7 +192,8 @@ public class FirebaseManagerAuth : MonoBehaviour
             await fbUser.UpdateUserProfileAsync(profile);
 
             if (doDebugImportant) Debug.Log($"Auth - RegisterAsync - Going to add username: {fbAuth.CurrentUser.DisplayName} and db-id: {fbAuth.CurrentUser.UserId} into usernames_dbid");
-            AddUsernameDbId(fbAuth.CurrentUser.DisplayName, fbAuth.CurrentUser.UserId); 
+            StartCoroutine(AddNewUsernameDbId(fbAuth.CurrentUser.DisplayName, fbAuth.CurrentUser.UserId));
+             
 
             // Optional: Verify that the profile has been updated
             //FirebaseUser user = fbAuth.CurrentUser;
@@ -233,21 +235,31 @@ public class FirebaseManagerAuth : MonoBehaviour
         return message; 
     }
 
-    public IEnumerator AddUsernameDbId(string displayName, string userId)
+    public IEnumerator AddNewUsernameDbId(string displayName, string userId)
     {
         if (doDebugImportant) Debug.Log($"Auth - AddUsernameDbId - Displayname: {displayName} and userId: {userId}");
-
-        Task DBTask = DBreference.Child("usernames_dbid").Child(displayName).Child(userId).SetValueAsync("bla");
-
+        //add new user info to usernames_dbid
+        Task DBTask = DBreference.Child("usernames_dbid").Child(displayName).Child(userId).SetValueAsync("");
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
-
         if (DBTask.Exception != null)
         {
             if (doDebugImportant) Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
         }
         else
         {
-            if (doDebugImportant) Debug.Log($"Auth - AddUsernameDbId - Added successfully");
+            if (doDebugImportant) Debug.Log($"Auth - AddUsernameDbId - Added into usernames_dbid successfully");
+        }
+
+        //add new user info to users
+        DBTask = DBreference.Child("users").Child(userId).Child("username").SetValueAsync(displayName);
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+        if (DBTask.Exception != null)
+        {
+            if (doDebugImportant) Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else
+        {
+            if (doDebugImportant) Debug.Log($"Auth - AddUsernameDbId - Added into users successfully");
         }
 
     }

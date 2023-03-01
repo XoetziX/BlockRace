@@ -52,7 +52,7 @@ public class MainMenu_Register : MonoBehaviour
     public async void RegisterNewUser()
     {
         warningRegisterText.text = ""; //if previous register failed
-        warningRegisterText.color = Color.red;
+        warningRegisterText.color = new Color(236 / 255.0f, 49 / 255.0f, 6 / 255.0f); 
 
         if (usernameRegisterField.text == "")
         {
@@ -80,7 +80,7 @@ public class MainMenu_Register : MonoBehaviour
             string resultOfRegistration = await FirebaseManagerAuth.instance.RegisterAsync(emailRegisterField.text, passwordRegisterField.text, usernameRegisterField.text); 
             if (resultOfRegistration == "registration_successful")
             {
-                warningRegisterText.color = Color.green;
+                warningRegisterText.color = new Color(4 / 255.0f, 162 / 255.0f, 24 / 255.0f);
                 warningRegisterText.text = "registration successful";
             }
             else if (resultOfRegistration == "registration_failed")

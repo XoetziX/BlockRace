@@ -16,6 +16,7 @@ public class MainMenu_Login : MonoBehaviour
     [Header("Login")]
     [SerializeField] private TMP_InputField emailLoginField;
     [SerializeField] private TMP_InputField passwordLoginField;
+    [SerializeField] private TMP_Text appVersion;
     [SerializeField] private TMP_Text warningLoginText;
     [SerializeField] private TMP_Text confirmLoginText; //currently warningLoginText used for positiv AND negativ response
 
@@ -37,7 +38,11 @@ public class MainMenu_Login : MonoBehaviour
             passwordLoginField.text = "oetzi1!";
         }
     }
-
+    void Start()
+    {
+        Debug.Log($"Setting app version: {Application.version}");
+        appVersion.text = "v " + Application.version;
+    }
 
     public async void LoginButton()
     {
